@@ -1,0 +1,9 @@
+html, body, #app {
+    height: 100%;
+}
+
+body {
+    font-family: sans-serif;
+    margin: 2em 4em;
+    padding: 0;
+}

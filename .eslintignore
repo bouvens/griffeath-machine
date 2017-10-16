@@ -1,0 +1,11 @@
+/coverage
+/demo/dist
+/es
+/lib
+/node_modules
+/reports
+/tests
+/umd
+
+*.test.js
+*.test.jsx

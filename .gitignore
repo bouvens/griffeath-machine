@@ -1,0 +1,12 @@
+/coverage
+/dist
+/node_modules
+npm-debug.log*
+
+# Intellij
+.idea/workspace.xml
+.idea/jsLinters/eslint.xml
+.idea/eslintPlugin.xml
+.idea/compiler.xml
+.idea/dictionaries
+.idea/jsLinters/
