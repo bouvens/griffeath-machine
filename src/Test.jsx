@@ -1,6 +1,14 @@
 import React, { Component } from 'react'
 import { Connector, Input, SettersBlock } from 'state-control'
+import _ from 'lodash'
 import CanvasField from './CanvasField'
+
+const NEIGHBOURS = [
+    [0, -1],
+    [0, 1],
+    [-1, 0],
+    [1, 0],
+]
 
 const IDS = {
     width: 'width',
@@ -43,6 +51,10 @@ function getRandomField ({ width, height, states }) {
     return field
 }
 
+function mod (number, limit) {
+    return number < 0 ? mod(number + limit, limit) : number % limit
+}
+
 export default class Test extends Component {
     static defaultProps = {
         ...setters[0].params,
@@ -55,13 +67,40 @@ export default class Test extends Component {
 
     componentWillMount () {
         this.randomizeField()
+        window.document.addEventListener('keydown', this.process)
     }
+
+    getUpdatedField = ({ field, width, height, states }) => _.map(
+        field,
+        (line, x) => _.map(line, (element, y) => {
+            if (
+                _.some(
+                    _.map(NEIGHBOURS, (direction) =>
+                        field[mod(x + direction[0], width)][mod(y + direction[1], height)]),
+                    (neighbour) => neighbour === element + 1
+                )
+            ) {
+                return mod(element + 1, states)
+            }
+
+            return element
+        })
+    )
 
     randomizeField = () => {
         this.setState({ field: getRandomField(this.state) })
     }
 
-    nextStep () {}
+    process = (e) => {
+        if (e.keyCode === 32) {
+            e.preventDefault()
+            this.nextStep()
+        }
+    }
+
+    nextStep = () => {
+        this.setState({ field: this.getUpdatedField(this.state) })
+    }
 
     changeHandler = (name, value) => {
         this.setState({ [name]: value })
@@ -124,7 +163,8 @@ export default class Test extends Component {
                         multiplier={this.state.multiplier}
                     />
                 </p>
-                <button onClick={this.randomizeField}>New</button> <button onClick={this.nextStep}>Next step</button>
+                <button onClick={this.randomizeField}>New</button>
+                <button onClick={this.nextStep}>Next step</button>
             </div>
         )
     }

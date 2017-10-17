@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import _ from 'lodash'
 
 export default class CanvasField extends React.PureComponent {
     static propTypes = {
@@ -41,7 +42,7 @@ export default class CanvasField extends React.PureComponent {
     paint = () => {
         for (let x = 0; x < this.props.width; x += 1) {
             for (let y = 0; y < this.props.height; y += 1) {
-                this.drawPoint(x, y, `hsl(${(this.props.field[x][y] / this.props.states) * 360}, 80% ,70%)`)
+                this.drawPoint(x, y, `hsl(${(_.get(this.props.field, [x, y]) / this.props.states) * 360}, 80% ,70%)`)
             }
         }
     }

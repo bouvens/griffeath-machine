@@ -45,6 +45,7 @@ module.exports = {
         'no-trailing-spaces': ['error', { skipBlankLines: true }],
         'no-undefined': 'error',
         'no-void': 'off',
+        'object-curly-newline': ['off'],
         'semi': ['warn', 'never'],
         'space-before-function-paren': [1, 'always'],
         'react/no-direct-mutation-state': 'error',
