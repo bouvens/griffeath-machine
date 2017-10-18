@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Connector, Input, SettersBlock } from 'state-control'
 import _ from 'lodash'
+import styled from 'styled-components'
 import CanvasField from './CanvasField'
 
 const NEIGHBOURS = [
@@ -20,8 +21,8 @@ const IDS = {
 }
 
 const STATUSES = {
-    play: 'play',
-    pause: 'pause',
+    play: 'Play',
+    pause: 'Pause',
 }
 
 const setters = [
@@ -32,11 +33,16 @@ const setters = [
             [IDS.height]: 100,
             [IDS.multiplier]: 5,
             [IDS.states]: 12,
-            [IDS.timeout]: 100,
+            [IDS.timeout]: 50,
             [IDS.status]: STATUSES.pause,
         },
     },
 ]
+
+const Button = styled.button`
+    margin-right: 2em;
+    padding: 0.6em 1.2em;
+`
 
 function getRandomField ({ width, height, states }) {
     const field = []
@@ -63,6 +69,7 @@ export default class Test extends Component {
     state = {
         ...this.props,
         field: [],
+        status: STATUSES.pause,
     }
 
     componentWillMount () {
@@ -77,7 +84,7 @@ export default class Test extends Component {
                 _.some(
                     _.map(NEIGHBOURS, (direction) =>
                         field[mod(x + direction[0], width)][mod(y + direction[1], height)]),
-                    (neighbour) => neighbour === element + 1
+                    (neighbour) => neighbour === mod(element + 1, states)
                 )
             ) {
                 return mod(element + 1, states)
@@ -100,6 +107,8 @@ export default class Test extends Component {
 
     nextStep = () => {
         this.setState({ field: this.getUpdatedField(this.state) })
+
+        if (this.state.status === STATUSES.play) setTimeout(this.nextStep, this.state.timeout)
     }
 
     changeHandler = (name, value) => {
@@ -110,6 +119,18 @@ export default class Test extends Component {
 
     handleRefCanvas = (canvas) => {
         this.canvas = canvas
+    }
+
+    handlePlay = () => {
+        switch (this.state.status) {
+            case STATUSES.play:
+                this.setState({ status: STATUSES.pause })
+                break
+            case STATUSES.pause:
+                this.setState({ status: STATUSES.play }, this.nextStep)
+                break
+            default:
+        }
     }
 
     render () {
@@ -153,18 +174,17 @@ export default class Test extends Component {
                         defaultNum={1}
                     />
                 </Connector>
-                <p>
-                    <CanvasField
-                        ref={this.handleRefCanvas}
-                        field={this.state.field}
-                        width={this.state.width}
-                        height={this.state.height}
-                        states={this.state.states}
-                        multiplier={this.state.multiplier}
-                    />
-                </p>
-                <button onClick={this.randomizeField}>New</button>
-                <button onClick={this.nextStep}>Next step</button>
+                <CanvasField
+                    ref={this.handleRefCanvas}
+                    field={this.state.field}
+                    width={this.state.width}
+                    height={this.state.height}
+                    states={this.state.states}
+                    multiplier={this.state.multiplier}
+                />
+                <Button onClick={this.randomizeField}>New</Button>
+                <Button onClick={this.nextStep}>Next step</Button>
+                <Button onClick={this.handlePlay}>{this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play }</Button>
             </div>
         )
     }
