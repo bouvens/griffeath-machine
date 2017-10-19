@@ -16,7 +16,6 @@ const IDS = {
     height: 'height',
     multiplier: 'multiplier',
     states: 'states',
-    timeout: 'timeout',
     status: 'status',
 }
 
@@ -29,12 +28,10 @@ const setters = [
     {
         text: 'Default',
         params: {
-            [IDS.width]: 100,
-            [IDS.height]: 100,
-            [IDS.multiplier]: 5,
-            [IDS.states]: 12,
-            [IDS.timeout]: 50,
-            [IDS.status]: STATUSES.pause,
+            [IDS.width]: 300,
+            [IDS.height]: 300,
+            [IDS.multiplier]: 3,
+            [IDS.states]: 16,
         },
     },
 ]
@@ -58,7 +55,7 @@ function getRandomField ({ width, height, states }) {
 }
 
 function mod (number, limit) {
-    return number < 0 ? mod(number + limit, limit) : number % limit
+    return number < 0 ? number + limit : number % limit
 }
 
 export default class Test extends Component {
@@ -108,7 +105,9 @@ export default class Test extends Component {
     nextStep = () => {
         this.setState({ field: this.getUpdatedField(this.state) })
 
-        if (this.state.status === STATUSES.play) setTimeout(this.nextStep, this.state.timeout)
+        if (this.state.status === STATUSES.play) {
+            window.requestAnimationFrame(this.nextStep)
+        }
     }
 
     changeHandler = (name, value) => {
@@ -166,11 +165,6 @@ export default class Test extends Component {
                     <Input
                         id={IDS.states}
                         label="Number of states"
-                        defaultNum={1}
-                    />
-                    <Input
-                        id={IDS.timeout}
-                        label="Timeout"
                         defaultNum={1}
                     />
                 </Connector>
