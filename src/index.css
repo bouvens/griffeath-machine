@@ -3,3 +3,7 @@ body {
     margin: 2em 4em;
     padding: 0;
 }
+
+hr {
+    margin: 2em auto 3em;
+}
