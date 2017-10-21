@@ -17,8 +17,7 @@
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
-    "state-control": "^1.0.1",
-    "styled-components": "^2.2.1"
+    "state-control": "^1.0.1"
   },
   "devDependencies": {
     "babel-eslint": "^8.0.1",
@@ -31,7 +30,6 @@
     "nwb": "0.19.x"
   },
   "author": "Alexander Demin <bouvens@gmail.com> (https://bouvens.github.io/)",
-  "homepage": "https://github.com/bouvens/test",
-  "license": "MIT",
-  "repository": ""
+  "homepage": "https://bouvens.github.io/griffeath-machine",
+  "license": "MIT"
 }

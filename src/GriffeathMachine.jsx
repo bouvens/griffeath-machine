@@ -3,6 +3,7 @@ import { Connector, Input, SettersBlock } from 'state-control'
 import _ from 'lodash'
 import styled from 'styled-components'
 import CanvasField from './CanvasField'
+import style from './GriffeathMachine.css'
 
 const NEIGHBOURS = [
     [0, -1],
@@ -14,7 +15,6 @@ const NEIGHBOURS = [
 const IDS = {
     width: 'width',
     height: 'height',
-    multiplier: 'multiplier',
     states: 'states',
     status: 'status',
 }
@@ -30,16 +30,10 @@ const setters = [
         params: {
             [IDS.width]: 300,
             [IDS.height]: 300,
-            [IDS.multiplier]: 3,
             [IDS.states]: 16,
         },
     },
 ]
-
-const Button = styled.button`
-    margin-right: 2em;
-    padding: 0.6em 1.2em;
-`
 
 function getRandomField ({ width, height, states }) {
     const field = []
@@ -158,11 +152,6 @@ export default class Test extends Component {
                         defaultNum={1}
                     />
                     <Input
-                        id={IDS.multiplier}
-                        label="Field multiplier"
-                        defaultNum={1}
-                    />
-                    <Input
                         id={IDS.states}
                         label="Number of states"
                         defaultNum={1}
@@ -174,11 +163,12 @@ export default class Test extends Component {
                     width={this.state.width}
                     height={this.state.height}
                     states={this.state.states}
-                    multiplier={this.state.multiplier}
                 />
-                <Button onClick={this.randomizeField}>New</Button>
-                <Button onClick={this.nextStep}>Next step</Button>
-                <Button onClick={this.handlePlay}>{this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play }</Button>
+                <button className={style.bigButton} onClick={this.randomizeField}>New</button>
+                <button className={style.bigButton} onClick={this.nextStep}>Next step</button>
+                <button className={style.bigButton} onClick={this.handlePlay}>
+                    {this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play}
+                </button>
             </div>
         )
     }

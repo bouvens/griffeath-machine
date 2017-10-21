@@ -66,11 +66,6 @@ export default class CanvasField extends React.PureComponent {
         width: PropTypes.number.isRequired,
         height: PropTypes.number.isRequired,
         states: PropTypes.number.isRequired,
-        multiplier: PropTypes.number,
-    }
-
-    static defaultProps = {
-        multiplier: 1,
     }
 
     componentDidMount () {
