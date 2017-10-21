@@ -1,3 +1,7 @@
+.field {
+    cursor: pointer;
+}
+
 .bigButton {
     margin-right: 2em;
     padding: 0.6em 1.2em;

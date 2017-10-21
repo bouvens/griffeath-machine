@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { Connector, Input, SettersBlock } from 'state-control'
 import _ from 'lodash'
-import styled from 'styled-components'
 import CanvasField from './CanvasField'
 import style from './GriffeathMachine.css'
 
@@ -85,6 +84,8 @@ export default class Test extends Component {
         })
     )
 
+    getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
+
     randomizeField = () => {
         this.setState({ field: getRandomField(this.state) })
     }
@@ -157,18 +158,25 @@ export default class Test extends Component {
                         defaultNum={1}
                     />
                 </Connector>
-                <CanvasField
-                    ref={this.handleRefCanvas}
-                    field={this.state.field}
-                    width={this.state.width}
-                    height={this.state.height}
-                    states={this.state.states}
-                />
+                <p>
+                    <span
+                        onClick={this.handlePlay}
+                        className={style.field}
+                        role="presentation"
+                        title={this.getActionName()}
+                    >
+                        <CanvasField
+                            ref={this.handleRefCanvas}
+                            field={this.state.field}
+                            width={this.state.width}
+                            height={this.state.height}
+                            states={this.state.states}
+                        />
+                    </span>
+                </p>
                 <button className={style.bigButton} onClick={this.randomizeField}>New</button>
                 <button className={style.bigButton} onClick={this.nextStep}>Next step</button>
-                <button className={style.bigButton} onClick={this.handlePlay}>
-                    {this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play}
-                </button>
+                <button className={style.bigButton} onClick={this.handlePlay}>{this.getActionName()}</button>
             </div>
         )
     }

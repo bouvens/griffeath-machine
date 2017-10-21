@@ -112,11 +112,6 @@ export default class CanvasField extends React.PureComponent {
     render () {
         return (
             <canvas
-                style={{
-                    display: 'block',
-                    marginBottom: '1.6em',
-                    transformOrigin: '0 0',
-                }}
                 ref={this.handleRefCanvas}
                 width={this.props.width}
                 height={this.props.height}

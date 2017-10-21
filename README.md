@@ -1,6 +1,6 @@
 # Griffeath’s machine
 
-### [Demo](https://bouvens.github.io/zero-packer/)
+### [Demo](https://bouvens.github.io/griffeath-machine/)
 This experiment made with [state-control ![npm][npm-badge]][npm]
 
 [npm-badge]: https://img.shields.io/npm/v/state-control.png?style=flat-square
