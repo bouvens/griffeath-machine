@@ -40,6 +40,14 @@ export default class GriffeathMachine extends PureComponent {
         }
     }
 
+    handleNew = () => {
+        this.randomizeField()
+    }
+
+    handleNext = () => {
+        this.setState({ field: getUpdatedField(this.state) })
+    }
+
     handlePlay = () => {
         switch (this.state.status) {
             case STATUSES.play:
@@ -100,15 +108,17 @@ export default class GriffeathMachine extends PureComponent {
                         />
                     </span>
                 </p>
-                <button className={style.bigButton} onClick={this.randomizeField}>
+                <button className={style.bigButton} onClick={this.handleNew}>
                     New
-                </button>
-                <button className={style.bigButton} onClick={this.nextStep}>
-                    Next step
                 </button>
                 <button className={style.bigButton} onClick={this.handlePlay}>
                     {this.getActionName()}
                 </button>
+                {this.state.status === STATUSES.pause &&
+                <button className={style.bigButton} onClick={this.handleNext}>
+                    Next step
+                </button>
+                }
             </div>
         )
     }
