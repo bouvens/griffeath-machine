@@ -15,14 +15,14 @@ export default class GriffeathMachine extends PureComponent {
     }
 
     componentWillMount () {
-        this.randomizeField()
+        this.randomizeField(this.handlePlay)
         window.document.addEventListener('keydown', this.processKey)
     }
 
     getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
 
-    randomizeField = () => {
-        this.setState({ field: getRandomField(this.state) })
+    randomizeField = (callback) => {
+        this.setState({ field: getRandomField(this.state) }, callback)
     }
 
     processKey = (e) => {
