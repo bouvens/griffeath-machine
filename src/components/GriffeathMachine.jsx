@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import PropTypes from 'prop-types'
 import { Connector, Input } from 'state-control'
 import { DEFAULT, IDS, STATUSES } from '../constants'
 import { getRandomField, getUpdatedField } from '../utils'
@@ -6,10 +7,18 @@ import CanvasField from './CanvasField'
 import style from './GriffeathMachine.css'
 
 export default class GriffeathMachine extends PureComponent {
+    static propTypes = {
+        width: PropTypes.number.isRequired,
+        height: PropTypes.number.isRequired,
+        states: PropTypes.number.isRequired,
+    }
+
     static defaultProps = { ...DEFAULT }
 
     state = {
-        ...this.props,
+        width: this.props.width,
+        height: this.props.height,
+        states: this.props.states,
         field: [],
         status: STATUSES.pause,
     }
@@ -33,7 +42,14 @@ export default class GriffeathMachine extends PureComponent {
     }
 
     nextStep = () => {
-        this.setState({ field: getUpdatedField(this.state) })
+        try {
+            this.setState({ field: getUpdatedField(this.state) })
+        } catch (e) {
+            this.setState({
+                field: getRandomField(this.state),
+                status: STATUSES.pause,
+            })
+        }
 
         if (this.state.status === STATUSES.play) {
             requestAnimationFrame(this.nextStep)
