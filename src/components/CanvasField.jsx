@@ -76,8 +76,8 @@ export default class CanvasField extends React.PureComponent {
         this.paint()
     }
 
-    canvasContext = null
-    canvasData = null
+    canvasContext
+    canvasData
 
     drawPixel = (x, y, h, s, l) => {
         const index = (x + (y * this.props.width)) * 4
