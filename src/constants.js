@@ -13,8 +13,8 @@ export const IDS = {
 }
 
 export const DEFAULT = {
-    [IDS.width]: 300,
-    [IDS.height]: 300,
+    [IDS.width]: 500,
+    [IDS.height]: 500,
     [IDS.states]: 16,
 }
 

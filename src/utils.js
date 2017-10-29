@@ -20,10 +20,9 @@ export const getUpdatedField = ({ field, width, height, states }) => _.map(
     field,
     (line, x) => _.map(line, (element, y) => {
         if (
-            _(NEIGHBOURS)
-                .map((direction) =>
-                    field[mod(x + direction[0], width)][mod(y + direction[1], height)])
-                .some((neighbour) => neighbour === mod(element + 1, states))
+            _.some(NEIGHBOURS, (neighbour) =>
+                field[mod(x + neighbour[0], width)][mod(y + neighbour[1], height)] === mod(element + 1, states)
+            )
         ) {
             return mod(element + 1, states)
         }
