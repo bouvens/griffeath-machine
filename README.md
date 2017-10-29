@@ -15,19 +15,20 @@ A cyclic cellular automaton is a kind of cellular automaton rule developed by Da
 
 More information and rules can be found in [Wikipedia](https://en.wikipedia.org/wiki/Cyclic_cellular_automaton).
 
+Rendering made with high performance method `CanvasRenderingContext2D.putImageData()` inside React component [`<CanvasField />`](https://github.com/bouvens/griffeath-machine/blob/master/src/components/CanvasField.jsx).
+
 ## How it works?
 
-On every step [every cell changes](https://github.com/bouvens/griffeath-machine/blob/master/src/utils.js) it’s value to neighbour’s value if it’s have modular value one unit larger.
+On every step [every cell changes](https://github.com/bouvens/griffeath-machine/blob/master/src/utils.js) it’s value to neighbour’s value if it have modular value one unit larger.
 
 ```javascript
 export const getUpdatedField = ({ field, width, height, states }) => _.map(
     field,
     (line, x) => _.map(line, (element, y) => {
         if (
-            _(NEIGHBOURS)
-                .map((direction) =>
-                    field[mod(x + direction[0], width)][mod(y + direction[1], height)])
-                .some((neighbour) => neighbour === mod(element + 1, states))
+            _.some(NEIGHBOURS, (neighbour) =>
+                field[mod(x + neighbour[0], width)][mod(y + neighbour[1], height)] === mod(element + 1, states)
+            )
         ) {
             return mod(element + 1, states)
         }
