@@ -21,8 +21,7 @@ export const getUpdatedField = ({ field, width, height, states }) => _.map(
     (line, x) => _.map(line, (element, y) => {
         if (
             _.some(NEIGHBOURS, (neighbour) =>
-                field[mod(x + neighbour[0], width)][mod(y + neighbour[1], height)] === mod(element + 1, states)
-            )
+                field[mod(x + neighbour[0], width)][mod(y + neighbour[1], height)] === mod(element + 1, states))
         ) {
             return mod(element + 1, states)
         }
