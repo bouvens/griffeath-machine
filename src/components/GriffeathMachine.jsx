@@ -16,7 +16,7 @@ export default class GriffeathMachine extends PureComponent {
 
     componentWillMount () {
         this.randomizeField(this.handlePlay)
-        window.document.addEventListener('keydown', this.processKey)
+        document.addEventListener('keydown', this.processKey)
     }
 
     getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
@@ -36,7 +36,7 @@ export default class GriffeathMachine extends PureComponent {
         this.setState({ field: getUpdatedField(this.state) })
 
         if (this.state.status === STATUSES.play) {
-            window.requestAnimationFrame(this.nextStep)
+            requestAnimationFrame(this.nextStep)
         }
     }
 
@@ -101,9 +101,9 @@ export default class GriffeathMachine extends PureComponent {
                         title={this.getActionName()}
                     >
                         <CanvasField
-                            field={this.state.field}
                             width={this.state.width}
                             height={this.state.height}
+                            field={this.state.field}
                             states={this.state.states}
                         />
                     </span>
