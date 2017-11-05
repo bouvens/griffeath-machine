@@ -19,34 +19,26 @@ Rendering made with high performance method `CanvasRenderingContext2D.putImageDa
 
 ## How it works?
 
-On every step [every cell changes](https://github.com/bouvens/griffeath-machine/blob/master/src/utils.js) it’s value to neighbour’s value if it have modular value one unit larger.
+On every step [every cell changes](https://github.com/bouvens/griffeath-machine/blob/master/src/utils.js) it’s value to 1 of 4 neighbour’s value if it have modular value one unit larger.
 
 ```javascript
 export const getUpdatedField = ({ field, width, height, states }) => _.map(
     field,
     (line, x) => _.map(line, (element, y) => {
+        const plusOne = mod(element + 1, states)
+
         if (
-            _.some(NEIGHBOURS, (neighbour) =>
-                field[mod(x + neighbour[0], width)][mod(y + neighbour[1], height)] === mod(element + 1, states)
-            )
+            field[x][mod(y - 1, height)] === plusOne
+            || field[x][mod(y + 1, height)] === plusOne
+            || field[mod(x - 1, width)][y] === plusOne
+            || field[mod(x + 1, width)][y] === plusOne
         ) {
-            return mod(element + 1, states)
+            return plusOne
         }
 
         return element
     })
 )
-```
-
-Neighbours by [default](https://github.com/bouvens/griffeath-machine/blob/master/src/constants.js) have the following offsets by _x_ and _y_ axes:
-
-```javascript
-export const NEIGHBOURS = [
-    [0, -1],
-    [0, 1],
-    [-1, 0],
-    [1, 0],
-]
 ```
 
 ## How to run locally

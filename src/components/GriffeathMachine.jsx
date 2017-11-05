@@ -19,7 +19,6 @@ export default class GriffeathMachine extends PureComponent {
         width: this.props.width,
         height: this.props.height,
         states: this.props.states,
-        field: [],
         status: STATUSES.pause,
     }
 
@@ -30,8 +29,11 @@ export default class GriffeathMachine extends PureComponent {
 
     getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
 
-    randomizeField = (callback) => {
-        this.setState({ field: getRandomField(this.state) }, callback)
+    field
+
+    randomizeField = (callback = () => {}) => {
+        this.field = getRandomField(this.state)
+        callback()
     }
 
     processKey = (e) => {
@@ -43,13 +45,14 @@ export default class GriffeathMachine extends PureComponent {
 
     nextStep = () => {
         try {
-            this.setState({ field: getUpdatedField(this.state) })
+            this.field = getUpdatedField({ ...this.state, field: this.field })
         } catch (e) {
+            this.field = getRandomField(this.state)
             this.setState({
-                field: getRandomField(this.state),
                 status: STATUSES.pause,
             })
         }
+        this.canvas.paint(this.field)
 
         if (this.state.status === STATUSES.play) {
             requestAnimationFrame(this.nextStep)
@@ -58,10 +61,12 @@ export default class GriffeathMachine extends PureComponent {
 
     handleNew = () => {
         this.randomizeField()
+        this.canvas.paint(this.field)
     }
 
     handleNext = () => {
-        this.setState({ field: getUpdatedField(this.state) })
+        this.field = getUpdatedField({ ...this.state, field: this.field })
+        this.canvas.paint(this.field)
     }
 
     handlePlay = () => {
@@ -119,8 +124,10 @@ export default class GriffeathMachine extends PureComponent {
                         <CanvasField
                             width={this.state.width}
                             height={this.state.height}
-                            field={this.state.field}
+                            field={this.field}
                             states={this.state.states}
+                            // arrow function in render is not a problem for now
+                            ref={(e) => { this.canvas = e }}
                         />
                     </span>
                 </p>
