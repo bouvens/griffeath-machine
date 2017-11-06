@@ -48,14 +48,14 @@ export default class CanvasField extends React.PureComponent {
         this.canvasContext.putImageData(this.canvasData, 0, 0)
     }
 
-    handleRefCanvas = (elem) => {
+    refCanvas = (elem) => {
         this.canvasContext = elem.getContext('2d')
     }
 
     render () {
         return (
             <canvas
-                ref={this.handleRefCanvas}
+                ref={this.refCanvas}
                 width={this.props.width}
                 height={this.props.height}
             >
