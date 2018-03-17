@@ -15,3 +15,5 @@ export const STATUSES = {
     play: 'Play',
     pause: 'Pause',
 }
+
+export const SPACE_CODE = 32

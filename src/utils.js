@@ -35,14 +35,8 @@ export const getUpdatedField = ({ field, width, height, states }) => _.map(
 
 export function hueToRgb (h) {
     const h2rgb = (initT) => {
-        let t = initT
+        const t = mod(initT, 1)
 
-        if (t < 0) {
-            t += 1
-        }
-        if (t > 1) {
-            t -= 1
-        }
         if (t < 1 / 6) {
             return 6 * t
         }
