@@ -126,6 +126,7 @@ export default class GriffeathMachine extends PureComponent {
                         ref={(e) => { this.canvas = e }}
                     />
                 </div>
+                <p><em>Press Space or click field for play/pause</em></p>
                 <button className={style.bigButton} onClick={this.handleNew}>
                     New
                 </button>
