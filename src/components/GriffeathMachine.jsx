@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Connector, Input } from 'state-control'
-import { DEFAULT, IDS, STATUSES, SPACE_CODE } from '../constants'
+import { DEFAULT, IDS, STATUSES, SPACE_CODE } from './constants'
 import { getRandomField, getUpdatedField } from '../utils'
 import CanvasField from './CanvasField'
 import style from './GriffeathMachine.css'

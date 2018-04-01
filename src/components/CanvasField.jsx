@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import _ from 'lodash'
 import { hueToRgb } from '../utils'
 
 export default class CanvasField extends React.PureComponent {
@@ -32,16 +31,12 @@ export default class CanvasField extends React.PureComponent {
         this.canvasData.data[index + 3] = 255
     }
 
-    clear = () => {
-        this.canvasContext.clearRect(0, 0, this.props.width, this.props.height)
-    }
-
     paint = (field = this.props.field) => {
         this.canvasData = this.canvasContext.getImageData(0, 0, this.props.width, this.props.height)
 
         for (let x = 0; x < this.props.width; x += 1) {
             for (let y = 0; y < this.props.height; y += 1) {
-                this.drawPixel(x, y, _.get(field, [x, y]) / this.props.states)
+                this.drawPixel(x, y, field[x][y] / this.props.states)
             }
         }
 

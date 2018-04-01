@@ -1,5 +1,3 @@
-import _ from 'lodash'
-
 export function getRandomField ({ width, height, states }) {
     const field = []
 
@@ -15,9 +13,8 @@ export function getRandomField ({ width, height, states }) {
 
 const mod = (number, limit) => (number < 0 ? number + limit : number % limit)
 
-export const getUpdatedField = ({ field, width, height, states }) => _.map(
-    field,
-    (line, x) => _.map(line, (element, y) => {
+export const getUpdatedField = ({ field, width, height, states }) => field.map((line, x) =>
+    line.map((element, y) => {
         const plusOne = mod(element + 1, states)
 
         if (
@@ -30,8 +27,7 @@ export const getUpdatedField = ({ field, width, height, states }) => _.map(
         }
 
         return element
-    })
-)
+    }))
 
 export function hueToRgb (h) {
     const h2rgb = (initT) => {
