@@ -1,10 +1,10 @@
 .field {
-    cursor: pointer;
-    margin-bottom: 0.7em;
+  cursor: pointer;
+  margin-bottom: 0.7em;
 }
 
 .bigButton {
-    margin-right: 2em;
-    margin-bottom: 3em;
-    padding: 0.6em 1.2em;
+  margin-right: 2em;
+  margin-bottom: 3em;
+  padding: 0.6em 1.2em;
 }
