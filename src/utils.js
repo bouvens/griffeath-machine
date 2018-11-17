@@ -28,7 +28,7 @@ export const getUpdatedField = ({ field, width, height, states }) => field.map((
 
 export function hueToRgb (h) {
   const h2rgb = (initT) => {
-    const t = mod(initT, 1)
+    const t = initT < 0 ? initT + 1 : initT % 1
 
     if (t < 1 / 6) {
       return 6 * t
@@ -52,4 +52,16 @@ export function hueToRgb (h) {
     g: Math.round(g * 255),
     b: Math.round(b * 255),
   }
+}
+
+const colorMapping = []
+
+export function getColor (h, states) {
+  if (colorMapping.length !== states) {
+    colorMapping.length = states
+    for (let i = 0; i < states; i += 1) {
+      colorMapping[i] = hueToRgb(i / states)
+    }
+  }
+  return colorMapping[h] || { r: 0, g: 0, b: 0 }
 }

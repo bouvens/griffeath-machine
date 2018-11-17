@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { hueToRgb } from '../utils'
+import { getColor } from '../utils'
 
 export default class CanvasField extends React.PureComponent {
   static propTypes = {
@@ -20,7 +20,7 @@ export default class CanvasField extends React.PureComponent {
 
   drawPixel = (x, y, h, states) => {
     const index = (x + (y * this.props.width)) * 4
-    const { r, g, b } = hueToRgb(h / states)
+    const { r, g, b } = getColor(h, states)
     const { data } = this.canvasData
 
     data[index] = r
