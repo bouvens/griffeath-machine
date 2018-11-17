@@ -2,9 +2,9 @@ import React from 'react'
 import { render } from 'react-dom'
 
 import './index.css'
-import GriffeathMachine from './components/GriffeathMachine'
+import App from './components/App'
 
-render(<GriffeathMachine />, document.querySelector('#app'))
+render(<App />, document.querySelector('#app'))
 
 // eslint-disable-next-line no-undef, comment: it's global
 const stats = new Stats()
