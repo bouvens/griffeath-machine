@@ -18,23 +18,25 @@ export default class CanvasField extends React.PureComponent {
     this.paint()
   }
 
-  drawPixel = (x, y, h) => {
+  drawPixel = (x, y, h, states) => {
     const index = (x + (y * this.props.width)) * 4
-    const { r, g, b } = hueToRgb(h)
+    const { r, g, b } = hueToRgb(h / states)
+    const { data } = this.canvasData
 
-    this.canvasData.data[index] = r
-    this.canvasData.data[index + 1] = g
-    this.canvasData.data[index + 2] = b
-    this.canvasData.data[index + 3] = 255
+    data[index] = r
+    data[index + 1] = g
+    data[index + 2] = b
   }
 
   paint = (field = this.props.field) => {
-    this.canvasData = this.canvasContext.getImageData(0, 0, this.props.width, this.props.height)
+    const { width, height, states } = this.props
 
-    for (let x = 0; x < this.props.width; x += 1) {
-      for (let y = 0; y < this.props.height; y += 1) {
+    this.canvasData = this.canvasContext.getImageData(0, 0, width, height)
+
+    for (let x = 0; x < width; x += 1) {
+      for (let y = 0; y < height; y += 1) {
         if (field[x]) {
-          this.drawPixel(x, y, field[x][y] / this.props.states)
+          this.drawPixel(x, y, field[x][y], states)
         }
       }
     }
@@ -44,6 +46,8 @@ export default class CanvasField extends React.PureComponent {
 
   refCanvas = (elem) => {
     this.canvasContext = elem.getContext('2d')
+    this.canvasContext.fillStyle = '#000'
+    this.canvasContext.fillRect(0, 0, this.props.width, this.props.height)
   }
 
   canvasContext
