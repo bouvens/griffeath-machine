@@ -1,3 +1,6 @@
+/* eslint-disable prefer-arrow-callback,prefer-destructuring */
+import GPU from 'gpu.js'
+
 export function getRandomField ({ width, height, states }) {
   const field = []
 
@@ -11,20 +14,41 @@ export function getRandomField ({ width, height, states }) {
   return field
 }
 
-const mod = (number, limit) => (number < 0 ? number + limit : number % limit)
+function myMod (number, limit) {
+  return number % limit
+}
 
-export const getUpdatedField = ({ field, width, height, states }) => field.map((line, x) => line.map((element, y) => {
-  const plusOne = mod(element + 1, states)
+const gpu = new GPU()
+gpu.addFunction(myMod)
 
-  if (field[x][mod(y - 1, height)] === plusOne
-    || field[x][mod(y + 1, height)] === plusOne
-    || field[mod(x - 1, width)][y] === plusOne
-    || field[mod(x + 1, width)][y] === plusOne) {
+export const getUpdatedField = gpu.createKernel(function (field, width, height, states) {
+  const x = this.thread.x
+  const y = this.thread.y
+  const element = field[y][x]
+  const plusOne = myMod(element + 1, states)
+
+  let next = myMod(y - 1, height)
+  if (field[next][x] === plusOne) {
+    return plusOne
+  }
+
+  next = myMod(y + 1, height)
+  if (field[next][x] === plusOne) {
+    return plusOne
+  }
+
+  next = myMod(x - 1, width)
+  if (field[y][next] === plusOne) {
+    return plusOne
+  }
+
+  next = myMod(x + 1, width)
+  if (field[y][next] === plusOne) {
     return plusOne
   }
 
   return element
-}))
+}).setOutput([700, 1000])
 
 export function mapNumToRGB (h) {
   const h2rgb = (initT) => {

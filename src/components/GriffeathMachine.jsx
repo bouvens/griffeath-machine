@@ -47,7 +47,8 @@ export default class GriffeathMachine extends PureComponent {
 
   nextStep = () => {
     try {
-      this.field = getUpdatedField({ ...this.state, field: this.field })
+      const { width, height, states } = this.state
+      this.field = getUpdatedField(this.field, width, height, states)
     } catch (e) {
       this.field = getRandomField(this.state)
       this.setState({
@@ -87,15 +88,12 @@ export default class GriffeathMachine extends PureComponent {
     this.setState({ [name]: value })
   }
 
-  selectAll = (control) => control.setSelectionRange(0, control.value.length)
-
   render () {
     return (
       <div>
         <Connector
           state={this.state}
           onChange={this.changeHandler}
-          onFocus={this.selectAll}
         >
           <Input
             id={IDS.width}
