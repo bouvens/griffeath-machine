@@ -1,61 +1,68 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { hueToRgb } from '../utils'
+import { getColor } from '../utils'
 
 export default class CanvasField extends React.PureComponent {
-    static propTypes = {
-        width: PropTypes.number.isRequired,
-        height: PropTypes.number.isRequired,
-        field: PropTypes.arrayOf(PropTypes.array).isRequired,
-        states: PropTypes.number.isRequired,
-    }
+  static propTypes = {
+    width: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    field: PropTypes.arrayOf(PropTypes.array).isRequired,
+    states: PropTypes.number.isRequired,
+  }
 
-    componentDidMount () {
-        this.paint()
-    }
+  componentDidMount () {
+    this.paint()
+  }
 
-    componentDidUpdate () {
-        this.paint()
-    }
+  componentDidUpdate () {
+    this.paint()
+  }
 
-    canvasContext
-    canvasData
+  drawPixel = (x, y, h, states) => {
+    const index = (x + (y * this.props.width)) * 4
+    const { r, g, b } = getColor(h, states)
+    const { data } = this.canvasData
 
-    drawPixel = (x, y, h) => {
-        const index = (x + (y * this.props.width)) * 4
-        const { r, g, b } = hueToRgb(h)
+    data[index] = r
+    data[index + 1] = g
+    data[index + 2] = b
+  }
 
-        this.canvasData.data[index] = r
-        this.canvasData.data[index + 1] = g
-        this.canvasData.data[index + 2] = b
-        this.canvasData.data[index + 3] = 255
-    }
+  paint = (field = this.props.field) => {
+    const { width, height, states } = this.props
 
-    paint = (field = this.props.field) => {
-        this.canvasData = this.canvasContext.getImageData(0, 0, this.props.width, this.props.height)
+    this.canvasData = this.canvasContext.getImageData(0, 0, width, height)
 
-        for (let x = 0; x < this.props.width; x += 1) {
-            for (let y = 0; y < this.props.height; y += 1) {
-                this.drawPixel(x, y, field[x][y] / this.props.states)
-            }
+    for (let x = 0; x < width; x += 1) {
+      for (let y = 0; y < height; y += 1) {
+        if (field[x]) {
+          this.drawPixel(x, y, field[x][y], states)
         }
-
-        this.canvasContext.putImageData(this.canvasData, 0, 0)
+      }
     }
 
-    refCanvas = (elem) => {
-        this.canvasContext = elem.getContext('2d')
-    }
+    this.canvasContext.putImageData(this.canvasData, 0, 0)
+  }
 
-    render () {
-        return (
-            <canvas
-                ref={this.refCanvas}
-                width={this.props.width}
-                height={this.props.height}
-            >
-                {'You are using an outdated browser without support of canvas elements.'}
-            </canvas>
-        )
-    }
+  refCanvas = (elem) => {
+    this.canvasContext = elem.getContext('2d')
+    this.canvasContext.fillStyle = '#000'
+    this.canvasContext.fillRect(0, 0, this.props.width, this.props.height)
+  }
+
+  canvasContext
+
+  canvasData
+
+  render () {
+    return (
+      <canvas
+        ref={this.refCanvas}
+        width={this.props.width}
+        height={this.props.height}
+      >
+        {'You are using an outdated browser without support of canvas elements.'}
+      </canvas>
+    )
+  }
 }
