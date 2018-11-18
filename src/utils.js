@@ -1,4 +1,5 @@
-/* eslint-disable prefer-arrow-callback,prefer-destructuring */
+/* eslint-disable prefer-arrow-callback */
+// todo move GPU to separate file
 import GPU from 'gpu.js'
 
 export function getRandomField ({ width, height, states }) {
@@ -15,40 +16,44 @@ export function getRandomField ({ width, height, states }) {
 }
 
 function myMod (number, limit) {
+  if (number < 0) {
+    return number + limit
+  }
   return number % limit
 }
 
 const gpu = new GPU()
 gpu.addFunction(myMod)
 
-export const getUpdatedField = gpu.createKernel(function (field, width, height, states) {
-  const x = this.thread.x
-  const y = this.thread.y
-  const element = field[y][x]
+export const makeGetUpdatedField = (fieldWidth, fieldHeight) => gpu.createKernel(function (field, width, height, states) {
+  // what a mess
+  const ver = this.thread.x
+  const hor = this.thread.y
+  const element = field[hor][ver]
   const plusOne = myMod(element + 1, states)
 
-  let next = myMod(y - 1, height)
-  if (field[next][x] === plusOne) {
+  let next = myMod(hor - 1, width)
+  if (field[next][ver] === plusOne) {
     return plusOne
   }
 
-  next = myMod(y + 1, height)
-  if (field[next][x] === plusOne) {
+  next = myMod(hor + 1, width)
+  if (field[next][ver] === plusOne) {
     return plusOne
   }
 
-  next = myMod(x - 1, width)
-  if (field[y][next] === plusOne) {
+  next = myMod(ver - 1, height)
+  if (field[hor][next] === plusOne) {
     return plusOne
   }
 
-  next = myMod(x + 1, width)
-  if (field[y][next] === plusOne) {
+  next = myMod(ver + 1, height)
+  if (field[hor][next] === plusOne) {
     return plusOne
   }
 
   return element
-}).setOutput([700, 1000])
+}).setOutput([fieldHeight, fieldWidth]) // more of the mess
 
 export function mapNumToRGB (h) {
   const h2rgb = (initT) => {

@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Connector, Input } from 'state-control'
-import { getRandomField, getUpdatedField } from '../utils'
+import { getRandomField, makeGetUpdatedField } from '../utils'
 import { DEFAULT, IDS, SPACE_CODE, STATUSES } from './constants'
 import CanvasField from './CanvasField'
 import style from './GriffeathMachine.css'
@@ -30,6 +30,7 @@ export default class GriffeathMachine extends PureComponent {
     this.randomizeField()
     this.handlePlay()
     document.addEventListener('keydown', this.processKey)
+    this.updateFieldSize({})
   }
 
   getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
@@ -45,10 +46,18 @@ export default class GriffeathMachine extends PureComponent {
     }
   }
 
+  updateFieldSize = ({ width = this.props.width, height = this.props.height }) => {
+    this.fieldUpdater = makeGetUpdatedField(width, height)
+  }
+
+  getUpdatedField = () => {
+    const { width, height, states } = this.state
+    return this.fieldUpdater(this.field, width, height, states)
+  }
+
   nextStep = () => {
     try {
-      const { width, height, states } = this.state
-      this.field = getUpdatedField(this.field, width, height, states)
+      this.field = this.getUpdatedField()
     } catch (e) {
       this.field = getRandomField(this.state)
       this.setState({
@@ -68,7 +77,7 @@ export default class GriffeathMachine extends PureComponent {
   }
 
   handleNext = () => {
-    this.field = getUpdatedField({ ...this.state, field: this.field })
+    this.field = this.getUpdatedField()
     this.canvas.current.paint(this.field)
   }
 
@@ -85,8 +94,19 @@ export default class GriffeathMachine extends PureComponent {
   }
 
   changeHandler = (name, value) => {
+    switch (name) {
+      case IDS.width:
+        this.updateFieldSize({ width: value })
+        break
+      case IDS.height:
+        this.updateFieldSize({ height: value })
+        break
+      default:
+    }
     this.setState({ [name]: value })
   }
+
+  fieldUpdater
 
   render () {
     return (
