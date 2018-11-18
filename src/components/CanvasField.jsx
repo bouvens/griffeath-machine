@@ -26,6 +26,7 @@ export default class CanvasField extends React.PureComponent {
     data[index] = r
     data[index + 1] = g
     data[index + 2] = b
+    data[index + 3] = 255
   }
 
   paint = (field = this.props.field) => {
@@ -46,8 +47,6 @@ export default class CanvasField extends React.PureComponent {
 
   refCanvas = (elem) => {
     this.canvasContext = elem.getContext('2d')
-    this.canvasContext.fillStyle = '#000'
-    this.canvasContext.fillRect(0, 0, this.props.width, this.props.height)
   }
 
   canvasContext
