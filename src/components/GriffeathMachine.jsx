@@ -123,7 +123,6 @@ export default class GriffeathMachine extends PureComponent {
           <CanvasField
             width={this.state.width}
             height={this.state.height}
-            field={this.field}
             states={this.state.states}
             ref={this.canvas}
           />
