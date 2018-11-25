@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react'
 import PropTypes from 'prop-types'
-import { BrowserRouter, NavLink, Redirect, Route, Switch } from 'react-router-dom'
+import { HashRouter, NavLink, Redirect, Route, Switch } from 'react-router-dom'
 import style from './Routing.css'
 
 const WrapLazy = (Children) => () => (
@@ -10,7 +10,7 @@ const WrapLazy = (Children) => () => (
 )
 
 const Routing = ({ routes }) => (
-  <BrowserRouter>
+  <HashRouter>
     <div className="app">
       <ul className={style.routes}>
         {routes.map((route) => (
@@ -30,7 +30,7 @@ const Routing = ({ routes }) => (
         <Redirect exact from="/" to={routes[0].path} />
       </Switch>
     </div>
-  </BrowserRouter>
+  </HashRouter>
 )
 
 Routing.propTypes = {
