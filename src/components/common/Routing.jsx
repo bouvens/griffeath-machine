@@ -1,14 +1,15 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom'
+import Wrapper from './Wrapper'
 
-const Routing = ({ routes, Wrapper }) => (
+const Routing = ({ routes }) => (
   <BrowserRouter>
     <Switch>
       {routes.map((route) => (
         <Route
           key={route.path}
-          path={`/${route.path}`}
+          path={route.path}
           component={Wrapper({ routes, Children: route.component })}
         />
       ))}
@@ -21,9 +22,8 @@ Routing.propTypes = {
   routes: PropTypes.arrayOf(PropTypes.shape({
     name: PropTypes.string,
     path: PropTypes.string,
-    component: PropTypes.object,
+    component: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),
   })).isRequired,
-  Wrapper: PropTypes.func.isRequired,
 }
 
 export default Routing

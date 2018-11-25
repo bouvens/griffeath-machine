@@ -3,17 +3,17 @@ import { lazy } from 'react'
 export const ROUTES = [
   {
     name: 'Optimized',
-    path: 'optimized',
+    path: '/optimized',
     component: lazy(() => import('./optimized/GriffeathMachine')),
   },
   {
     name: 'Original',
-    path: 'original',
+    path: '/original',
     component: lazy(() => import('./original/GriffeathMachine')),
   },
   {
     name: 'GPU Accelerated',
-    path: 'gpu',
+    path: '/gpu',
     component: lazy(() => import('./gpu/GriffeathMachine')),
   },
 ]
