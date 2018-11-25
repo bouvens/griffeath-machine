@@ -33,7 +33,9 @@ export default class CanvasField extends React.PureComponent {
 
     for (let x = 0; x < this.props.width; x += 1) {
       for (let y = 0; y < this.props.height; y += 1) {
-        this.drawPixel(x, y, field[x][y] / this.props.states)
+        if (field[x]) {
+          this.drawPixel(x, y, field[x][y] / this.props.states)
+        }
       }
     }
 
