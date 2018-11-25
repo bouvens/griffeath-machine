@@ -25,7 +25,7 @@ function myMod (number, limit) {
 const gpu = new GPU()
 gpu.addFunction(myMod)
 
-export const makeGetUpdatedField = (fieldWidth, fieldHeight) => gpu.createKernel(function (field, width, height, states) {
+export const makeGetUpdatedField = (fieldWidth, fieldHeight) => gpu.createKernel(`function (field, width, height, states) {
   // what a mess
   const ver = this.thread.x
   const hor = this.thread.y
@@ -53,7 +53,7 @@ export const makeGetUpdatedField = (fieldWidth, fieldHeight) => gpu.createKernel
   }
 
   return element
-}).setOutput([fieldHeight, fieldWidth]) // more of the mess
+}`).setOutput([fieldHeight, fieldWidth]) // more of the mess
 
 export function mapNumToRGB (h) {
   const h2rgb = (initT) => {
