@@ -6,16 +6,7 @@ export default class CanvasField extends React.PureComponent {
   static propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
-    field: PropTypes.arrayOf(PropTypes.array).isRequired,
     states: PropTypes.number.isRequired,
-  }
-
-  componentDidMount () {
-    this.paint()
-  }
-
-  componentDidUpdate () {
-    this.paint()
   }
 
   drawPixel = (x, y, h) => {
@@ -28,7 +19,7 @@ export default class CanvasField extends React.PureComponent {
     this.canvasData.data[index + 3] = 255
   }
 
-  paint = (field = this.props.field) => {
+  paint = (field) => {
     this.canvasData = this.canvasContext.getImageData(0, 0, this.props.width, this.props.height)
 
     for (let x = 0; x < this.props.width; x += 1) {

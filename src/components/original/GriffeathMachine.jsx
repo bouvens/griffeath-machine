@@ -24,6 +24,8 @@ export default class GriffeathMachine extends PureComponent {
 
   field = null
 
+  canvas = React.createRef()
+
   componentWillMount () {
     this.randomizeField()
     this.handlePlay()
@@ -61,17 +63,17 @@ export default class GriffeathMachine extends PureComponent {
         status: STATUSES.pause,
       })
     }
-    this.canvas.paint(this.field)
+    this.canvas.current.paint(this.field)
   }
 
   handleNew = () => {
     this.randomizeField()
-    this.canvas.paint(this.field)
+    this.canvas.current.paint(this.field)
   }
 
   handleNext = () => {
     this.field = getUpdatedField({ ...this.state, field: this.field })
-    this.canvas.paint(this.field)
+    this.canvas.current.paint(this.field)
   }
 
   handlePlay = () => {
@@ -125,7 +127,7 @@ export default class GriffeathMachine extends PureComponent {
             height={this.state.height}
             field={this.field}
             states={this.state.states}
-            ref={(e) => { this.canvas = e }}
+            ref={this.canvas}
           />
         </div>
         <p><em>Press Space or click field for play / pause</em></p>
