@@ -141,18 +141,6 @@ export default class GriffeathMachine extends PureComponent {
             Next step
           </button>
         )}
-        <p>
-          <small>
-            {'This experiment is made using '}
-            <a
-              href="https://www.npmjs.com/package/state-control"
-              title="npm package"
-            >
-              {'state-control'}
-            </a>
-            {'.'}
-          </small>
-        </p>
       </div>
     )
   }
