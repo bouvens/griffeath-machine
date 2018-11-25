@@ -52,17 +52,18 @@ export default class GriffeathMachine extends PureComponent {
   nextStep = () => {
     try {
       this.field = getUpdatedField({ ...this.state, field: this.field })
+
+      if (this.state.status === STATUSES.play) {
+        this.requestID = requestAnimationFrame(this.nextStep)
+      }
     } catch (e) {
+      cancelAnimationFrame(this.requestID)
       this.field = getRandomField(this.state)
       this.setState({
         status: STATUSES.pause,
       })
     }
     this.canvas.current.paint(this.field)
-
-    if (this.state.status === STATUSES.play) {
-      this.requestID = requestAnimationFrame(this.nextStep)
-    }
   }
 
   handleNew = () => {
@@ -124,12 +125,11 @@ export default class GriffeathMachine extends PureComponent {
           <CanvasField
             width={this.state.width}
             height={this.state.height}
-            field={this.field}
             states={this.state.states}
             ref={this.canvas}
           />
         </div>
-        <p><em>Press Space or click field for play/pause</em></p>
+        <p><em>Press Space or click field for play / pause</em></p>
         <button type="button" className={style.bigButton} onClick={this.handleNew}>
           New
         </button>

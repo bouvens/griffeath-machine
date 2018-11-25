@@ -1,3 +1,4 @@
+/* eslint-disable no-bitwise */
 import React from 'react'
 import PropTypes from 'prop-types'
 import { getColor } from './utils'
@@ -6,32 +7,20 @@ export default class CanvasField extends React.PureComponent {
   static propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
-    field: PropTypes.arrayOf(PropTypes.array).isRequired,
     states: PropTypes.number.isRequired,
   }
 
-  componentDidMount () {
-    this.paint()
-  }
-
-  componentDidUpdate () {
-    this.paint()
-  }
-
   drawPixel = (x, y, h, states) => {
-    const index = (x + (y * this.props.width)) * 4
+    const index = x + (y * this.props.width)
     const { r, g, b } = getColor(h, states)
-    const { data } = this.canvasData
 
-    data[index] = r
-    data[index + 1] = g
-    data[index + 2] = b
+    this.uInt32Array[index] = (255 << 24) | (b << 16) | (g << 8) | r
   }
 
-  paint = (field = this.props.field) => {
+  paint = (field) => {
     const { width, height, states } = this.props
 
-    this.canvasData = this.canvasContext.getImageData(0, 0, width, height)
+    this.uInt32Array = new Uint32Array(width * height)
 
     for (let x = 0; x < width; x += 1) {
       for (let y = 0; y < height; y += 1) {
@@ -41,7 +30,8 @@ export default class CanvasField extends React.PureComponent {
       }
     }
 
-    this.canvasContext.putImageData(this.canvasData, 0, 0)
+    const canvasData = new ImageData(new Uint8ClampedArray(this.uInt32Array.buffer), width, height)
+    this.canvasContext.putImageData(canvasData, 0, 0)
   }
 
   refCanvas = (elem) => {
@@ -50,13 +40,11 @@ export default class CanvasField extends React.PureComponent {
       return
     }
     this.canvasContext = elem.getContext('2d')
-    this.canvasContext.fillStyle = '#000'
-    this.canvasContext.fillRect(0, 0, this.props.width, this.props.height)
   }
 
   canvasContext
 
-  canvasData
+  uInt32Array
 
   render () {
     return (
