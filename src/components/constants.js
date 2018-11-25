@@ -6,7 +6,7 @@ export const IDS = {
 }
 
 export const DEFAULT = {
-  [IDS.width]: 1000,
+  [IDS.width]: 700,
   [IDS.height]: 700,
   [IDS.states]: 16,
 }
