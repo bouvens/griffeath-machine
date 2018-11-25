@@ -62,17 +62,18 @@ export default class GriffeathMachine extends PureComponent {
   nextStep = () => {
     try {
       this.field = this.getUpdatedField()
+
+      if (this.state.status === STATUSES.play) {
+        this.requestID = requestAnimationFrame(this.nextStep)
+      }
     } catch (e) {
+      cancelAnimationFrame(this.requestID)
       this.field = getRandomField(this.state)
       this.setState({
         status: STATUSES.pause,
       })
     }
     this.canvas.current.paint(this.field)
-
-    if (this.state.status === STATUSES.play) {
-      this.requestID = requestAnimationFrame(this.nextStep)
-    }
   }
 
   handleNew = () => {
