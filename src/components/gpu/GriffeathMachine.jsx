@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Connector, Input } from 'state-control'
-import { getRandomField, makeGetUpdatedField } from '../utils'
-import { DEFAULT, IDS, SPACE_CODE, STATUSES } from './constants'
+import { DEFAULT, IDS, SPACE_CODE, STATUSES } from '../constants'
+import style from '../common/GriffeathMachine.css'
+import { getRandomField, makeGetUpdatedField } from './utils'
 import CanvasField from './CanvasField'
-import style from './GriffeathMachine.css'
 
 export default class GriffeathMachine extends PureComponent {
   static propTypes = {
@@ -31,6 +31,10 @@ export default class GriffeathMachine extends PureComponent {
     this.handlePlay()
     document.addEventListener('keydown', this.processKey)
     this.updateFieldSize({})
+  }
+
+  componentWillUnmount () {
+    cancelAnimationFrame(this.requestID)
   }
 
   getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
@@ -67,7 +71,7 @@ export default class GriffeathMachine extends PureComponent {
     this.canvas.current.paint(this.field)
 
     if (this.state.status === STATUSES.play) {
-      requestAnimationFrame(this.nextStep)
+      this.requestID = requestAnimationFrame(this.nextStep)
     }
   }
 

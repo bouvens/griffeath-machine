@@ -1,5 +1,9 @@
 import React from 'react'
-import ErrorBoundary from './ErrorBoundary'
-import GriffeathMachine from './GriffeathMachine'
+import ErrorBoundary from './common/ErrorBoundary'
+import Routing from './common/Routing'
+import { ROUTES } from './routes'
+import Wrapper from './common/Wrapper'
 
-export default () => <ErrorBoundary><GriffeathMachine /></ErrorBoundary>
+export default () => (
+  <ErrorBoundary><Routing routes={ROUTES} Wrapper={Wrapper} /></ErrorBoundary>
+)

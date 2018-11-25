@@ -1,7 +1,7 @@
 /* eslint-disable no-bitwise */
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getColor } from '../utils'
+import { getColor } from './utils'
 
 export default class CanvasField extends React.PureComponent {
   static propTypes = {
@@ -35,7 +35,7 @@ export default class CanvasField extends React.PureComponent {
   }
 
   refCanvas = (elem) => {
-    this.canvasContext = elem.getContext('2d')
+    this.canvasContext = elem && elem.getContext('2d')
   }
 
   canvasContext
