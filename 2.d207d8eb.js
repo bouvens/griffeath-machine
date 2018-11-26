@@ -1,1 +1,391 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{85:function(t,e,n){"use strict";var a;n.d(e,"b",function(){return r}),n.d(e,"a",function(){return i}),n.d(e,"d",function(){return o}),n.d(e,"c",function(){return s});var r={width:"width",height:"height",states:"states",status:"status"},i=((a={})[r.width]=700,a[r.height]=700,a[r.states]=16,a),o={play:"Play",pause:"Pause"},s=32},86:function(t,e,n){t.exports={field:"GriffeathMachine__field__2ugWL",bigButton:"GriffeathMachine__bigButton__1GY-9"}},89:function(t,e,n){"use strict";n.r(e);var a=n(0),s=n.n(a),r=(n(1),n(83)),u=n(85),i=n(86),c=n.n(i);function l(t){for(var e=t.width,n=t.height,a=t.states,r=[],i=0;i<e;i+=1){r[i]=[];for(var o=0;o<n;o+=1)r[i][o]=Math.floor(Math.random()*a)}return r}var f=function(t,e){return t<0?t+e:t%e},h=function(t){var r=t.field,i=t.width,o=t.height,s=t.states;return r.map(function(t,a){return t.map(function(t,e){var n=f(t+1,s);return r[a][f(e-1,o)]===n||r[a][f(e+1,o)]===n||r[f(a-1,i)][e]===n||r[f(a+1,i)][e]===n?n:t})})};var p=[],d={r:0,g:0,b:0};function o(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}var y=function(r){function i(){var t,c;!function(t,e){if(!(t instanceof i))throw new TypeError("Cannot call a class as a function")}(this);for(var e=arguments.length,n=Array(e),a=0;a<e;a++)n[a]=arguments[a];return t=c=o(this,r.call.apply(r,[this].concat(n))),c.drawPixel=function(t,e,n,a){var r=t+e*c.props.width,i=function(t,e){if(p.length!==e){p.length=e;for(var n=0;n<e;n+=1)p[n]=(void 0,i=(r=function(t){var e=t<0?t+1:t%1;return e<1/6?6*e:e<.5?1:e<2/3?6*(2/3-e):0})((a=n/e)+1/3),o=r(a),s=r(a-1/3),{r:Math.round(255*i),g:Math.round(255*o),b:Math.round(255*s)})}var a,r,i,o,s;return p[t]||d}(n,a),o=i.r,s=i.g,u=i.b;c.uInt32Array[r]=255<<24|u<<16|s<<8|o},c.paint=function(t){var e=c.props,n=e.width,a=e.height,r=e.states;c.uInt32Array=new Uint32Array(n*a);for(var i=0;i<n;i+=1)for(var o=0;o<a;o+=1)t[i]&&c.drawPixel(i,o,t[i][o],r);var s=new ImageData(new Uint8ClampedArray(c.uInt32Array.buffer),n,a);c.canvasContext.putImageData(s,0,0)},c.refCanvas=function(t){t&&(c.canvasContext=t.getContext("2d"))},o(c,t)}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(i,r),i.prototype.render=function(){return s.a.createElement("canvas",{ref:this.refCanvas,width:this.props.width,height:this.props.height},"You are using an outdated browser without support of canvas elements.")},i}(s.a.PureComponent);n.d(e,"default",function(){return E});var b,m,w=Object.assign||function(t){for(var e=1;e<arguments.length;e++){var n=arguments[e];for(var a in n)Object.prototype.hasOwnProperty.call(n,a)&&(t[a]=n[a])}return t};function v(t,e){if(!t)throw new ReferenceError("this hasn't been initialised - super() hasn't been called");return!e||"object"!=typeof e&&"function"!=typeof e?t:e}var g=s.a.createElement("p",null,s.a.createElement("em",null,"Press Space or click field for play / pause")),E=(m=b=function(i){function o(){var t,a;!function(t,e){if(!(t instanceof o))throw new TypeError("Cannot call a class as a function")}(this);for(var e=arguments.length,n=Array(e),r=0;r<e;r++)n[r]=arguments[r];return t=a=v(this,i.call.apply(i,[this].concat(n))),a.state={width:a.props.width,height:a.props.height,states:a.props.states,status:u.d.pause},a.field=null,a.canvas=s.a.createRef(),a.getActionName=function(){return a.state.status===u.d.play?u.d.pause:u.d.play},a.randomizeField=function(){a.field=l(a.state)},a.processKey=function(t){t.keyCode===u.c&&(t.preventDefault(),a.handlePlay())},a.nextStep=function(){try{a.field=h(w({},a.state,{field:a.field})),a.state.status===u.d.play&&(a.requestID=requestAnimationFrame(a.nextStep))}catch(t){cancelAnimationFrame(a.requestID),a.field=l(a.state),a.setState({status:u.d.pause})}a.canvas.current.paint(a.field)},a.handleNew=function(){a.randomizeField(),a.canvas.current.paint(a.field)},a.handleNext=function(){a.field=h(w({},a.state,{field:a.field})),a.canvas.current.paint(a.field)},a.handlePlay=function(){switch(a.state.status){case u.d.play:a.setState({status:u.d.pause});break;case u.d.pause:a.setState({status:u.d.play},a.nextStep)}},a.changeHandler=function(t,e){var n;a.setState(((n={})[t]=e,n))},v(a,t)}return function(t,e){if("function"!=typeof e&&null!==e)throw new TypeError("Super expression must either be null or a function, not "+typeof e);t.prototype=Object.create(e&&e.prototype,{constructor:{value:t,enumerable:!1,writable:!0,configurable:!0}}),e&&(Object.setPrototypeOf?Object.setPrototypeOf(t,e):t.__proto__=e)}(o,i),o.prototype.componentWillMount=function(){this.randomizeField(),this.handlePlay(),document.addEventListener("keydown",this.processKey)},o.prototype.componentWillUnmount=function(){cancelAnimationFrame(this.requestID)},o.prototype.render=function(){return s.a.createElement("div",null,s.a.createElement(r.a,{state:this.state,onChange:this.changeHandler},s.a.createElement(r.b,{id:u.b.width,label:"Field width",defaultNum:1}),s.a.createElement(r.b,{id:u.b.height,label:"Field height",defaultNum:1}),s.a.createElement(r.b,{id:u.b.states,label:"Number of states",defaultNum:1})),s.a.createElement("div",{onClick:this.handlePlay,onKeyDown:this.processKey,className:c.a.field,role:"presentation",title:this.getActionName()},s.a.createElement(y,{width:this.state.width,height:this.state.height,states:this.state.states,ref:this.canvas})),g,s.a.createElement("button",{type:"button",className:c.a.bigButton,onClick:this.handleNew},"New"),s.a.createElement("button",{type:"button",className:c.a.bigButton,onClick:this.handlePlay},this.getActionName()),this.state.status===u.d.pause&&s.a.createElement("button",{type:"button",className:c.a.bigButton,onClick:this.handleNext},"Next step"))},o}(a.PureComponent),b.defaultProps=w({},u.a),m)}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[2],{
+
+/***/ 85:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return IDS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DEFAULT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return STATUSES; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return SPACE_CODE; });
+var _DEFAULT;
+
+var IDS = {
+  width: 'width',
+  height: 'height',
+  states: 'states',
+  status: 'status'
+};
+
+var DEFAULT = (_DEFAULT = {}, _DEFAULT[IDS.width] = 700, _DEFAULT[IDS.height] = 700, _DEFAULT[IDS.states] = 16, _DEFAULT);
+
+var STATUSES = {
+  play: 'Play',
+  pause: 'Pause'
+};
+
+var SPACE_CODE = 32;
+
+/***/ }),
+
+/***/ 86:
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+module.exports = {"field":"GriffeathMachine__field__2ugWL","bigButton":"GriffeathMachine__bigButton__1GY-9"};
+
+/***/ }),
+
+/***/ 89:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(0);
+var react_default = /*#__PURE__*/__webpack_require__.n(react);
+
+// EXTERNAL MODULE: ./node_modules/prop-types/index.js
+var prop_types = __webpack_require__(1);
+
+// EXTERNAL MODULE: ./node_modules/state-control/es/index.js + 16 modules
+var es = __webpack_require__(83);
+
+// EXTERNAL MODULE: ./src/components/constants.js
+var constants = __webpack_require__(85);
+
+// EXTERNAL MODULE: ./src/components/common/GriffeathMachine.css
+var common_GriffeathMachine = __webpack_require__(86);
+var GriffeathMachine_default = /*#__PURE__*/__webpack_require__.n(common_GriffeathMachine);
+
+// CONCATENATED MODULE: ./src/components/optimized/utils.js
+function getRandomField(_ref) {
+  var width = _ref.width,
+      height = _ref.height,
+      states = _ref.states;
+
+  var field = [];
+
+  for (var x = 0; x < width; x += 1) {
+    field[x] = [];
+    for (var y = 0; y < height; y += 1) {
+      field[x][y] = Math.floor(Math.random() * states);
+    }
+  }
+
+  return field;
+}
+
+var mod = function mod(number, limit) {
+  return number < 0 ? number + limit : number % limit;
+};
+
+var getUpdatedField = function getUpdatedField(_ref2) {
+  var field = _ref2.field,
+      width = _ref2.width,
+      height = _ref2.height,
+      states = _ref2.states;
+  return field.map(function (line, x) {
+    return line.map(function (element, y) {
+      var plusOne = mod(element + 1, states);
+
+      if (field[x][mod(y - 1, height)] === plusOne || field[x][mod(y + 1, height)] === plusOne || field[mod(x - 1, width)][y] === plusOne || field[mod(x + 1, width)][y] === plusOne) {
+        return plusOne;
+      }
+
+      return element;
+    });
+  });
+};
+
+function mapNumToRGB(h) {
+  var h2rgb = function h2rgb(initT) {
+    var t = initT < 0 ? initT + 1 : initT % 1;
+
+    if (t < 1 / 6) {
+      return 6 * t;
+    }
+    if (t < 1 / 2) {
+      return 1;
+    }
+    if (t < 2 / 3) {
+      return (2 / 3 - t) * 6;
+    }
+
+    return 0;
+  };
+
+  var r = h2rgb(h + 1 / 3);
+  var g = h2rgb(h);
+  var b = h2rgb(h - 1 / 3);
+
+  return {
+    r: Math.round(r * 255),
+    g: Math.round(g * 255),
+    b: Math.round(b * 255)
+  };
+}
+
+var colorMapping = [];
+var DEFAULT_COLOR = { r: 0, g: 0, b: 0 };
+
+function getColor(h, states) {
+  if (colorMapping.length !== states) {
+    colorMapping.length = states;
+    for (var i = 0; i < states; i += 1) {
+      colorMapping[i] = mapNumToRGB(i / states);
+    }
+  }
+  return colorMapping[h] || DEFAULT_COLOR;
+}
+// CONCATENATED MODULE: ./src/components/optimized/CanvasField.jsx
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/* eslint-disable no-bitwise */
+
+
+
+
+var CanvasField_CanvasField = function (_React$PureComponent) {
+  _inherits(CanvasField, _React$PureComponent);
+
+  function CanvasField() {
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, CanvasField);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$PureComponent.call.apply(_React$PureComponent, [this].concat(args))), _this), _this.drawPixel = function (x, y, h, states) {
+      var index = x + y * _this.props.width;
+
+      var _getColor = getColor(h, states),
+          r = _getColor.r,
+          g = _getColor.g,
+          b = _getColor.b;
+
+      _this.uInt32Array[index] = 255 << 24 | b << 16 | g << 8 | r;
+    }, _this.paint = function (field) {
+      var _this$props = _this.props,
+          width = _this$props.width,
+          height = _this$props.height,
+          states = _this$props.states;
+
+
+      _this.uInt32Array = new Uint32Array(width * height);
+
+      for (var x = 0; x < width; x += 1) {
+        for (var y = 0; y < height; y += 1) {
+          if (field[x]) {
+            _this.drawPixel(x, y, field[x][y], states);
+          }
+        }
+      }
+
+      var canvasData = new ImageData(new Uint8ClampedArray(_this.uInt32Array.buffer), width, height);
+      _this.canvasContext.putImageData(canvasData, 0, 0);
+    }, _this.refCanvas = function (elem) {
+      // on unmount
+      if (!elem) {
+        return;
+      }
+      _this.canvasContext = elem.getContext('2d');
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  CanvasField.prototype.render = function render() {
+    return react_default.a.createElement(
+      'canvas',
+      {
+        ref: this.refCanvas,
+        width: this.props.width,
+        height: this.props.height
+      },
+      'You are using an outdated browser without support of canvas elements.'
+    );
+  };
+
+  return CanvasField;
+}(react_default.a.PureComponent);
+
+
+// CONCATENATED MODULE: ./src/components/optimized/GriffeathMachine.jsx
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return GriffeathMachine_GriffeathMachine; });
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _class, _temp2;
+
+function GriffeathMachine_classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function GriffeathMachine_possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function GriffeathMachine_inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+
+
+
+
+
+
+
+
+var _ref = react_default.a.createElement(
+  'p',
+  null,
+  react_default.a.createElement(
+    'em',
+    null,
+    'Press Space or click field for play / pause'
+  )
+);
+
+var GriffeathMachine_GriffeathMachine = (_temp2 = _class = function (_PureComponent) {
+  GriffeathMachine_inherits(GriffeathMachine, _PureComponent);
+
+  function GriffeathMachine() {
+    var _temp, _this, _ret;
+
+    GriffeathMachine_classCallCheck(this, GriffeathMachine);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = GriffeathMachine_possibleConstructorReturn(this, _PureComponent.call.apply(_PureComponent, [this].concat(args))), _this), _this.state = {
+      width: _this.props.width,
+      height: _this.props.height,
+      states: _this.props.states,
+      status: constants["d" /* STATUSES */].pause
+    }, _this.field = null, _this.canvas = react_default.a.createRef(), _this.getActionName = function () {
+      return _this.state.status === constants["d" /* STATUSES */].play ? constants["d" /* STATUSES */].pause : constants["d" /* STATUSES */].play;
+    }, _this.randomizeField = function () {
+      _this.field = getRandomField(_this.state);
+    }, _this.processKey = function (e) {
+      if (e.keyCode === constants["c" /* SPACE_CODE */]) {
+        e.preventDefault();
+        _this.handlePlay();
+      }
+    }, _this.nextStep = function () {
+      try {
+        _this.field = getUpdatedField(_extends({}, _this.state, { field: _this.field }));
+
+        if (_this.state.status === constants["d" /* STATUSES */].play) {
+          _this.requestID = requestAnimationFrame(_this.nextStep);
+        }
+      } catch (e) {
+        cancelAnimationFrame(_this.requestID);
+        _this.field = getRandomField(_this.state);
+        _this.setState({
+          status: constants["d" /* STATUSES */].pause
+        });
+      }
+      _this.canvas.current.paint(_this.field);
+    }, _this.handleNew = function () {
+      _this.randomizeField();
+      _this.canvas.current.paint(_this.field);
+    }, _this.handleNext = function () {
+      _this.field = getUpdatedField(_extends({}, _this.state, { field: _this.field }));
+      _this.canvas.current.paint(_this.field);
+    }, _this.handlePlay = function () {
+      switch (_this.state.status) {
+        case constants["d" /* STATUSES */].play:
+          _this.setState({ status: constants["d" /* STATUSES */].pause });
+          break;
+        case constants["d" /* STATUSES */].pause:
+          _this.setState({ status: constants["d" /* STATUSES */].play }, _this.nextStep);
+          break;
+        default:
+      }
+    }, _this.changeHandler = function (name, value) {
+      var _this$setState;
+
+      _this.setState((_this$setState = {}, _this$setState[name] = value, _this$setState));
+    }, _temp), GriffeathMachine_possibleConstructorReturn(_this, _ret);
+  }
+
+  GriffeathMachine.prototype.componentWillMount = function componentWillMount() {
+    this.randomizeField();
+    this.handlePlay();
+    document.addEventListener('keydown', this.processKey);
+  };
+
+  GriffeathMachine.prototype.componentWillUnmount = function componentWillUnmount() {
+    cancelAnimationFrame(this.requestID);
+  };
+
+  GriffeathMachine.prototype.render = function render() {
+    return react_default.a.createElement(
+      'div',
+      null,
+      react_default.a.createElement(
+        es["a" /* Connector */],
+        {
+          state: this.state,
+          onChange: this.changeHandler
+        },
+        react_default.a.createElement(es["b" /* Input */], {
+          id: constants["b" /* IDS */].width,
+          label: 'Field width',
+          defaultNum: 1
+        }),
+        react_default.a.createElement(es["b" /* Input */], {
+          id: constants["b" /* IDS */].height,
+          label: 'Field height',
+          defaultNum: 1
+        }),
+        react_default.a.createElement(es["b" /* Input */], {
+          id: constants["b" /* IDS */].states,
+          label: 'Number of states',
+          defaultNum: 1
+        })
+      ),
+      react_default.a.createElement(
+        'div',
+        {
+          onClick: this.handlePlay,
+          onKeyDown: this.processKey,
+          className: GriffeathMachine_default.a.field,
+          role: 'presentation',
+          title: this.getActionName()
+        },
+        react_default.a.createElement(CanvasField_CanvasField, {
+          width: this.state.width,
+          height: this.state.height,
+          states: this.state.states,
+          ref: this.canvas
+        })
+      ),
+      _ref,
+      react_default.a.createElement(
+        'button',
+        { type: 'button', className: GriffeathMachine_default.a.bigButton, onClick: this.handleNew },
+        'New'
+      ),
+      react_default.a.createElement(
+        'button',
+        { type: 'button', className: GriffeathMachine_default.a.bigButton, onClick: this.handlePlay },
+        this.getActionName()
+      ),
+      this.state.status === constants["d" /* STATUSES */].pause && react_default.a.createElement(
+        'button',
+        { type: 'button', className: GriffeathMachine_default.a.bigButton, onClick: this.handleNext },
+        'Next step'
+      )
+    );
+  };
+
+  return GriffeathMachine;
+}(react["PureComponent"]), _class.defaultProps = _extends({}, constants["a" /* DEFAULT */]), _temp2);
+
+
+/***/ })
+
+}]);
+//# sourceMappingURL=2.d207d8eb.js.map
