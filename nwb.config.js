@@ -20,6 +20,9 @@ module.exports = {
       node: {
         process: false,
       },
+      optimization: {
+        minimize: false,
+      },
     },
     publicPath: '',
   },
