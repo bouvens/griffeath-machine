@@ -1,10 +1,11 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Connector, Input } from 'state-control'
-import { getRandomField, getUpdatedField } from '../utils'
-import { DEFAULT, IDS, SPACE_CODE, STATUSES } from './constants'
+import { DEFAULT, IDS, SPACE_CODE, STATUSES } from '../constants'
+import style from '../common/GriffeathMachine.css'
+import { getRandomField } from './utils'
+import { makeGetUpdatedField } from './gpu-utils'
 import CanvasField from './CanvasField'
-import style from './GriffeathMachine.css'
 
 export default class GriffeathMachine extends PureComponent {
   static propTypes = {
@@ -30,6 +31,11 @@ export default class GriffeathMachine extends PureComponent {
     this.randomizeField()
     this.handlePlay()
     document.addEventListener('keydown', this.processKey)
+    this.updateFieldSize({})
+  }
+
+  componentWillUnmount () {
+    cancelAnimationFrame(this.requestID)
   }
 
   getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
@@ -45,20 +51,30 @@ export default class GriffeathMachine extends PureComponent {
     }
   }
 
+  updateFieldSize = ({ width = this.props.width, height = this.props.height }) => {
+    this.fieldUpdater = makeGetUpdatedField(width, height)
+  }
+
+  getUpdatedField = () => {
+    const { width, height, states } = this.state
+    return this.fieldUpdater(this.field, width, height, states)
+  }
+
   nextStep = () => {
     try {
-      this.field = getUpdatedField({ ...this.state, field: this.field })
+      this.field = this.getUpdatedField()
+
+      if (this.state.status === STATUSES.play) {
+        this.requestID = requestAnimationFrame(this.nextStep)
+      }
     } catch (e) {
+      cancelAnimationFrame(this.requestID)
       this.field = getRandomField(this.state)
       this.setState({
         status: STATUSES.pause,
       })
     }
     this.canvas.current.paint(this.field)
-
-    if (this.state.status === STATUSES.play) {
-      requestAnimationFrame(this.nextStep)
-    }
   }
 
   handleNew = () => {
@@ -67,7 +83,7 @@ export default class GriffeathMachine extends PureComponent {
   }
 
   handleNext = () => {
-    this.field = getUpdatedField({ ...this.state, field: this.field })
+    this.field = this.getUpdatedField()
     this.canvas.current.paint(this.field)
   }
 
@@ -84,10 +100,19 @@ export default class GriffeathMachine extends PureComponent {
   }
 
   changeHandler = (name, value) => {
+    switch (name) {
+      case IDS.width:
+        this.updateFieldSize({ width: value })
+        break
+      case IDS.height:
+        this.updateFieldSize({ height: value })
+        break
+      default:
+    }
     this.setState({ [name]: value })
   }
 
-  selectAll = (control) => control.setSelectionRange(0, control.value.length)
+  fieldUpdater
 
   render () {
     return (
@@ -95,7 +120,6 @@ export default class GriffeathMachine extends PureComponent {
         <Connector
           state={this.state}
           onChange={this.changeHandler}
-          onFocus={this.selectAll}
         >
           <Input
             id={IDS.width}
@@ -139,18 +163,6 @@ export default class GriffeathMachine extends PureComponent {
             Next step
           </button>
         )}
-        <p>
-          <small>
-            {'This experiment is made using '}
-            <a
-              href="https://www.npmjs.com/package/state-control"
-              title="npm package"
-            >
-              {'state-control'}
-            </a>
-            {'.'}
-          </small>
-        </p>
       </div>
     )
   }

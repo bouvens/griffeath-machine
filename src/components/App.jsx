@@ -1,5 +1,8 @@
 import React from 'react'
-import ErrorBoundary from './ErrorBoundary'
-import GriffeathMachine from './GriffeathMachine'
+import ErrorBoundary from './common/ErrorBoundary'
+import Routing from './common/Routing'
+import { ROUTES } from './routes'
 
-export default () => <ErrorBoundary><GriffeathMachine /></ErrorBoundary>
+const App = () => <ErrorBoundary><Routing routes={ROUTES} /></ErrorBoundary>
+
+export default App
