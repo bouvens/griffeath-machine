@@ -1,7 +1,3 @@
-/* eslint-disable prefer-arrow-callback */
-// todo move GPU to separate file
-import GPU from 'gpu.js'
-
 export function getRandomField ({ width, height, states }) {
   const field = []
 
@@ -14,46 +10,6 @@ export function getRandomField ({ width, height, states }) {
 
   return field
 }
-
-function myMod (number, limit) {
-  if (number < 0) {
-    return number + limit
-  }
-  return number % limit
-}
-
-const gpu = new GPU()
-gpu.addFunction(myMod)
-
-export const makeGetUpdatedField = (fieldWidth, fieldHeight) => gpu.createKernel(`function (field, width, height, states) {
-  // what a mess
-  const ver = this.thread.x
-  const hor = this.thread.y
-  const element = field[hor][ver]
-  const plusOne = myMod(element + 1, states)
-
-  let next = myMod(hor - 1, width)
-  if (field[next][ver] === plusOne) {
-    return plusOne
-  }
-
-  next = myMod(hor + 1, width)
-  if (field[next][ver] === plusOne) {
-    return plusOne
-  }
-
-  next = myMod(ver - 1, height)
-  if (field[hor][next] === plusOne) {
-    return plusOne
-  }
-
-  next = myMod(ver + 1, height)
-  if (field[hor][next] === plusOne) {
-    return plusOne
-  }
-
-  return element
-}`).setOutput([fieldHeight, fieldWidth]) // more of the mess
 
 export function mapNumToRGB (h) {
   const h2rgb = (initT) => {
