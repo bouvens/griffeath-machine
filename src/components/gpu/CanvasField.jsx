@@ -1,7 +1,6 @@
-/* eslint-disable no-bitwise */
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getColor } from './utils'
+import getColor from 'number-to-color'
 
 export default class CanvasField extends React.PureComponent {
   static propTypes = {
@@ -14,6 +13,7 @@ export default class CanvasField extends React.PureComponent {
     const index = x + (y * this.props.width)
     const { r, g, b } = getColor(h, states)
 
+    /* eslint-disable-next-line no-bitwise */
     this.uInt32Array[index] = (255 << 24) | (b << 16) | (g << 8) | r
   }
 

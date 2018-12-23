@@ -6270,6 +6270,11 @@ number-is-nan@^1.0.0:
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
+number-to-color@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/number-to-color/-/number-to-color-0.1.0.tgz#f0f9d0d97684329738b3c6ae4fd453a065033b57"
+  integrity sha512-WjR+HICltna5HadbqYgF3BOCquHeiYoPEAvqEDxyBhCKIBbqxPUmW4c40Ldy4kpmV0SAxkU3FhnTkAE98w+sDg==
+
 nwb@0.23.x:
   version "0.23.0"
   resolved "https://registry.yarnpkg.com/nwb/-/nwb-0.23.0.tgz#038f8e54ea36b3887cecfc8ae5d3aef7b204d75a"
