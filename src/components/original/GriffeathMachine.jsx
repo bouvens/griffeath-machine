@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { Connector, Input } from 'state-control'
 import { DEFAULT, IDS, SPACE_CODE, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
-import { getRandomField, getUpdatedField } from './utils'
+import { getRandomField, getUpdatedField } from '../common/utils'
 import CanvasField from './CanvasField'
 
 export default class GriffeathMachine extends PureComponent {

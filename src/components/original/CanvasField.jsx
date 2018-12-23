@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { hueToRgb } from './utils'
+import hueToRgb from 'number-to-color/map'
 
 export default class CanvasField extends React.PureComponent {
   static propTypes = {
