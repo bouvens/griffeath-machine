@@ -10,9 +10,8 @@
     "deploy": "nwb build-react-app && gh-pages -d dist"
   },
   "dependencies": {
-    "gh-pages": "^2.0.1",
     "gpu.js": "^1.10.2",
-    "number-to-color": "^0.1.0",
+    "number-to-color": "^0.2.0",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
@@ -27,6 +26,7 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
+    "gh-pages": "^2.0.1",
     "nwb": "0.23.x"
   },
   "author": "Alexander Demin <bouvens@gmail.com> (https://bouvens.github.io/)",
