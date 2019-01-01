@@ -1,6 +1,6 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[3],{
 
-/***/ 85:
+/***/ 86:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -28,7 +28,7 @@ var SPACE_CODE = 32;
 
 /***/ }),
 
-/***/ 86:
+/***/ 87:
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
@@ -36,30 +36,12 @@ module.exports = {"field":"GriffeathMachine__field__2ugWL","bigButton":"Griffeat
 
 /***/ }),
 
-/***/ 92:
+/***/ 89:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-
-// EXTERNAL MODULE: ./node_modules/react/index.js
-var react = __webpack_require__(0);
-var react_default = /*#__PURE__*/__webpack_require__.n(react);
-
-// EXTERNAL MODULE: ./node_modules/prop-types/index.js
-var prop_types = __webpack_require__(1);
-
-// EXTERNAL MODULE: ./node_modules/state-control/es/index.js + 16 modules
-var es = __webpack_require__(83);
-
-// EXTERNAL MODULE: ./src/components/constants.js
-var constants = __webpack_require__(85);
-
-// EXTERNAL MODULE: ./src/components/common/GriffeathMachine.css
-var common_GriffeathMachine = __webpack_require__(86);
-var GriffeathMachine_default = /*#__PURE__*/__webpack_require__.n(common_GriffeathMachine);
-
-// CONCATENATED MODULE: ./src/components/original/utils.js
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getRandomField; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return getUpdatedField; });
 function getRandomField(_ref) {
   var width = _ref.width,
       height = _ref.height,
@@ -99,33 +81,38 @@ var getUpdatedField = function getUpdatedField(_ref2) {
   });
 };
 
-function hueToRgb(h) {
-  var h2rgb = function h2rgb(initT) {
-    var t = mod(initT, 1);
+/***/ }),
 
-    if (t < 1 / 6) {
-      return 6 * t;
-    }
-    if (t < 1 / 2) {
-      return 1;
-    }
-    if (t < 2 / 3) {
-      return (2 / 3 - t) * 6;
-    }
+/***/ 98:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-    return 0;
-  };
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 
-  var r = h2rgb(h + 1 / 3);
-  var g = h2rgb(h);
-  var b = h2rgb(h - 1 / 3);
+// EXTERNAL MODULE: ./node_modules/react/index.js
+var react = __webpack_require__(0);
+var react_default = /*#__PURE__*/__webpack_require__.n(react);
 
-  return {
-    r: Math.round(r * 255),
-    g: Math.round(g * 255),
-    b: Math.round(b * 255)
-  };
-}
+// EXTERNAL MODULE: ./node_modules/prop-types/index.js
+var prop_types = __webpack_require__(1);
+
+// EXTERNAL MODULE: ./node_modules/state-control/es/index.js + 14 modules
+var es = __webpack_require__(83);
+
+// EXTERNAL MODULE: ./src/components/constants.js
+var constants = __webpack_require__(86);
+
+// EXTERNAL MODULE: ./src/components/common/GriffeathMachine.css
+var common_GriffeathMachine = __webpack_require__(87);
+var GriffeathMachine_default = /*#__PURE__*/__webpack_require__.n(common_GriffeathMachine);
+
+// EXTERNAL MODULE: ./src/components/common/utils.js
+var utils = __webpack_require__(89);
+
+// EXTERNAL MODULE: ./node_modules/number-to-color/map.js
+var map = __webpack_require__(46);
+var map_default = /*#__PURE__*/__webpack_require__.n(map);
+
 // CONCATENATED MODULE: ./src/components/original/CanvasField.jsx
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -152,7 +139,7 @@ var CanvasField_CanvasField = function (_React$PureComponent) {
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, _React$PureComponent.call.apply(_React$PureComponent, [this].concat(args))), _this), _this.drawPixel = function (x, y, h) {
       var index = (x + y * _this.props.width) * 4;
 
-      var _hueToRgb = hueToRgb(h),
+      var _hueToRgb = map_default()(h),
           r = _hueToRgb.r,
           g = _hueToRgb.g,
           b = _hueToRgb.b;
@@ -244,7 +231,7 @@ var GriffeathMachine_GriffeathMachine = (_temp2 = _class = function (_PureCompon
     }, _this.field = null, _this.canvas = react_default.a.createRef(), _this.getActionName = function () {
       return _this.state.status === constants["d" /* STATUSES */].play ? constants["d" /* STATUSES */].pause : constants["d" /* STATUSES */].play;
     }, _this.randomizeField = function () {
-      _this.field = getRandomField(_this.state);
+      _this.field = Object(utils["a" /* getRandomField */])(_this.state);
     }, _this.processKey = function (e) {
       if (e.keyCode === constants["c" /* SPACE_CODE */]) {
         e.preventDefault();
@@ -252,14 +239,14 @@ var GriffeathMachine_GriffeathMachine = (_temp2 = _class = function (_PureCompon
       }
     }, _this.nextStep = function () {
       try {
-        _this.field = getUpdatedField(_extends({}, _this.state, { field: _this.field }));
+        _this.field = Object(utils["b" /* getUpdatedField */])(_extends({}, _this.state, { field: _this.field }));
 
         if (_this.state.status === constants["d" /* STATUSES */].play) {
           _this.requestID = requestAnimationFrame(_this.nextStep);
         }
       } catch (e) {
         cancelAnimationFrame(_this.requestID);
-        _this.field = getRandomField(_this.state);
+        _this.field = Object(utils["a" /* getRandomField */])(_this.state);
         _this.setState({
           status: constants["d" /* STATUSES */].pause
         });
@@ -269,7 +256,7 @@ var GriffeathMachine_GriffeathMachine = (_temp2 = _class = function (_PureCompon
       _this.randomizeField();
       _this.canvas.current.paint(_this.field);
     }, _this.handleNext = function () {
-      _this.field = getUpdatedField(_extends({}, _this.state, { field: _this.field }));
+      _this.field = Object(utils["b" /* getUpdatedField */])(_extends({}, _this.state, { field: _this.field }));
       _this.canvas.current.paint(_this.field);
     }, _this.handlePlay = function () {
       switch (_this.state.status) {
@@ -367,4 +354,4 @@ var GriffeathMachine_GriffeathMachine = (_temp2 = _class = function (_PureCompon
 /***/ })
 
 }]);
-//# sourceMappingURL=3.e0a7f3d6.js.map
+//# sourceMappingURL=3.e10de32d.js.map

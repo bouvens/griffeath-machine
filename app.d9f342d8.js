@@ -1,6 +1,6 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[1],{
 
-/***/ 24:
+/***/ 25:
 /***/ (function(module, exports, __webpack_require__) {
 
 // extracted by mini-css-extract-plugin
@@ -97,22 +97,22 @@ var ErrorBoundary = function (_React$Component) {
 
 
 // EXTERNAL MODULE: ./node_modules/react-router-dom/es/HashRouter.js + 2 modules
-var HashRouter = __webpack_require__(91);
+var HashRouter = __webpack_require__(93);
 
 // EXTERNAL MODULE: ./node_modules/react-router-dom/es/NavLink.js + 1 modules
-var NavLink = __webpack_require__(94);
+var NavLink = __webpack_require__(97);
 
 // EXTERNAL MODULE: ./node_modules/react-router-dom/es/Switch.js + 1 modules
-var Switch = __webpack_require__(93);
+var Switch = __webpack_require__(95);
 
 // EXTERNAL MODULE: ./node_modules/react-router-dom/es/Route.js + 1 modules
-var Route = __webpack_require__(45);
+var Route = __webpack_require__(91);
 
 // EXTERNAL MODULE: ./node_modules/react-router-dom/es/Redirect.js + 2 modules
-var Redirect = __webpack_require__(90);
+var Redirect = __webpack_require__(94);
 
 // EXTERNAL MODULE: ./src/components/common/Routing.css
-var common_Routing = __webpack_require__(24);
+var common_Routing = __webpack_require__(25);
 var Routing_default = /*#__PURE__*/__webpack_require__.n(common_Routing);
 
 // CONCATENATED MODULE: ./src/components/common/Routing.jsx
@@ -186,19 +186,19 @@ var ROUTES = [{
   name: 'Optimized',
   path: '/optimized',
   component: Object(react["lazy"])(function () {
-    return Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, 89));
+    return Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, 92));
   })
 }, {
   name: 'Original',
   path: '/original',
   component: Object(react["lazy"])(function () {
-    return Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, 92));
+    return Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(3)]).then(__webpack_require__.bind(null, 98));
   })
 }, {
   name: 'GPU Accelerated',
   path: '/gpu',
   component: Object(react["lazy"])(function () {
-    return Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, 88));
+    return Promise.all(/* import() */[__webpack_require__.e(0), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, 96));
   })
 }];
 // CONCATENATED MODULE: ./src/components/App.jsx
@@ -238,4 +238,4 @@ requestAnimationFrame(function loop() {
 /***/ })
 
 },[[47,5,0]]]);
-//# sourceMappingURL=app.31b2be6c.js.map
+//# sourceMappingURL=app.d9f342d8.js.map
