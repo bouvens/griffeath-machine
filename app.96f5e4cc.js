@@ -96,8 +96,8 @@ var ErrorBoundary = function (_React$Component) {
 }(react_default.a.Component);
 
 
-// EXTERNAL MODULE: ./node_modules/react-router-dom/es/HashRouter.js + 2 modules
-var HashRouter = __webpack_require__(93);
+// EXTERNAL MODULE: ./node_modules/react-router-dom/es/BrowserRouter.js + 2 modules
+var BrowserRouter = __webpack_require__(93);
 
 // EXTERNAL MODULE: ./node_modules/react-router-dom/es/NavLink.js + 1 modules
 var NavLink = __webpack_require__(97);
@@ -142,7 +142,7 @@ var Routing_WrapLazy = function WrapLazy(Children) {
 var Routing_Routing = function Routing(_ref3) {
   var routes = _ref3.routes;
   return react_default.a.createElement(
-    HashRouter["a" /* default */],
+    BrowserRouter["a" /* default */],
     null,
     react_default.a.createElement(
       'div',
@@ -238,4 +238,4 @@ requestAnimationFrame(function loop() {
 /***/ })
 
 },[[47,5,0]]]);
-//# sourceMappingURL=app.d9f342d8.js.map
+//# sourceMappingURL=app.96f5e4cc.js.map
