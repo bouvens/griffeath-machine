@@ -8,11 +8,6 @@ import { getRandomField } from '../common/utils'
 
 const worker = new Worker('./worker.js')
 
-worker.addEventListener('error', (e) => {
-  // eslint-disable-next-line no-console
-  console.error(e.data)
-}, false)
-
 export default class WebWorkerMachine extends PureComponent {
   static propTypes = {
     width: PropTypes.number.isRequired,
@@ -39,6 +34,7 @@ export default class WebWorkerMachine extends PureComponent {
 
     document.addEventListener('keydown', this.processKey)
     worker.addEventListener('message', this.updateField)
+    worker.addEventListener('error', this.handleError)
   }
 
   componentWillUnmount () {
@@ -46,13 +42,10 @@ export default class WebWorkerMachine extends PureComponent {
 
     document.removeEventListener('keydown', this.processKey)
     worker.removeEventListener('message', this.updateField)
+    worker.removeEventListener('error', this.handleError)
   }
 
   getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
-
-  randomizeField = () => {
-    this.field = getRandomField(this.state)
-  }
 
   processKey = (e) => {
     if (e.keyCode === SPACE_CODE) {
@@ -64,27 +57,20 @@ export default class WebWorkerMachine extends PureComponent {
   updateField = ({ data }) => {
     this.field = data
     this.canvas.current.paint(this.field)
+
+    if (this.state.status === STATUSES.play) {
+      this.requestID = requestAnimationFrame(this.handleNext)
+    }
   }
 
-  //nextStep = () => {
-  //  try {
-  //    this.field = this.getUpdatedField()
-  //
-  //    if (this.state.status === STATUSES.play) {
-  //      this.requestID = requestAnimationFrame(this.nextStep)
-  //    }
-  //  } catch (e) {
-  //    cancelAnimationFrame(this.requestID)
-  //    this.field = getRandomField(this.state)
-  //    this.setState({
-  //      status: STATUSES.pause,
-  //    })
-  //  }
-  //  this.canvas.current.paint(this.field)
-  //}
+  handleError = (error) => {
+    error.preventDefault()
+    cancelAnimationFrame(this.requestID)
+    this.setState({ status: STATUSES.pause }, this.handleNew)
+  }
 
   handleNew = () => {
-    this.randomizeField()
+    this.field = getRandomField(this.state)
     this.canvas.current.paint(this.field)
   }
 
@@ -100,7 +86,7 @@ export default class WebWorkerMachine extends PureComponent {
         this.setState({ status: STATUSES.pause })
         break
       case STATUSES.pause:
-        //this.setState({ status: STATUSES.play }, this.nextStep)
+        this.setState({ status: STATUSES.play }, this.handleNext)
         break
       default:
     }
