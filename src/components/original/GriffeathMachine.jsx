@@ -26,14 +26,17 @@ export default class GriffeathMachine extends PureComponent {
 
   canvas = React.createRef()
 
-  componentWillMount () {
+  componentDidMount () {
     this.randomizeField()
     this.handlePlay()
+
     document.addEventListener('keydown', this.processKey)
   }
 
   componentWillUnmount () {
     cancelAnimationFrame(this.requestID)
+
+    document.removeEventListener('keydown', this.processKey)
   }
 
   getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
