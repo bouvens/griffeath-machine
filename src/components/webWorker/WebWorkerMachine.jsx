@@ -6,7 +6,7 @@ import style from '../common/GriffeathMachine.css'
 import CanvasField from '../common/CanvasField'
 import { getRandomField } from '../common/utils'
 
-const worker = new Worker('./worker.js')
+const getNewWorker = () => new Worker('./worker.js')
 
 export default class WebWorkerMachine extends PureComponent {
   static propTypes = {
@@ -24,25 +24,30 @@ export default class WebWorkerMachine extends PureComponent {
     status: STATUSES.pause,
   }
 
+  worker = null
+
   field = null
 
   canvas = React.createRef()
 
   componentDidMount () {
-    this.handleNew()
+    this.makeNewField()
     this.handlePlay()
 
     document.addEventListener('keydown', this.processKey)
-    worker.addEventListener('message', this.updateField)
-    worker.addEventListener('error', this.handleError)
   }
 
   componentWillUnmount () {
     cancelAnimationFrame(this.requestID)
 
     document.removeEventListener('keydown', this.processKey)
-    worker.removeEventListener('message', this.updateField)
-    worker.removeEventListener('error', this.handleError)
+    this.worker.terminate()
+  }
+
+  initializeWorker = () => {
+    this.worker = getNewWorker()
+    this.worker.addEventListener('message', this.updateField)
+    this.worker.addEventListener('error', this.handleError)
   }
 
   getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
@@ -69,15 +74,20 @@ export default class WebWorkerMachine extends PureComponent {
     this.setState({ status: STATUSES.pause }, this.handleNew)
   }
 
+  makeNewField = () => {
+    this.initializeWorker()
+    this.updateField({ data: getRandomField(this.state) })
+  }
+
   handleNew = () => {
-    this.field = getRandomField(this.state)
-    this.canvas.current.paint(this.field)
+    this.worker.terminate()
+    this.makeNewField()
   }
 
   handleNext = () => {
     const { width, height, states } = this.state
 
-    worker.postMessage({ field: this.field, width, height, states })
+    this.worker.postMessage({ field: this.field, width, height, states })
   }
 
   handlePlay = () => {
