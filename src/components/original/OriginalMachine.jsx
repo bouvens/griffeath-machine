@@ -58,9 +58,7 @@ export default class OriginalMachine extends PureComponent {
     } catch (e) {
       cancelAnimationFrame(this.requestID)
       this.field = getRandomField(this.state)
-      this.setState({
-        status: STATUSES.pause,
-      })
+      this.setState({ status: STATUSES.pause })
     }
     this.canvas.current.paint(this.field)
   }
