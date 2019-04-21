@@ -16,4 +16,9 @@ export const ROUTES = [
     path: '/gpu',
     component: lazy(() => import('./gpu/GriffeathMachine')),
   },
+  {
+    name: 'Web Workers',
+    path: '/workers',
+    component: lazy(() => import('./webWorker/GriffeathMachine')),
+  },
 ]

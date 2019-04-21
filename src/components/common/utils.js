@@ -13,7 +13,7 @@ export function getRandomField ({ width, height, states }) {
 
 const mod = (number, limit) => (number < 0 ? number + limit : number % limit)
 
-export const getUpdatedField = ({ field, width, height, states }) => field.map((line, x) => line.map((element, y) => {
+export function getUpdatedElement (element, x, y, field, width, height, states) {
   const plusOne = mod(element + 1, states)
 
   if (field[x][mod(y - 1, height)] === plusOne
@@ -24,4 +24,10 @@ export const getUpdatedField = ({ field, width, height, states }) => field.map((
   }
 
   return element
-}))
+}
+
+export const getUpdatedField = ({ field, width, height, states }) => field.map(
+  (column, x) => column.map(
+    (element, y) => getUpdatedElement(element, x, y, field, width, height, states)
+  )
+)
