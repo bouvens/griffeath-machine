@@ -27,7 +27,7 @@ export default class OptimizedMachine extends PureComponent {
   canvas = React.createRef()
 
   componentDidMount () {
-    this.randomizeField()
+    this.handleNew()
     this.handlePlay()
 
     document.addEventListener('keydown', this.processKey)
@@ -40,10 +40,6 @@ export default class OptimizedMachine extends PureComponent {
   }
 
   getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
-
-  randomizeField = () => {
-    this.field = getRandomField(this.state)
-  }
 
   processKey = (e) => {
     if (e.keyCode === SPACE_CODE) {
@@ -70,7 +66,7 @@ export default class OptimizedMachine extends PureComponent {
   }
 
   handleNew = () => {
-    this.randomizeField()
+    this.field = getRandomField(this.state)
     this.canvas.current.paint(this.field)
   }
 
