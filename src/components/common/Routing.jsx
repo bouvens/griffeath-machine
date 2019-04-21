@@ -18,6 +18,7 @@ const Routing = ({ routes }) => (
             <NavLink to={route.path} activeClassName={style.active}>{route.name}</NavLink>
           </li>
         ))}
+        ← it loads lazily
       </ul>
       <Switch>
         {routes.map((route) => (
