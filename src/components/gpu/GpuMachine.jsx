@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 import { Connector, Input } from 'state-control'
 import { DEFAULT, IDS, SPACE_CODE, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
-import { getRandomField, getUpdatedField } from '../common/utils'
-import CanvasField from './CanvasField'
+import CanvasField from '../common/CanvasField'
+import { getRandomField } from '../common/utils'
+import { makeGetUpdatedField } from './gpu-utils'
 
-export default class GriffeathMachine extends PureComponent {
+export default class GpuMachine extends PureComponent {
   static propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
@@ -29,6 +30,7 @@ export default class GriffeathMachine extends PureComponent {
   componentDidMount () {
     this.randomizeField()
     this.handlePlay()
+    this.updateFieldSize({})
 
     document.addEventListener('keydown', this.processKey)
   }
@@ -52,9 +54,18 @@ export default class GriffeathMachine extends PureComponent {
     }
   }
 
+  updateFieldSize = ({ width = this.props.width, height = this.props.height }) => {
+    this.fieldUpdater = makeGetUpdatedField(width, height)
+  }
+
+  getUpdatedField = () => {
+    const { width, height, states } = this.state
+    return this.fieldUpdater(this.field, width, height, states)
+  }
+
   nextStep = () => {
     try {
-      this.field = getUpdatedField({ ...this.state, field: this.field })
+      this.field = this.getUpdatedField()
 
       if (this.state.status === STATUSES.play) {
         this.requestID = requestAnimationFrame(this.nextStep)
@@ -75,7 +86,7 @@ export default class GriffeathMachine extends PureComponent {
   }
 
   handleNext = () => {
-    this.field = getUpdatedField({ ...this.state, field: this.field })
+    this.field = this.getUpdatedField()
     this.canvas.current.paint(this.field)
   }
 
@@ -92,8 +103,19 @@ export default class GriffeathMachine extends PureComponent {
   }
 
   changeHandler = (name, value) => {
+    switch (name) {
+      case IDS.width:
+        this.updateFieldSize({ width: value })
+        break
+      case IDS.height:
+        this.updateFieldSize({ height: value })
+        break
+      default:
+    }
     this.setState({ [name]: value })
   }
+
+  fieldUpdater
 
   render () {
     return (
@@ -128,7 +150,6 @@ export default class GriffeathMachine extends PureComponent {
           <CanvasField
             width={this.state.width}
             height={this.state.height}
-            field={this.field}
             states={this.state.states}
             ref={this.canvas}
           />

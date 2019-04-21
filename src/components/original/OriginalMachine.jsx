@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import { Connector, Input } from 'state-control'
 import { DEFAULT, IDS, SPACE_CODE, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
-import CanvasField from '../common/CanvasField'
 import { getRandomField, getUpdatedField } from '../common/utils'
+import CanvasField from './CanvasField'
 
-export default class GriffeathMachine extends PureComponent {
+export default class OriginalMachine extends PureComponent {
   static propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
@@ -128,6 +128,7 @@ export default class GriffeathMachine extends PureComponent {
           <CanvasField
             width={this.state.width}
             height={this.state.height}
+            field={this.field}
             states={this.state.states}
             ref={this.canvas}
           />

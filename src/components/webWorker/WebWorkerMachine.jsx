@@ -13,7 +13,7 @@ worker.addEventListener('error', (e) => {
   console.error(e.data)
 }, false)
 
-export default class GriffeathMachine extends PureComponent {
+export default class WebWorkerMachine extends PureComponent {
   static propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
