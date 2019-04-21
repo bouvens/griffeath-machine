@@ -1,11 +1,3 @@
-/coverage
-/demo/dist
-/es
-/lib
+/dist
+/src/lib
 /node_modules
-/reports
-/tests
-/umd
-
-*.test.js
-*.test.jsx

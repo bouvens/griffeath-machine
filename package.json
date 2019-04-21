@@ -4,10 +4,9 @@
   "description": "Cyclic cellular automaton",
   "private": true,
   "scripts": {
-    "build": "nwb build-react-app",
-    "clean": "nwb clean-app",
-    "start": "nwb serve-react-app",
-    "deploy": "nwb build-react-app && gh-pages -d dist"
+    "build": "parcel build src/index.html --out-dir dist --public-url ./",
+    "deploy": "gh-pages -d dist",
+    "start": "parcel src/index.html --out-dir temp"
   },
   "dependencies": {
     "gpu.js": "^1.10.2",
@@ -19,7 +18,12 @@
     "state-control": "^2.0.1"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
     "babel-eslint": "^10.0.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1",
     "eslint": "^5.7.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-import-resolver-webpack": "^0.11.1",
@@ -27,7 +31,9 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
     "gh-pages": "^2.0.1",
-    "nwb": "0.23.x"
+    "parcel-bundler": "^1.12.3",
+    "parcel-plugin-clean-dist": "^0.0.6",
+    "postcss-modules": "^1.4.1"
   },
   "author": "Alexander Demin <bouvens@gmail.com> (https://bouvens.github.io/)",
   "homepage": "https://bouvens.github.io/griffeath-machine",
