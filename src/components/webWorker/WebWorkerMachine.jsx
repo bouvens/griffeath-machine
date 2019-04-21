@@ -38,8 +38,6 @@ export default class WebWorkerMachine extends PureComponent {
   }
 
   componentWillUnmount () {
-    cancelAnimationFrame(this.requestID)
-
     document.removeEventListener('keydown', this.processKey)
     this.worker.terminate()
   }
@@ -64,13 +62,12 @@ export default class WebWorkerMachine extends PureComponent {
     this.canvas.current.paint(this.field)
 
     if (this.state.status === STATUSES.play) {
-      this.requestID = requestAnimationFrame(this.handleNext)
+      this.handleNext()
     }
   }
 
   handleError = (error) => {
     error.preventDefault()
-    cancelAnimationFrame(this.requestID)
     this.setState({ status: STATUSES.pause }, this.handleNew)
   }
 
