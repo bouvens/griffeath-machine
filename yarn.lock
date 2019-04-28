@@ -4866,10 +4866,10 @@ number-is-nan@^1.0.0:
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
   integrity sha1-CXtgK1NCKlIsGvuHkDGDNpQaAR0=
 
-number-to-color@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/number-to-color/-/number-to-color-0.3.0.tgz#0cfc73e3cdf7061a99600cfa0472ed98c5f84f70"
-  integrity sha512-nrHDM2GQaBVM2DqH+wBz2rLscK5XLIIvnuDXOfxbRKBEvGxQgrA/+fLoGX7Jn+SWQC4+mOnuGv8inTu/8UyKMA==
+number-to-color@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/number-to-color/-/number-to-color-0.4.0.tgz#c06a5ec676cb90a695a1fee280757e12dafb719a"
+  integrity sha512-KDj0479cPiGRyfsgR3QI98cK2rg+6pPzzjCctuFJOfYLK4xeIK6pccuj9CduxHDE9g1CUnn4z8JyI4OnI0jWUA==
 
 nwsapi@^2.0.7:
   version "2.1.3"
