@@ -6,8 +6,6 @@ import style from '../common/GriffeathMachine.css'
 import CanvasField from '../common/CanvasField'
 import { getRandomField } from '../common/utils'
 
-const getNewWorker = () => new Worker('./worker.js')
-
 export default class WebWorkerMachine extends PureComponent {
   static propTypes = {
     width: PropTypes.number.isRequired,
@@ -43,7 +41,7 @@ export default class WebWorkerMachine extends PureComponent {
   }
 
   initializeWorker = () => {
-    this.worker = getNewWorker()
+    this.worker = new Worker('./worker.js')
     this.worker.addEventListener('message', this.updateField)
     this.worker.addEventListener('error', this.handleError)
   }
