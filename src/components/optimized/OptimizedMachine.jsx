@@ -85,7 +85,13 @@ export default class OptimizedMachine extends PureComponent {
     }
   }
 
-  changeHandler = (name, value) => {
+  changeHandler = (name, initialValue) => {
+    let value = initialValue
+
+    if (name === IDS.states && value > 255) {
+      value = 255
+    }
+
     this.setState({ [name]: value })
   }
 

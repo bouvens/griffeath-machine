@@ -96,13 +96,20 @@ export default class GpuMachine extends PureComponent {
     }
   }
 
-  changeHandler = (name, value) => {
+  changeHandler = (name, initialValue) => {
+    let value = initialValue
+
     switch (name) {
       case IDS.width:
         this.updateFieldSize({ width: value })
         break
       case IDS.height:
         this.updateFieldSize({ height: value })
+        break
+      case IDS.states:
+        if (value > 255) {
+          value = 255
+        }
         break
       default:
     }
