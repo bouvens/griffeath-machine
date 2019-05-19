@@ -12,30 +12,30 @@ function myMod (number, limit) {
   return number
 }
 
-function myKernel (field, width, height, states) {
-  // what a mess
-  const ver = this.thread.x
-  const hor = this.thread.y
-  const element = field[hor][ver]
+function updateElement (field, width, height, states) {
+  const i = this.thread.x
+  const element = field[i]
+  const hor = i % width
+  const ver = trunc(i / width)
   const plusOne = myMod(element + 1, states)
 
   let next = myMod(hor - 1, width)
-  if (field[next][ver] === plusOne) {
+  if (field[next + ver * width] === plusOne) {
     return plusOne
   }
 
   next = myMod(hor + 1, width)
-  if (field[next][ver] === plusOne) {
+  if (field[next + ver * width] === plusOne) {
     return plusOne
   }
 
   next = myMod(ver - 1, height)
-  if (field[hor][next] === plusOne) {
+  if (field[hor + next * width] === plusOne) {
     return plusOne
   }
 
   next = myMod(ver + 1, height)
-  if (field[hor][next] === plusOne) {
+  if (field[hor + next * width] === plusOne) {
     return plusOne
   }
 
@@ -44,7 +44,7 @@ function myKernel (field, width, height, states) {
 
 const gpu = new GPU()
 
-export const makeGetUpdatedField = (fieldWidth, fieldHeight) => gpu
-  .createKernel(myKernel)
-  .setOutput([fieldHeight, fieldWidth]) // more of the mess
+export const makeGetUpdatedField = (size) => gpu
+  .createKernel(updateElement)
+  .setOutput([size])
   .setFunctions([myMod])

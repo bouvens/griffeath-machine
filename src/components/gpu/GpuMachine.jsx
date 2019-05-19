@@ -25,12 +25,14 @@ export default class GpuMachine extends PureComponent {
 
   field = null
 
+  fieldUpdater
+
   canvas = React.createRef()
 
   componentDidMount () {
     this.handleNew()
     this.handlePlay()
-    this.updateFieldSize({})
+    this.updateFieldSize()
 
     document.addEventListener('keydown', this.processKey)
   }
@@ -50,18 +52,18 @@ export default class GpuMachine extends PureComponent {
     }
   }
 
-  updateFieldSize = ({ width = this.props.width, height = this.props.height }) => {
-    this.fieldUpdater = makeGetUpdatedField(width, height)
+  updateFieldSize = ({ width, height } = { width: this.props.width, height: this.props.height }) => {
+    this.fieldUpdater = makeGetUpdatedField(width * height)
   }
 
-  getUpdatedField = () => {
+  updateField = () => {
     const { width, height, states } = this.state
-    return this.fieldUpdater(this.field, width, height, states)
+    this.field = this.fieldUpdater(this.field, width, height, states)
   }
 
   nextStep = () => {
     try {
-      this.field = this.getUpdatedField()
+      this.updateField()
 
       if (this.state.status === STATUSES.play) {
         this.requestID = requestAnimationFrame(this.nextStep)
@@ -80,7 +82,7 @@ export default class GpuMachine extends PureComponent {
   }
 
   handleNext = () => {
-    this.field = this.getUpdatedField()
+    this.updateField()
     this.canvas.current.paint(this.field)
   }
 
@@ -115,8 +117,6 @@ export default class GpuMachine extends PureComponent {
     }
     this.setState({ [name]: value })
   }
-
-  fieldUpdater
 
   render () {
     return (
