@@ -9,28 +9,20 @@ export default class CanvasField extends React.PureComponent {
     states: PropTypes.number.isRequired,
   }
 
-  drawPixel = (x, y, h, states) => {
-    const index = x + (y * this.props.width)
-    const { r, g, b } = getColor(h, states)
-
-    /* eslint-disable-next-line no-bitwise */
-    this.uInt32Array[index] = (255 << 24) | (b << 16) | (g << 8) | r
-  }
-
   paint = (field) => {
     const { width, height, states } = this.props
+    const size = width * height
 
-    this.uInt32Array = new Uint32Array(width * height)
+    this.colorsOfField = new Uint32Array(size)
 
-    for (let x = 0; x < width; x += 1) {
-      for (let y = 0; y < height; y += 1) {
-        if (field[x]) {
-          this.drawPixel(x, y, field[x][y], states)
-        }
-      }
+    for (let i = 0; i < size; i += 1) {
+      const { r, g, b } = getColor(field[i], states)
+
+      /* eslint-disable-next-line no-bitwise */
+      this.colorsOfField[i] = (255 << 24) | (b << 16) | (g << 8) | r
     }
 
-    const canvasData = new ImageData(new Uint8ClampedArray(this.uInt32Array.buffer), width, height)
+    const canvasData = new ImageData(new Uint8ClampedArray(this.colorsOfField.buffer), width, height)
     this.canvasContext.putImageData(canvasData, 0, 0)
   }
 
@@ -40,7 +32,7 @@ export default class CanvasField extends React.PureComponent {
 
   canvasContext
 
-  uInt32Array
+  colorsOfField
 
   render () {
     return (

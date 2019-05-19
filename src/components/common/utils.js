@@ -1,33 +1,50 @@
 export function getRandomField ({ width, height, states }) {
-  const field = []
+  const size = width * height
+  const field = new Int8Array(size)
 
-  for (let x = 0; x < width; x += 1) {
-    field[x] = []
-    for (let y = 0; y < height; y += 1) {
-      field[x][y] = Math.floor(Math.random() * states)
-    }
+  for (let i = 0; i < size; i += 1) {
+    field[i] = Math.floor(Math.random() * states)
   }
 
   return field
 }
 
-const mod = (number, limit) => (number < 0 ? number + limit : number % limit)
+function mod (number, limit) {
+  if (number < 0) {
+    return number + limit
+  }
 
-export function getUpdatedElement (element, x, y, field, width, height, states) {
+  if (number >= limit) {
+    return number - limit
+  }
+
+  return number
+}
+
+export function getUpdatedElement (i, x, y, field, width, height, states) {
+  const element = field[i]
   const plusOne = mod(element + 1, states)
 
-  if (field[x][mod(y - 1, height)] === plusOne
-    || field[x][mod(y + 1, height)] === plusOne
-    || field[mod(x - 1, width)][y] === plusOne
-    || field[mod(x + 1, width)][y] === plusOne) {
+  if (field[x + mod(y - 1, height) * width] === plusOne
+    || field[x + mod(y + 1, height) * width] === plusOne
+    || field[mod(x - 1, width) + y * width] === plusOne
+    || field[mod(x + 1, width) + y * width] === plusOne) {
     return plusOne
   }
 
   return element
 }
 
-export const getUpdatedField = ({ field, width, height, states }) => field.map(
-  (column, x) => column.map(
-    (element, y) => getUpdatedElement(element, x, y, field, width, height, states)
-  )
-)
+export const getUpdatedField = ({ field, width, height, states }) => {
+  const result = new Int8Array(width * height)
+
+  for (let y = 0; y < height; y += 1) {
+    const padding = y * width
+    for (let x = 0; x < width; x += 1) {
+      const i = x + padding
+      result[i] = getUpdatedElement(i, x, y, field, width, height, states)
+    }
+  }
+
+  return result
+}

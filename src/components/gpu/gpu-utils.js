@@ -4,7 +4,12 @@ function myMod (number, limit) {
   if (number < 0) {
     return number + limit
   }
-  return (number % limit)
+
+  if (number >= limit) {
+    return number - limit
+  }
+
+  return number
 }
 
 function myKernel (field, width, height, states) {
