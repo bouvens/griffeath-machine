@@ -10,7 +10,6 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
-    "gpu.js": "^1.10.2",
     "number-to-color": "^0.4.0",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
