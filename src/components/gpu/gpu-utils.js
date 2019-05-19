@@ -16,6 +16,7 @@ function updateElement (field, width, height, states) {
   const i = this.thread.x
   const element = field[i]
   const hor = i % width
+  // eslint-disable-next-line no-undef
   const ver = trunc(i / width)
   const plusOne = myMod(element + 1, states)
 

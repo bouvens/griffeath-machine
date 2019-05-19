@@ -31,8 +31,8 @@ export default class GpuMachine extends PureComponent {
 
   componentDidMount () {
     this.handleNew()
-    this.handlePlay()
     this.updateFieldSize()
+    this.handlePlay()
 
     document.addEventListener('keydown', this.processKey)
   }
@@ -52,7 +52,7 @@ export default class GpuMachine extends PureComponent {
     }
   }
 
-  updateFieldSize = ({ width, height } = { width: this.props.width, height: this.props.height }) => {
+  updateFieldSize = (width = this.props.width, height = this.props.height) => {
     this.fieldUpdater = makeGetUpdatedField(width * height)
   }
 
@@ -103,10 +103,10 @@ export default class GpuMachine extends PureComponent {
 
     switch (name) {
       case IDS.width:
-        this.updateFieldSize({ width: value })
+        this.updateFieldSize(value)
         break
       case IDS.height:
-        this.updateFieldSize({ height: value })
+        this.updateFieldSize(void 0, value)
         break
       case IDS.states:
         if (value > 255) {
