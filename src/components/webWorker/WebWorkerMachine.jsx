@@ -5,6 +5,7 @@ import { DEFAULT, IDS, SPACE_CODE, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
 import CanvasField from '../common/CanvasField'
 import { getRandomField } from '../common/utils'
+import GriffeathWorker from 'worker-loader!./worker'
 
 export default class WebWorkerMachine extends PureComponent {
   static propTypes = {
@@ -41,7 +42,7 @@ export default class WebWorkerMachine extends PureComponent {
   }
 
   initializeWorker = () => {
-    this.worker = new Worker('./worker.js')
+    this.worker = new GriffeathWorker()
     this.worker.addEventListener('message', this.updateField)
     this.worker.addEventListener('error', this.handleError)
   }

@@ -42,7 +42,8 @@
     "terser-webpack-plugin": "^1.2.4",
     "webpack": "^4.32.2",
     "webpack-cli": "^3.3.2",
-    "webpack-dev-server": "^3.4.1"
+    "webpack-dev-server": "^3.4.1",
+    "worker-loader": "^2.0.0"
   },
   "author": "Alexander Demin <bouvens@gmail.com> (https://bouvens.github.io/)",
   "homepage": "https://bouvens.github.io/griffeath-machine",
