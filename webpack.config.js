@@ -1,4 +1,5 @@
 const path = require('path')
+const TerserPlugin = require('terser-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
@@ -7,8 +8,8 @@ module.exports = {
   entry: './src/index.jsx',
   output: {
     path: path.join(__dirname, '/dist'),
-    publicPath: '/',
-    filename: 'bundle.js',
+    publicPath: '',
+    filename: '[name].bundle.js',
   },
   module: {
     rules: [
@@ -52,6 +53,14 @@ module.exports = {
       { from: 'public', to: '' },
     ]),
   ],
+  optimization: {
+    minimizer: [
+      new TerserPlugin({
+        cache: '.cache',
+        exclude: /^gpu-utils\.bundle\.js$/,
+      }),
+    ],
+  },
   resolve: {
     extensions: ['.js', '.jsx'],
   },

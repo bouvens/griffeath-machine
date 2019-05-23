@@ -5,7 +5,6 @@ import { DEFAULT, IDS, SPACE_CODE, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
 import CanvasField from '../common/CanvasField'
 import { getRandomField } from '../common/utils'
-import { makeGetUpdatedField } from './gpu-utils'
 
 export default class GpuMachine extends PureComponent {
   static propTypes = {
@@ -25,16 +24,20 @@ export default class GpuMachine extends PureComponent {
 
   field = null
 
-  fieldUpdater
-
   canvas = React.createRef()
 
   componentDidMount () {
     this.handleNew()
-    this.updateFieldSize()
-    this.handlePlay()
-
     document.addEventListener('keydown', this.processKey)
+
+    import(/* webpackChunkName: "gpu-utils" */ './gpu-utils')
+      .then((module) => {
+        const { width, height } = this.props
+
+        this.makeGetUpdatedField = module.makeGetUpdatedField
+        this.fieldUpdater = this.makeGetUpdatedField(width * height)
+        this.handlePlay()
+      })
   }
 
   componentWillUnmount () {
@@ -53,7 +56,7 @@ export default class GpuMachine extends PureComponent {
   }
 
   updateFieldSize = (width = this.props.width, height = this.props.height) => {
-    this.fieldUpdater = makeGetUpdatedField(width * height)
+    this.fieldUpdater = this.makeGetUpdatedField(width * height)
   }
 
   updateField = () => {
@@ -117,6 +120,10 @@ export default class GpuMachine extends PureComponent {
     }
     this.setState({ [name]: value })
   }
+
+  makeGetUpdatedField
+
+  fieldUpdater
 
   render () {
     return (
