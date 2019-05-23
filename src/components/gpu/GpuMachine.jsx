@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import { Connector, Input } from 'state-control'
 import { DEFAULT, IDS, SPACE_CODE, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
-import CanvasField from '../common/CanvasField'
-import { getRandomField } from '../common/utils'
+import { getRandomField } from '../original/utils'
+import CanvasField from './CanvasField'
 
 export default class GpuMachine extends PureComponent {
   static propTypes = {
@@ -35,7 +35,7 @@ export default class GpuMachine extends PureComponent {
         const { width, height } = this.props
 
         this.makeGetUpdatedField = module.makeGetUpdatedField
-        this.fieldUpdater = this.makeGetUpdatedField(width * height)
+        this.fieldUpdater = this.makeGetUpdatedField(width, height)
         this.handlePlay()
       })
   }
@@ -56,7 +56,7 @@ export default class GpuMachine extends PureComponent {
   }
 
   updateFieldSize = (width = this.props.width, height = this.props.height) => {
-    this.fieldUpdater = this.makeGetUpdatedField(width * height)
+    this.fieldUpdater = this.makeGetUpdatedField(width, height)
   }
 
   updateField = () => {

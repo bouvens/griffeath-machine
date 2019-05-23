@@ -13,30 +13,29 @@ function myMod (number, limit) {
 }
 
 function updateElement (field, width, height, states) {
-  const i = this.thread.x
-  const element = field[i]
-  const hor = i % width
-  // eslint-disable-next-line no-undef
-  const ver = trunc(i / width)
+  // what a mess
+  const ver = this.thread.x
+  const hor = this.thread.y
+  const element = field[hor][ver]
   const plusOne = myMod(element + 1, states)
 
   let next = myMod(hor - 1, width)
-  if (field[next + ver * width] === plusOne) {
+  if (field[next][ver] === plusOne) {
     return plusOne
   }
 
   next = myMod(hor + 1, width)
-  if (field[next + ver * width] === plusOne) {
+  if (field[next][ver] === plusOne) {
     return plusOne
   }
 
   next = myMod(ver - 1, height)
-  if (field[hor + next * width] === plusOne) {
+  if (field[hor][next] === plusOne) {
     return plusOne
   }
 
   next = myMod(ver + 1, height)
-  if (field[hor + next * width] === plusOne) {
+  if (field[hor][next] === plusOne) {
     return plusOne
   }
 
@@ -45,7 +44,7 @@ function updateElement (field, width, height, states) {
 
 const gpu = new GPU()
 
-export const makeGetUpdatedField = (size) => gpu
+export const makeGetUpdatedField = (fieldWidth, fieldHeight) => gpu
   .createKernel(updateElement)
-  .setOutput([size])
+  .setOutput([fieldHeight, fieldWidth]) // more of the mess
   .setFunctions([myMod])
