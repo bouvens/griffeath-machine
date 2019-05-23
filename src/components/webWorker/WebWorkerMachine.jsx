@@ -1,11 +1,11 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Connector, Input } from 'state-control'
+import GriffeathWorker from './machine.worker'
 import { DEFAULT, IDS, SPACE_CODE, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
 import CanvasField from '../common/CanvasField'
 import { getRandomField } from '../common/utils'
-import GriffeathWorker from 'worker-loader!./worker'
 
 export default class WebWorkerMachine extends PureComponent {
   static propTypes = {
@@ -66,7 +66,6 @@ export default class WebWorkerMachine extends PureComponent {
   }
 
   handleError = (error) => {
-    error.preventDefault()
     this.setState({ status: STATUSES.pause }, this.handleNew)
   }
 

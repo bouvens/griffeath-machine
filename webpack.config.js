@@ -10,9 +10,16 @@ module.exports = {
     path: path.join(__dirname, '/dist'),
     publicPath: '',
     filename: '[name].bundle.js',
+    globalObject: 'this',
   },
   module: {
     rules: [
+      {
+        test: /\.worker\.js$/,
+        use: {
+          loader: 'worker-loader',
+        },
+      },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
