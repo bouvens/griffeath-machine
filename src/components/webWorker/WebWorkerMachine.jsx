@@ -6,6 +6,7 @@ import { DEFAULT, IDS, SPACE_CODE, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
 import CanvasField from '../common/CanvasField'
 import { getRandomField } from '../common/utils'
+import { initializeWorkers, terminateWorkers, updateWithWorkers } from './workersWrapper'
 
 export default class WebWorkerMachine extends PureComponent {
   static propTypes = {
@@ -23,8 +24,6 @@ export default class WebWorkerMachine extends PureComponent {
     status: STATUSES.pause,
   }
 
-  worker = null
-
   field = null
 
   canvas = React.createRef()
@@ -38,14 +37,22 @@ export default class WebWorkerMachine extends PureComponent {
 
   componentWillUnmount () {
     document.removeEventListener('keydown', this.processKey)
-    this.worker.terminate()
+    terminateWorkers()
   }
 
-  initializeWorker = () => {
-    this.worker = new GriffeathWorker()
-    this.worker.addEventListener('message', this.updateField)
-    this.worker.addEventListener('error', this.handleError)
+  initializeFieldWorkers = () => {
+    initializeWorkers(GriffeathWorker, this.updateField, this.handleError)
   }
+
+  updateField = (data) => {
+    this.field = data
+    this.canvas.current.paint(this.field)
+
+    if (this.state.status === STATUSES.play) {
+      this.handleNext()
+    }
+  }
+
 
   getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
 
@@ -56,33 +63,20 @@ export default class WebWorkerMachine extends PureComponent {
     }
   }
 
-  updateField = ({ data }) => {
-    this.field = data
-    this.canvas.current.paint(this.field)
-
-    if (this.state.status === STATUSES.play) {
-      this.handleNext()
-    }
-  }
-
-  handleError = (error) => {
-    this.setState({ status: STATUSES.pause }, this.handleNew)
+  handleError = () => {
+    this.setState({ status: STATUSES.pause }, this.makeNewField)
   }
 
   makeNewField = () => {
-    this.initializeWorker()
-    this.updateField({ data: getRandomField(this.state) })
-  }
-
-  handleNew = () => {
-    this.worker.terminate()
-    this.makeNewField()
+    terminateWorkers()
+    this.initializeFieldWorkers()
+    this.updateField(getRandomField(this.state))
   }
 
   handleNext = () => {
     const { width, height, states } = this.state
 
-    this.worker.postMessage({ field: this.field, width, height, states })
+    updateWithWorkers({ field: this.field, width, height, states }, this.field.length)
   }
 
   handlePlay = () => {
@@ -139,7 +133,7 @@ export default class WebWorkerMachine extends PureComponent {
           />
         </div>
         <p><em>Press Space or click field for play / pause</em></p>
-        <button type="button" className={style.bigButton} onClick={this.handleNew}>
+        <button type="button" className={style.bigButton} onClick={this.makeNewField}>
           New
         </button>
         <button type="button" className={style.bigButton} onClick={this.handlePlay}>
