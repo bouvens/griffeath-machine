@@ -4,7 +4,7 @@
   "description": "Cyclic cellular automaton",
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server --mode development --hot",
+    "start": "webpack-dev-server --mode development --hot --open",
     "build": "webpack --mode production",
     "deploy": "gh-pages -d dist",
     "test": "node src/test/benchmark.js"
