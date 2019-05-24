@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import { Connector, Input } from 'state-control'
 import { DEFAULT, IDS, SPACE_CODE, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
-import { getRandomField, getUpdatedField } from '../common/utils'
+import { getRandomField } from '../original/utils'
 import CanvasField from './CanvasField'
 
-export default class GriffeathMachine extends PureComponent {
+export default class GpuMachine extends PureComponent {
   static propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
@@ -26,21 +26,27 @@ export default class GriffeathMachine extends PureComponent {
 
   canvas = React.createRef()
 
-  componentWillMount () {
-    this.randomizeField()
-    this.handlePlay()
+  componentDidMount () {
+    this.handleNew()
     document.addEventListener('keydown', this.processKey)
+
+    import(/* webpackChunkName: "gpu-utils" */ './gpu-utils')
+      .then((module) => {
+        const { width, height } = this.props
+
+        this.makeGetUpdatedField = module.makeGetUpdatedField
+        this.fieldUpdater = this.makeGetUpdatedField(width, height)
+        this.handlePlay()
+      })
   }
 
   componentWillUnmount () {
     cancelAnimationFrame(this.requestID)
+
+    document.removeEventListener('keydown', this.processKey)
   }
 
   getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
-
-  randomizeField = () => {
-    this.field = getRandomField(this.state)
-  }
 
   processKey = (e) => {
     if (e.keyCode === SPACE_CODE) {
@@ -49,9 +55,18 @@ export default class GriffeathMachine extends PureComponent {
     }
   }
 
+  updateFieldSize = (width = this.props.width, height = this.props.height) => {
+    this.fieldUpdater = this.makeGetUpdatedField(width, height)
+  }
+
+  updateField = () => {
+    const { width, height, states } = this.state
+    this.field = this.fieldUpdater(this.field, width, height, states)
+  }
+
   nextStep = () => {
     try {
-      this.field = getUpdatedField({ ...this.state, field: this.field })
+      this.updateField()
 
       if (this.state.status === STATUSES.play) {
         this.requestID = requestAnimationFrame(this.nextStep)
@@ -59,20 +74,18 @@ export default class GriffeathMachine extends PureComponent {
     } catch (e) {
       cancelAnimationFrame(this.requestID)
       this.field = getRandomField(this.state)
-      this.setState({
-        status: STATUSES.pause,
-      })
+      this.setState({ status: STATUSES.pause })
     }
     this.canvas.current.paint(this.field)
   }
 
   handleNew = () => {
-    this.randomizeField()
+    this.field = getRandomField(this.state)
     this.canvas.current.paint(this.field)
   }
 
   handleNext = () => {
-    this.field = getUpdatedField({ ...this.state, field: this.field })
+    this.updateField()
     this.canvas.current.paint(this.field)
   }
 
@@ -88,9 +101,29 @@ export default class GriffeathMachine extends PureComponent {
     }
   }
 
-  changeHandler = (name, value) => {
+  changeHandler = (name, initialValue) => {
+    let value = initialValue
+
+    switch (name) {
+      case IDS.width:
+        this.updateFieldSize(value)
+        break
+      case IDS.height:
+        this.updateFieldSize(void 0, value)
+        break
+      case IDS.states:
+        if (value > 255) {
+          value = 255
+        }
+        break
+      default:
+    }
     this.setState({ [name]: value })
   }
+
+  makeGetUpdatedField
+
+  fieldUpdater
 
   render () {
     return (
@@ -125,7 +158,6 @@ export default class GriffeathMachine extends PureComponent {
           <CanvasField
             width={this.state.width}
             height={this.state.height}
-            field={this.field}
             states={this.state.states}
             ref={this.canvas}
           />

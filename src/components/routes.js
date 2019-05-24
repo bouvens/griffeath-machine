@@ -4,16 +4,21 @@ export const ROUTES = [
   {
     name: 'Optimized',
     path: '/optimized',
-    component: lazy(() => import('./optimized/GriffeathMachine')),
+    component: lazy(() => import(/* webpackChunkName: "optimized" */ './optimized/OptimizedMachine')),
   },
   {
     name: 'Original',
     path: '/original',
-    component: lazy(() => import('./original/GriffeathMachine')),
+    component: lazy(() => import(/* webpackChunkName: "original" */ './original/OriginalMachine')),
   },
   {
     name: 'GPU Accelerated',
     path: '/gpu',
-    component: lazy(() => import('./gpu/GriffeathMachine')),
+    component: lazy(() => import(/* webpackChunkName: "gpu" */ './gpu/GpuMachine')),
+  },
+  {
+    name: 'Web Workers',
+    path: '/workers',
+    component: lazy(() => import(/* webpackChunkName: "web-worker" */ './webWorker/WebWorkerMachine')),
   },
 ]

@@ -1,13 +1,14 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Connector, Input } from 'state-control'
+import GriffeathWorker from './machine.worker'
 import { DEFAULT, IDS, SPACE_CODE, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
 import CanvasField from '../common/CanvasField'
 import { getRandomField } from '../common/utils'
-import { makeGetUpdatedField } from './gpu-utils'
+import WorkersWrapper from './workersWrapper'
 
-export default class GriffeathMachine extends PureComponent {
+export default class WebWorkerMachine extends PureComponent {
   static propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
@@ -27,22 +28,33 @@ export default class GriffeathMachine extends PureComponent {
 
   canvas = React.createRef()
 
-  componentWillMount () {
-    this.randomizeField()
+  componentDidMount () {
+    this.workers = new WorkersWrapper(GriffeathWorker, this.updateField, this.handleError)
+    this.makeNewField()
     this.handlePlay()
+
     document.addEventListener('keydown', this.processKey)
-    this.updateFieldSize({})
   }
 
   componentWillUnmount () {
-    cancelAnimationFrame(this.requestID)
+    document.removeEventListener('keydown', this.processKey)
+    this.workers.terminate()
+  }
+
+  updateField = (data) => {
+    this.field = data
+    this.canvas.current.paint(this.field)
+
+    if (this.state.status === STATUSES.play) {
+      this.handleNext()
+    }
+  }
+
+  handleError = () => {
+    this.setState({ status: STATUSES.pause }, this.makeNewField)
   }
 
   getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
-
-  randomizeField = () => {
-    this.field = getRandomField(this.state)
-  }
 
   processKey = (e) => {
     if (e.keyCode === SPACE_CODE) {
@@ -51,40 +63,16 @@ export default class GriffeathMachine extends PureComponent {
     }
   }
 
-  updateFieldSize = ({ width = this.props.width, height = this.props.height }) => {
-    this.fieldUpdater = makeGetUpdatedField(width, height)
-  }
-
-  getUpdatedField = () => {
-    const { width, height, states } = this.state
-    return this.fieldUpdater(this.field, width, height, states)
-  }
-
-  nextStep = () => {
-    try {
-      this.field = this.getUpdatedField()
-
-      if (this.state.status === STATUSES.play) {
-        this.requestID = requestAnimationFrame(this.nextStep)
-      }
-    } catch (e) {
-      cancelAnimationFrame(this.requestID)
-      this.field = getRandomField(this.state)
-      this.setState({
-        status: STATUSES.pause,
-      })
-    }
-    this.canvas.current.paint(this.field)
-  }
-
-  handleNew = () => {
-    this.randomizeField()
-    this.canvas.current.paint(this.field)
+  makeNewField = () => {
+    this.workers.terminate()
+    this.workers.initialize()
+    this.updateField(getRandomField(this.state))
   }
 
   handleNext = () => {
-    this.field = this.getUpdatedField()
-    this.canvas.current.paint(this.field)
+    const { width, height, states } = this.state
+
+    this.workers.start({ field: this.field, width, height, states }, this.field.length)
   }
 
   handlePlay = () => {
@@ -93,26 +81,17 @@ export default class GriffeathMachine extends PureComponent {
         this.setState({ status: STATUSES.pause })
         break
       case STATUSES.pause:
-        this.setState({ status: STATUSES.play }, this.nextStep)
+        this.setState({ status: STATUSES.play }, this.handleNext)
         break
       default:
     }
   }
 
   changeHandler = (name, value) => {
-    switch (name) {
-      case IDS.width:
-        this.updateFieldSize({ width: value })
-        break
-      case IDS.height:
-        this.updateFieldSize({ height: value })
-        break
-      default:
-    }
     this.setState({ [name]: value })
   }
 
-  fieldUpdater
+  workers
 
   render () {
     return (
@@ -152,7 +131,7 @@ export default class GriffeathMachine extends PureComponent {
           />
         </div>
         <p><em>Press Space or click field for play / pause</em></p>
-        <button type="button" className={style.bigButton} onClick={this.handleNew}>
+        <button type="button" className={style.bigButton} onClick={this.makeNewField}>
           New
         </button>
         <button type="button" className={style.bigButton} onClick={this.handlePlay}>

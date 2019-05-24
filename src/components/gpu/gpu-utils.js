@@ -4,10 +4,15 @@ function myMod (number, limit) {
   if (number < 0) {
     return number + limit
   }
-  return (number % limit)
+
+  if (number >= limit) {
+    return number - limit
+  }
+
+  return number
 }
 
-function myKernel (field, width, height, states) {
+function updateElement (field, width, height, states) {
   // what a mess
   const ver = this.thread.x
   const hor = this.thread.y
@@ -40,6 +45,6 @@ function myKernel (field, width, height, states) {
 const gpu = new GPU()
 
 export const makeGetUpdatedField = (fieldWidth, fieldHeight) => gpu
-  .createKernel(myKernel)
+  .createKernel(updateElement)
   .setOutput([fieldHeight, fieldWidth]) // more of the mess
   .setFunctions([myMod])

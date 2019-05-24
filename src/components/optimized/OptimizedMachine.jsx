@@ -6,7 +6,7 @@ import style from '../common/GriffeathMachine.css'
 import CanvasField from '../common/CanvasField'
 import { getRandomField, getUpdatedField } from '../common/utils'
 
-export default class GriffeathMachine extends PureComponent {
+export default class OptimizedMachine extends PureComponent {
   static propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
@@ -26,21 +26,20 @@ export default class GriffeathMachine extends PureComponent {
 
   canvas = React.createRef()
 
-  componentWillMount () {
-    this.randomizeField()
+  componentDidMount () {
+    this.handleNew()
     this.handlePlay()
+
     document.addEventListener('keydown', this.processKey)
   }
 
   componentWillUnmount () {
     cancelAnimationFrame(this.requestID)
+
+    document.removeEventListener('keydown', this.processKey)
   }
 
   getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
-
-  randomizeField = () => {
-    this.field = getRandomField(this.state)
-  }
 
   processKey = (e) => {
     if (e.keyCode === SPACE_CODE) {
@@ -59,15 +58,13 @@ export default class GriffeathMachine extends PureComponent {
     } catch (e) {
       cancelAnimationFrame(this.requestID)
       this.field = getRandomField(this.state)
-      this.setState({
-        status: STATUSES.pause,
-      })
+      this.setState({ status: STATUSES.pause })
     }
     this.canvas.current.paint(this.field)
   }
 
   handleNew = () => {
-    this.randomizeField()
+    this.field = getRandomField(this.state)
     this.canvas.current.paint(this.field)
   }
 
@@ -88,7 +85,13 @@ export default class GriffeathMachine extends PureComponent {
     }
   }
 
-  changeHandler = (name, value) => {
+  changeHandler = (name, initialValue) => {
+    let value = initialValue
+
+    if (name === IDS.states && value > 255) {
+      value = 255
+    }
+
     this.setState({ [name]: value })
   }
 

@@ -4,13 +4,14 @@
   "description": "Cyclic cellular automaton",
   "private": true,
   "scripts": {
-    "build": "parcel build src/index.html --out-dir dist --public-url ./",
+    "start": "webpack-dev-server --mode development --hot --open",
+    "build": "webpack --mode production",
     "deploy": "gh-pages -d dist",
-    "start": "parcel src/index.html --out-dir temp"
+    "test": "node src/test/benchmark.js"
   },
   "dependencies": {
     "gpu.js": "^1.10.2",
-    "number-to-color": "^0.3.0",
+    "number-to-color": "^0.4.0",
     "prop-types": "^15.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
@@ -18,12 +19,16 @@
     "state-control": "^2.0.1"
   },
   "devDependencies": {
-    "babel-core": "^6.26.3",
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
     "babel-eslint": "^10.0.1",
-    "babel-plugin-transform-decorators-legacy": "^1.3.5",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^2.0.2",
+    "copy-webpack-plugin": "^5.0.3",
+    "css-loader": "^2.1.1",
     "eslint": "^5.7.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-import-resolver-webpack": "^0.11.1",
@@ -31,9 +36,14 @@
     "eslint-plugin-jsx-a11y": "^6.0.2",
     "eslint-plugin-react": "^7.4.0",
     "gh-pages": "^2.0.1",
-    "parcel-bundler": "^1.12.3",
-    "parcel-plugin-clean-dist": "^0.0.6",
-    "postcss-modules": "^1.4.1"
+    "html-webpack-plugin": "^3.2.0",
+    "postcss-modules": "^1.4.1",
+    "style-loader": "^0.23.1",
+    "terser-webpack-plugin": "^1.2.4",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-dev-server": "^3.4.1",
+    "worker-loader": "^2.0.0"
   },
   "author": "Alexander Demin <bouvens@gmail.com> (https://bouvens.github.io/)",
   "homepage": "https://bouvens.github.io/griffeath-machine",
