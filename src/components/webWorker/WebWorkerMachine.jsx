@@ -38,7 +38,7 @@ export default class WebWorkerMachine extends PureComponent {
 
   componentWillUnmount () {
     document.removeEventListener('keydown', this.processKey)
-    this.workers.terminateWorkers()
+    this.workers.terminate()
   }
 
   updateField = (data) => {
@@ -64,7 +64,7 @@ export default class WebWorkerMachine extends PureComponent {
   }
 
   makeNewField = () => {
-    this.workers.terminateWorkers()
+    this.workers.terminate()
     this.workers.initialize()
     this.updateField(getRandomField(this.state))
   }
@@ -72,7 +72,7 @@ export default class WebWorkerMachine extends PureComponent {
   handleNext = () => {
     const { width, height, states } = this.state
 
-    this.workers.updateWithWorkers({ field: this.field, width, height, states }, this.field.length)
+    this.workers.start({ field: this.field, width, height, states }, this.field.length)
   }
 
   handlePlay = () => {

@@ -8,7 +8,7 @@ module.exports = function WorkersWrapper (
   let finished
   let result
 
-  function initializeResult () {
+  function reinitializeResult () {
     finished = 0
     result = []
   }
@@ -27,7 +27,7 @@ module.exports = function WorkersWrapper (
       offset += result[i].length
     }
     handleUpdate(flattened)
-    initializeResult()
+    reinitializeResult()
   }
 
   const catchUpdate = (i) => ({ data }) => {
@@ -38,7 +38,7 @@ module.exports = function WorkersWrapper (
     }
   }
 
-  this.terminateWorkers = () => {
+  this.terminate = () => {
     workers.forEach((worker) => {
       worker.terminate()
     })
@@ -46,8 +46,8 @@ module.exports = function WorkersWrapper (
   }
 
   const catchError = (error) => {
-    this.terminateWorkers()
-    initializeResult()
+    this.terminate()
+    reinitializeResult()
     handleError(error)
   }
 
@@ -61,11 +61,11 @@ module.exports = function WorkersWrapper (
 
   this.initialize()
 
-  this.updateWithWorkers = (options, jobSize) => {
+  this.start = (options, jobSize) => {
     let from = jobSize % numberOfWorkers
     const step = (jobSize - from) / numberOfWorkers
 
-    initializeResult()
+    reinitializeResult()
 
     for (let i = 0; i < numberOfWorkers; i += 1) {
       const to = from + step
