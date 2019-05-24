@@ -2,7 +2,6 @@ const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CopyWebpackPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   entry: './src/index.jsx',
@@ -55,10 +54,8 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
+      favicon: path.join(__dirname, 'img/favicon.png'),
     }),
-    new CopyWebpackPlugin([
-      { from: 'public', to: '' },
-    ]),
   ],
   optimization: {
     minimizer: [
