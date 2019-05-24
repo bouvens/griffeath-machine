@@ -6,7 +6,7 @@ import { DEFAULT, IDS, SPACE_CODE, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
 import CanvasField from '../common/CanvasField'
 import { getRandomField } from '../common/utils'
-import { initializeWorkers, terminateWorkers, updateWithWorkers } from './workersWrapper'
+import WorkersWrapper from './workersWrapper'
 
 export default class WebWorkerMachine extends PureComponent {
   static propTypes = {
@@ -29,6 +29,7 @@ export default class WebWorkerMachine extends PureComponent {
   canvas = React.createRef()
 
   componentDidMount () {
+    this.workers = new WorkersWrapper(GriffeathWorker, this.updateField, this.handleError)
     this.makeNewField()
     this.handlePlay()
 
@@ -37,11 +38,7 @@ export default class WebWorkerMachine extends PureComponent {
 
   componentWillUnmount () {
     document.removeEventListener('keydown', this.processKey)
-    terminateWorkers()
-  }
-
-  initializeFieldWorkers = () => {
-    initializeWorkers(GriffeathWorker, this.updateField, this.handleError)
+    this.workers.terminateWorkers()
   }
 
   updateField = (data) => {
@@ -53,6 +50,9 @@ export default class WebWorkerMachine extends PureComponent {
     }
   }
 
+  handleError = () => {
+    this.setState({ status: STATUSES.pause }, this.makeNewField)
+  }
 
   getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
 
@@ -63,20 +63,16 @@ export default class WebWorkerMachine extends PureComponent {
     }
   }
 
-  handleError = () => {
-    this.setState({ status: STATUSES.pause }, this.makeNewField)
-  }
-
   makeNewField = () => {
-    terminateWorkers()
-    this.initializeFieldWorkers()
+    this.workers.terminateWorkers()
+    this.workers.initialize()
     this.updateField(getRandomField(this.state))
   }
 
   handleNext = () => {
     const { width, height, states } = this.state
 
-    updateWithWorkers({ field: this.field, width, height, states }, this.field.length)
+    this.workers.updateWithWorkers({ field: this.field, width, height, states }, this.field.length)
   }
 
   handlePlay = () => {
@@ -94,6 +90,8 @@ export default class WebWorkerMachine extends PureComponent {
   changeHandler = (name, value) => {
     this.setState({ [name]: value })
   }
+
+  workers
 
   render () {
     return (

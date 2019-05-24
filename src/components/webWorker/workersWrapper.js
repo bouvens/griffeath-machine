@@ -1,73 +1,80 @@
-const NUMBER_OF_WORKERS = 4
+module.exports = function WorkersWrapper (
+  Worker,
+  handleUpdate,
+  handleError,
+  numberOfWorkers = navigator.hardwareConcurrency,
+) {
+  let workers = []
+  let finished
+  let result
 
-let workers = []
-let finished
-let result
-
-function initializeResult () {
-  finished = 0
-  result = []
-}
-
-function returnUpdated (handleUpdate) {
-  let length = 0
-  for (let i = 0; i < NUMBER_OF_WORKERS; i += 1) {
-    length += result[i].length
+  function initializeResult () {
+    finished = 0
+    result = []
   }
 
-  let offset = 0
-  const flattened = new Int8Array(length)
+  function returnUpdated () {
+    let length = 0
+    for (let i = 0; i < numberOfWorkers; i += 1) {
+      length += result[i].length
+    }
 
-  for (let i = 0; i < NUMBER_OF_WORKERS; i += 1) {
-    flattened.set(result[i], offset)
-    offset += result[i].length
+    let offset = 0
+    const flattened = new Int8Array(length)
+
+    for (let i = 0; i < numberOfWorkers; i += 1) {
+      flattened.set(result[i], offset)
+      offset += result[i].length
+    }
+    handleUpdate(flattened)
+    initializeResult()
   }
-  handleUpdate(flattened)
-  initializeResult()
-}
 
-const catchUpdate = (i, handleUpdate) => ({ data }) => {
-  result[i] = data
-  finished += 1
-  if (finished === NUMBER_OF_WORKERS) {
-    returnUpdated(handleUpdate)
+  const catchUpdate = (i) => ({ data }) => {
+    result[i] = data
+    finished += 1
+    if (finished === numberOfWorkers) {
+      returnUpdated(handleUpdate)
+    }
   }
-}
 
-export function terminateWorkers () {
-  workers.forEach((worker) => {
-    worker.terminate()
-  })
-  workers = []
-}
-
-const catchError = (handleError) => (error) => {
-  terminateWorkers()
-  initializeResult()
-  handleError(error)
-}
-
-export function initializeWorkers (Worker, handleUpdate, handleError) {
-  for (let i = 0; i < NUMBER_OF_WORKERS; i += 1) {
-    workers[i] = new Worker()
-    workers[i].addEventListener('message', catchUpdate(i, handleUpdate))
-    workers[i].addEventListener('error', catchError(handleError))
-  }
-}
-
-export function updateWithWorkers (options, jobSize) {
-  let from = jobSize % NUMBER_OF_WORKERS
-  const step = (jobSize - from) / NUMBER_OF_WORKERS
-
-  initializeResult()
-
-  for (let i = 0; i < NUMBER_OF_WORKERS; i += 1) {
-    const to = from + step
-    workers[i].postMessage({
-      ...options,
-      from: i === 0 ? 0 : from,
-      to,
+  this.terminateWorkers = () => {
+    workers.forEach((worker) => {
+      worker.terminate()
     })
-    from = to
+    workers = []
+  }
+
+  const catchError = (error) => {
+    this.terminateWorkers()
+    initializeResult()
+    handleError(error)
+  }
+
+  this.initialize = () => {
+    for (let i = 0; i < numberOfWorkers; i += 1) {
+      workers[i] = new Worker()
+      workers[i].addEventListener('message', catchUpdate(i))
+      workers[i].addEventListener('error', catchError)
+    }
+  }
+
+  this.initialize()
+
+  this.updateWithWorkers = (options, jobSize) => {
+    let from = jobSize % numberOfWorkers
+    const step = (jobSize - from) / numberOfWorkers
+
+    initializeResult()
+
+    for (let i = 0; i < numberOfWorkers; i += 1) {
+      const to = from + step
+      workers[i].postMessage({
+        ...options,
+        from: i === 0 ? 0 : from,
+        to,
+      })
+      from = to
+    }
   }
 }
