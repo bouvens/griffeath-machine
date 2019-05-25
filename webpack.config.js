@@ -2,6 +2,7 @@ const path = require('path')
 const TerserPlugin = require('terser-webpack-plugin')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 
 module.exports = {
@@ -30,9 +31,7 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          {
-            loader: 'style-loader',
-          },
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
@@ -43,12 +42,6 @@ module.exports = {
           },
         ],
       },
-      {
-        test: /\/public\/*\.*/,
-        use: [
-          'file-loader',
-        ],
-      },
     ],
   },
   plugins: [
@@ -56,6 +49,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       favicon: path.join(__dirname, 'img/favicon.png'),
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].css',
+      chunkFilename: '[id].css',
     }),
     // new BundleAnalyzerPlugin(),
   ],
@@ -66,6 +63,16 @@ module.exports = {
         exclude: /^gpu-utils\.bundle\.js$/,
       }),
     ],
+    splitChunks: {
+      cacheGroups: {
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true,
+        },
+      },
+    },
   },
   resolve: {
     extensions: ['.js', '.jsx'],
