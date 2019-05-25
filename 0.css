@@ -1,0 +1,55 @@
+.Routing__routes__3pEOK {
+  padding: 0;
+}
+
+.Routing__routes__3pEOK li {
+  display: inline-block;
+  margin-right: 0.7em;
+}
+
+.Routing__routes__3pEOK a {
+  text-decoration: none;
+  border-bottom: 1px dashed;
+}
+
+.Routing__routes__3pEOK a,
+.Routing__routes__3pEOK a.Routing__active__1gNPT:focus {
+  color: #6060cc;
+}
+
+.Routing__routes__3pEOK a.Routing__active__1gNPT {
+  border-bottom: none;
+  cursor: default;
+  font-weight: bold;
+}
+
+.stats__stats__zvaq0 {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+  opacity: 0.9;
+  z-index: 10000;
+}
+
+body {
+  font-family: sans-serif;
+  margin: 2em 4em;
+  padding: 0;
+}
+
+hr {
+  margin: 2em auto 3em;
+}
+
+.GriffeathMachine__field__1wxML {
+  display: inline-block;
+  cursor: pointer;
+  margin-bottom: 0.7em;
+}
+
+.GriffeathMachine__bigButton__1Dk5W {
+  margin-right: 2em;
+  padding: 0.6em 1.2em;
+}
+
