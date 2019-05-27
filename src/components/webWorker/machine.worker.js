@@ -1,7 +1,7 @@
 import { getUpdatedElement } from '../common/utils'
 
 onmessage = function updatePoints ({ data: { field, width, height, states, from, to } }) {
-  const result = new Int8Array(to - from)
+  const result = new Uint8Array(to - from)
   for (let i = from; i < to; i += 1) {
     const x = i % width
     // eslint-disable-next-line no-bitwise

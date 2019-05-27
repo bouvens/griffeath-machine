@@ -1,6 +1,6 @@
 export function getRandomField ({ width, height, states }) {
   const size = width * height
-  const field = new Int8Array(size)
+  const field = new Uint8Array(size)
 
   for (let i = 0; i < size; i += 1) {
     field[i] = Math.floor(Math.random() * states)
@@ -36,7 +36,7 @@ export function getUpdatedElement (i, x, y, field, width, height, states) {
 }
 
 export const getUpdatedField = ({ field, width, height, states }) => {
-  const result = new Int8Array(width * height)
+  const result = new Uint8Array(width * height)
 
   for (let y = 0; y < height; y += 1) {
     const padding = y * width

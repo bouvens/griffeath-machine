@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Connector, Input } from 'state-control'
+import Parallel from 'parallel1d'
 import GriffeathWorker from './machine.worker'
 import { DEFAULT, IDS, SPACE_CODE, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
 import CanvasField from '../common/CanvasField'
 import { getRandomField } from '../common/utils'
-import WorkersWrapper from './workersWrapper'
 
 export default class WebWorkerMachine extends PureComponent {
   static propTypes = {
@@ -29,7 +29,7 @@ export default class WebWorkerMachine extends PureComponent {
   canvas = React.createRef()
 
   componentDidMount () {
-    this.workers = new WorkersWrapper(GriffeathWorker, this.updateField, this.handleError)
+    this.workers = new Parallel(GriffeathWorker, this.updateField, { handleError: this.handleError, ArrayConstructor: Uint8Array })
     this.makeNewField()
     this.handlePlay()
 
@@ -65,7 +65,6 @@ export default class WebWorkerMachine extends PureComponent {
 
   makeNewField = () => {
     this.workers.terminate()
-    this.workers.initialize()
     this.updateField(getRandomField(this.state))
   }
 

@@ -4639,6 +4639,11 @@ parallel-transform@^1.1.0:
     inherits "^2.0.3"
     readable-stream "^2.1.5"
 
+parallel1d@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/parallel1d/-/parallel1d-0.1.1.tgz#d271f0f33d5ebca70f1141cbf1ee98e17a2f94fd"
+  integrity sha512-J263y+IixmTTy/0KtYTp5u79vi6mn2qkPzpkDwes40vzzlAmzemqJrO/s5eNwUDZX2+/fwhm15Ev0KMFfWurrQ==
+
 param-case@2.1.x:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/param-case/-/param-case-2.1.1.tgz#df94fd8cf6531ecf75e6bef9a0858fbc72be2247"
