@@ -30,7 +30,7 @@ export default class WebWorkerMachine extends PureComponent {
 
   componentDidMount () {
     this.workers = new Parallel(GriffeathWorker, this.updateField, { handleError: this.handleError, ArrayConstructor: Uint8Array })
-    this.makeNewField()
+    this.updateFieldRandomly()
     this.handlePlay()
 
     document.addEventListener('keydown', this.processKey)
@@ -63,9 +63,13 @@ export default class WebWorkerMachine extends PureComponent {
     }
   }
 
+  updateFieldRandomly = () => {
+    this.updateField(getRandomField(this.state))
+  }
+
   makeNewField = () => {
     this.workers.terminate()
-    this.updateField(getRandomField(this.state))
+    this.updateFieldRandomly()
   }
 
   handleNext = () => {
