@@ -11,7 +11,7 @@ This experiment made with [state-control ![npm][npm-badge]][npm]
 
 ## What’s this?
 
-A cyclic cellular automaton is a kind of cellular automaton rule developed by David Griffeath and studied by several other cellular automaton researchers.
+A cyclic cellular automaton is a kind of cellular automaton rule invited by David Griffeath and studied by several other cellular automaton researchers.
 
 More information and rules can be found in [Wikipedia](https://en.wikipedia.org/wiki/Cyclic_cellular_automaton).
 
