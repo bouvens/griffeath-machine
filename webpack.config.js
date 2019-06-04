@@ -46,18 +46,18 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-      favicon: path.join(__dirname, 'img/favicon.png'),
-    }),
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-      chunkFilename: '[id].css',
-    }),
-    // new BundleAnalyzerPlugin(),
-  ],
+  plugins: (isProduction ? new CleanWebpackPlugin() : [])
+    .concat([
+      new HtmlWebpackPlugin({
+        template: './src/index.html',
+        favicon: path.join(__dirname, 'img/favicon.png'),
+      }),
+      new MiniCssExtractPlugin({
+        filename: '[name].css',
+        chunkFilename: '[id].css',
+      }),
+      // new BundleAnalyzerPlugin(),
+    ]),
   optimization: {
     minimizer: [
       new TerserPlugin({
