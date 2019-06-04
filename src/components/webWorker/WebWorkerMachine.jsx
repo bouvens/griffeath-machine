@@ -22,14 +22,18 @@ export default class WebWorkerMachine extends PureComponent {
     height: this.props.height,
     states: this.props.states,
     status: STATUSES.pause,
+    fps: 0,
   }
 
   field = null
 
   canvas = React.createRef()
 
+  frameTimes = []
+
   componentDidMount () {
-    this.workers = new Parallel(GriffeathWorker, this.updateField, { handleError: this.handleError, ArrayConstructor: Uint8Array })
+    this.workers = new Parallel(GriffeathWorker, this.updateField,
+      { handleError: this.handleError, ArrayConstructor: Uint8Array })
     this.updateFieldRandomly()
     this.handlePlay()
 
@@ -41,12 +45,24 @@ export default class WebWorkerMachine extends PureComponent {
     this.workers.terminate()
   }
 
+  updateFPS = () => {
+    const now = performance.now()
+    while (this.frameTimes[0] <= now - 1000 && this.frameTimes.length > 0) {
+      this.frameTimes.shift()
+    }
+    this.frameTimes.push(now)
+    this.setState({ fps: this.frameTimes.length })
+  }
+
   updateField = (data) => {
     this.field = data
     this.canvas.current.paint(this.field)
 
     if (this.state.status === STATUSES.play) {
+      this.updateFPS()
       this.handleNext()
+    } else {
+      this.setState({ fps: 0 })
     }
   }
 
@@ -132,6 +148,12 @@ export default class WebWorkerMachine extends PureComponent {
             states={this.state.states}
             ref={this.canvas}
           />
+        </div>
+        <div className={style.fps}>
+          {this.state.fps}
+          {' FPS'}
+          <br />
+          in the canvas
         </div>
         <p><em>Press Space or click field for play / pause</em></p>
         <button type="button" className={style.bigButton} onClick={this.makeNewField}>
