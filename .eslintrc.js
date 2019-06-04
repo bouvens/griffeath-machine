@@ -3,11 +3,12 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
+    jasmine: true,
   },
   extends: 'airbnb',
   plugins: [
-    'react',
     'import',
+    'react',
   ],
   rules: {
     'arrow-parens': ['warn', 'always'],
@@ -26,6 +27,7 @@ module.exports = {
     'jsx-quotes': ['warn', 'prefer-double'],
     'linebreak-style': 'off',
     'no-multiple-empty-lines': 'warn',
+    'no-plusplus': ['error', { "allowForLoopAfterthoughts": true }],
     'no-trailing-spaces': ['error', { skipBlankLines: true }],
     'no-undefined': 'error',
     'no-unexpected-multiline': 'error',
@@ -33,6 +35,13 @@ module.exports = {
     'object-curly-newline': ['off'],
     'semi': ['warn', 'never'],
     'space-before-function-paren': ['error', 'always'],
+    'valid-jsdoc': ['error'],
+    'jsx-a11y/label-has-for': ['warn', {
+      'components': ['Label'],
+      'required': {
+        'every': [],
+      },
+    }],
     "react/destructuring-assignment": ['off', 'always'],
     'react/no-direct-mutation-state': 'error',
     'react/jsx-filename-extension': ['warn', { "extensions": [".js", ".jsx"] }],
