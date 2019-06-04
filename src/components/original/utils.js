@@ -28,6 +28,6 @@ export function getUpdatedElement (element, x, y, field, width, height, states) 
 
 export const getUpdatedField = ({ field, width, height, states }) => field.map(
   (column, x) => column.map(
-    (element, y) => getUpdatedElement(element, x, y, field, width, height, states)
-  )
+    (element, y) => getUpdatedElement(element, x, y, field, width, height, states),
+  ),
 )

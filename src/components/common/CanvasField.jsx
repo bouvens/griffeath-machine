@@ -22,7 +22,8 @@ export default class CanvasField extends React.PureComponent {
       this.colorsOfField[i] = (255 << 24) | (b << 16) | (g << 8) | r
     }
 
-    const canvasData = new ImageData(new Uint8ClampedArray(this.colorsOfField.buffer), width, height)
+    const canvasData = new ImageData(new Uint8ClampedArray(this.colorsOfField.buffer), width,
+      height)
     this.canvasContext.putImageData(canvasData, 0, 0)
   }
 

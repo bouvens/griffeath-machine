@@ -6,7 +6,8 @@
   "scripts": {
     "start": "webpack-dev-server --mode development --hot --open",
     "build": "webpack --mode production",
-    "deploy": "gh-pages -d dist",
+    "deploy": "yarn build && gh-pages -d dist",
+    "eslint:fix": "eslint --fix --ext .js,.jsx  ./src",
     "test": "node src/test/benchmark.js"
   },
   "dependencies": {
