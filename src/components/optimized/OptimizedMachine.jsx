@@ -97,7 +97,7 @@ export default class OptimizedMachine extends PureComponent {
 
   render () {
     return (
-      <div>
+      <>
         <Connector
           state={this.state}
           onChange={this.changeHandler}
@@ -144,7 +144,7 @@ export default class OptimizedMachine extends PureComponent {
             Next step
           </button>
         )}
-      </div>
+      </>
     )
   }
 }

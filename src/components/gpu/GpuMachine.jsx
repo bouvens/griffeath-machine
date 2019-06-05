@@ -127,7 +127,7 @@ export default class GpuMachine extends PureComponent {
 
   render () {
     return (
-      <div>
+      <>
         <Connector
           state={this.state}
           onChange={this.changeHandler}
@@ -174,7 +174,7 @@ export default class GpuMachine extends PureComponent {
             Next step
           </button>
         )}
-      </div>
+      </>
     )
   }
 }
