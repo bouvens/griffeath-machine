@@ -51,7 +51,8 @@ export default class WebWorkerMachine extends PureComponent {
       this.frameTimes.shift()
     }
     this.frameTimes.push(now)
-    this.setState({ fps: this.frameTimes.length })
+    // callback should be faster with React 16 and Fiber
+    this.setState(() => ({ fps: this.frameTimes.length }))
   }
 
   updateField = (data) => {
@@ -114,7 +115,14 @@ export default class WebWorkerMachine extends PureComponent {
 
   render () {
     return (
-      <div>
+      <>
+        {this.workers
+        && (
+          <p>
+            {this.workers.threads}
+            {' workers started'}
+          </p>
+        )}
         <Connector
           state={this.state}
           onChange={this.changeHandler}
@@ -167,7 +175,7 @@ export default class WebWorkerMachine extends PureComponent {
             Next step
           </button>
         )}
-      </div>
+      </>
     )
   }
 }
