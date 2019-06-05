@@ -26,6 +26,10 @@ export default class GpuMachine extends PureComponent {
 
   canvas = React.createRef()
 
+  makeGetUpdatedField
+
+  fieldUpdater
+
   componentDidMount () {
     this.handleNew()
     document.addEventListener('keydown', this.processKey)
@@ -120,10 +124,6 @@ export default class GpuMachine extends PureComponent {
     }
     this.setState({ [name]: value })
   }
-
-  makeGetUpdatedField
-
-  fieldUpdater
 
   render () {
     return (

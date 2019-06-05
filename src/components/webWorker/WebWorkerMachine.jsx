@@ -31,6 +31,8 @@ export default class WebWorkerMachine extends PureComponent {
 
   frameTimes = []
 
+  workers
+
   componentDidMount () {
     this.workers = new Parallel(GriffeathWorker, this.updateField,
       { handleError: this.handleError, ArrayConstructor: Uint8Array })
@@ -110,8 +112,6 @@ export default class WebWorkerMachine extends PureComponent {
   changeHandler = (name, value) => {
     this.setState({ [name]: value })
   }
-
-  workers
 
   render () {
     return (

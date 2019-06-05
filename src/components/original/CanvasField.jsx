@@ -9,6 +9,10 @@ export default class CanvasField extends React.PureComponent {
     states: PropTypes.number.isRequired,
   }
 
+  canvasContext
+
+  canvasData
+
   drawPixel = (x, y, h) => {
     const index = (x + (y * this.props.width)) * 4
     const { r, g, b } = hueToRgb(h)
@@ -36,10 +40,6 @@ export default class CanvasField extends React.PureComponent {
   refCanvas = (elem) => {
     this.canvasContext = elem && elem.getContext('2d')
   }
-
-  canvasContext
-
-  canvasData
 
   render () {
     return (

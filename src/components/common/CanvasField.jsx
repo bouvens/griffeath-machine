@@ -9,6 +9,10 @@ export default class CanvasField extends React.PureComponent {
     states: PropTypes.number.isRequired,
   }
 
+  canvasContext
+
+  colorsOfField
+
   paint = (field) => {
     const { width, height, states } = this.props
     const size = width * height
@@ -30,10 +34,6 @@ export default class CanvasField extends React.PureComponent {
   refCanvas = (elem) => {
     this.canvasContext = elem && elem.getContext('2d')
   }
-
-  canvasContext
-
-  colorsOfField
 
   render () {
     return (
