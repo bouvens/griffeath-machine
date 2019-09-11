@@ -50,5 +50,6 @@
   },
   "author": "Alexander Demin <bouvens@gmail.com> (https://bouvens.github.io/)",
   "homepage": "https://bouvens.github.io/griffeath-machine",
+  "repository": "github:bouvens/griffeath-machine",
   "license": "MIT"
 }
