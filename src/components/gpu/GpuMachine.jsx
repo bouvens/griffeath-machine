@@ -7,6 +7,14 @@ import { getRandomField } from '../original/utils'
 import CanvasField from './CanvasField'
 
 export default class GpuMachine extends PureComponent {
+  field = null
+
+  canvas = React.createRef()
+
+  makeGetUpdatedField
+
+  fieldUpdater
+
   static propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
@@ -21,14 +29,6 @@ export default class GpuMachine extends PureComponent {
     states: this.props.states,
     status: STATUSES.pause,
   }
-
-  field = null
-
-  canvas = React.createRef()
-
-  makeGetUpdatedField
-
-  fieldUpdater
 
   componentDidMount () {
     this.handleNew()
@@ -113,7 +113,7 @@ export default class GpuMachine extends PureComponent {
         this.updateFieldSize(value)
         break
       case IDS.height:
-        this.updateFieldSize(void 0, value)
+        this.updateFieldSize(undefined, value)
         break
       case IDS.states:
         if (value > 255) {

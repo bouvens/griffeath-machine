@@ -7,6 +7,10 @@ import CanvasField from '../common/CanvasField'
 import { getRandomField, getUpdatedField } from '../common/utils'
 
 export default class OptimizedMachine extends PureComponent {
+  field = null
+
+  canvas = React.createRef()
+
   static propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
@@ -21,10 +25,6 @@ export default class OptimizedMachine extends PureComponent {
     states: this.props.states,
     status: STATUSES.pause,
   }
-
-  field = null
-
-  canvas = React.createRef()
 
   componentDidMount () {
     this.handleNew()

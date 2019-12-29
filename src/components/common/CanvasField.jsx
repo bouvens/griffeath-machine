@@ -3,15 +3,15 @@ import PropTypes from 'prop-types'
 import getColor from 'number-to-color'
 
 export default class CanvasField extends React.PureComponent {
+  canvasContext
+
+  colorsOfField
+
   static propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     states: PropTypes.number.isRequired,
   }
-
-  canvasContext
-
-  colorsOfField
 
   paint = (field) => {
     const { width, height, states } = this.props
@@ -32,7 +32,7 @@ export default class CanvasField extends React.PureComponent {
   }
 
   refCanvas = (elem) => {
-    this.canvasContext = elem && elem.getContext('2d')
+    this.canvasContext = elem && elem.getContext('2d', { desynchronized: true })
   }
 
   render () {
@@ -42,7 +42,7 @@ export default class CanvasField extends React.PureComponent {
         width={this.props.width}
         height={this.props.height}
       >
-        {'You are using an outdated browser without support of canvas elements.'}
+        You are using an outdated browser without support of canvas elements.
       </canvas>
     )
   }

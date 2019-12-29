@@ -10,10 +10,7 @@ export default class ErrorBoundary extends React.Component {
     children: PropTypes.element.isRequired,
   }
 
-  constructor (props) {
-    super(props)
-    this.state = { hasError: false }
-  }
+  state = { hasError: false }
 
   componentDidCatch () {
     this.setState({ hasError: true })
@@ -22,8 +19,8 @@ export default class ErrorBoundary extends React.Component {
   render () {
     if (this.state.hasError) {
       return [
-        <h1>{'I\'m sorry. Something went wrong.'}</h1>,
-        <button onClick={reloadPage} type="button">Reload</button>,
+        <h1 key={0}>{'I\'m sorry. Something went wrong.'}</h1>,
+        <button key={1} onClick={reloadPage} type="button">Reload</button>,
       ]
     }
     return this.props.children

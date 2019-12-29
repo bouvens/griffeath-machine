@@ -3,15 +3,15 @@ import PropTypes from 'prop-types'
 import hueToRgb from 'number-to-color/map'
 
 export default class CanvasField extends React.PureComponent {
+  canvasContext
+
+  canvasData
+
   static propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     states: PropTypes.number.isRequired,
   }
-
-  canvasContext
-
-  canvasData
 
   drawPixel = (x, y, h) => {
     const index = (x + (y * this.props.width)) * 4
@@ -48,7 +48,7 @@ export default class CanvasField extends React.PureComponent {
         width={this.props.width}
         height={this.props.height}
       >
-        {'You are using an outdated browser without support of canvas elements.'}
+        You are using an outdated browser without support of canvas elements.
       </canvas>
     )
   }

@@ -3,15 +3,15 @@ import PropTypes from 'prop-types'
 import getColor from 'number-to-color'
 
 export default class CanvasField extends React.PureComponent {
+  canvasContext
+
+  uInt32Array
+
   static propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     states: PropTypes.number.isRequired,
   }
-
-  canvasContext
-
-  uInt32Array
 
   drawPixel = (x, y, h, states) => {
     const index = x + (y * this.props.width)
@@ -49,7 +49,7 @@ export default class CanvasField extends React.PureComponent {
         width={this.props.width}
         height={this.props.height}
       >
-        {'You are using an outdated browser without support of canvas elements.'}
+        You are using an outdated browser without support of canvas elements.
       </canvas>
     )
   }

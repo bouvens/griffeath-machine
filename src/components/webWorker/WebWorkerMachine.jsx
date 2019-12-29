@@ -9,6 +9,14 @@ import CanvasField from '../common/CanvasField'
 import { getRandomField } from '../common/utils'
 
 export default class WebWorkerMachine extends PureComponent {
+  field = null
+
+  canvas = React.createRef()
+
+  frameTimes = []
+
+  workers
+
   static propTypes = {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
@@ -24,14 +32,6 @@ export default class WebWorkerMachine extends PureComponent {
     status: STATUSES.pause,
     fps: 0,
   }
-
-  field = null
-
-  canvas = React.createRef()
-
-  frameTimes = []
-
-  workers
 
   componentDidMount () {
     this.workers = new Parallel(GriffeathWorker, this.updateField,
