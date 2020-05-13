@@ -47,7 +47,7 @@ module.exports = {
       },
     ],
   },
-  plugins: (isProduction ? new CleanWebpackPlugin() : [])
+  plugins: (isProduction ? [new CleanWebpackPlugin()] : [])
     .concat([
       new HtmlWebpackPlugin({
         template: './src/index.html',
