@@ -11,15 +11,15 @@ This experiment made with [state-control ![npm][npm-badge]][npm]
 
 ## What’s this?
 
-A cyclic cellular automaton is a kind of cellular automaton rule invited by David Griffeath and studied by several other cellular automaton researchers.
+A cyclic cellular automaton is a kind of automaton rule invented by David Griffeath and studied by several other researchers.
 
-More information and rules can be found in [Wikipedia](https://en.wikipedia.org/wiki/Cyclic_cellular_automaton).
+You can find more information and rules in [Wikipedia](https://en.wikipedia.org/wiki/Cyclic_cellular_automaton).
 
 Rendering is made with high performance method `CanvasRenderingContext2D.putImageData()` with typed arrays and some bitwise magic inside React component [`<CanvasField />`](https://github.com/bouvens/griffeath-machine/blob/master/src/components/optimized/CanvasField.jsx).
 
 ## How it works?
 
-On every step [every cell changes](https://github.com/bouvens/griffeath-machine/blob/master/src/utils.js) it’s value to 1 of 4 neighbour’s value if it have modular value one unit larger.
+On every step [every cell changes](https://github.com/bouvens/griffeath-machine/blob/master/src/utils.js) its value to make it equal to a neighbor’s value if it has modular value one unit larger.
 
 ## How to run locally
 
@@ -31,8 +31,7 @@ npm install
 npm start
 ```
 
-Also there’s a script for local build:
+Also, there’s a script for a local build:
 ```bash
 npm run build
 ```
-
