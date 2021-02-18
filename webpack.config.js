@@ -62,7 +62,6 @@ module.exports = {
   optimization: {
     minimizer: [
       new TerserPlugin({
-        cache: '.cache',
         exclude: /^gpu-utils\.bundle\.js$/,
       }),
     ],
