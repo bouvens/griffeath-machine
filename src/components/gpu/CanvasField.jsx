@@ -42,7 +42,7 @@ export default class CanvasField extends React.PureComponent {
     this.canvasContext = elem && elem.getContext('2d')
   }
 
-  render () {
+  render() {
     return (
       <canvas
         ref={this.refCanvas}

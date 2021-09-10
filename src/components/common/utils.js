@@ -1,4 +1,4 @@
-export function getRandomField ({ width, height, states }) {
+export function getRandomField({ width, height, states }) {
   const size = width * height
   const field = new Uint8Array(size)
 
@@ -9,7 +9,7 @@ export function getRandomField ({ width, height, states }) {
   return field
 }
 
-function mod (number, limit) {
+function mod(number, limit) {
   if (number < 0) {
     return number + limit
   }
@@ -21,7 +21,7 @@ function mod (number, limit) {
   return number
 }
 
-export function getUpdatedElement (i, x, y, field, width, height, states) {
+export function getUpdatedElement(i, x, y, field, width, height, states) {
   const element = field[i]
   const plusOne = mod(element + 1, states)
 

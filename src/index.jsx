@@ -8,7 +8,7 @@ render(<App />, document.querySelector('#app'))
 
 const stats = new Stats()
 document.body.appendChild(stats.dom)
-requestAnimationFrame(function loop () {
+requestAnimationFrame(function loop() {
   stats.update()
   requestAnimationFrame(loop)
 })

@@ -33,7 +33,7 @@ export default class WebWorkerMachine extends PureComponent {
     fps: 0,
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.workers = new Parallel(GriffeathWorker, this.updateField,
       { handleError: this.handleError, ArrayConstructor: Uint8Array })
     this.updateFieldRandomly()
@@ -42,7 +42,7 @@ export default class WebWorkerMachine extends PureComponent {
     document.addEventListener('keydown', this.processKey)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     document.removeEventListener('keydown', this.processKey)
     this.workers.terminate()
   }
@@ -113,7 +113,7 @@ export default class WebWorkerMachine extends PureComponent {
     this.setState({ [name]: value })
   }
 
-  render () {
+  render() {
     return (
       <>
         {this.workers

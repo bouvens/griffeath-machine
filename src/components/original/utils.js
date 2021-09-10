@@ -1,4 +1,4 @@
-export function getRandomField ({ width, height, states }) {
+export function getRandomField({ width, height, states }) {
   const field = []
 
   for (let x = 0; x < width; x += 1) {
@@ -13,7 +13,7 @@ export function getRandomField ({ width, height, states }) {
 
 const mod = (number, limit) => (number < 0 ? number + limit : number % limit)
 
-export function getUpdatedElement (element, x, y, field, width, height, states) {
+export function getUpdatedElement(element, x, y, field, width, height, states) {
   const plusOne = mod(element + 1, states)
 
   if (field[x][mod(y - 1, height)] === plusOne

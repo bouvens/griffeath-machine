@@ -1,6 +1,6 @@
 import GPU from 'gpu.js'
 
-function myMod (number, limit) {
+function myMod(number, limit) {
   if (number < 0) {
     return number + limit
   }
@@ -12,7 +12,7 @@ function myMod (number, limit) {
   return number
 }
 
-function updateElement (field, width, height, states) {
+function updateElement(field, width, height, states) {
   // what a mess
   const ver = this.thread.x
   const hor = this.thread.y

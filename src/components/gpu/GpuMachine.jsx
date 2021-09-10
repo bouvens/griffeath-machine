@@ -30,7 +30,7 @@ export default class GpuMachine extends PureComponent {
     status: STATUSES.pause,
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.handleNew()
     document.addEventListener('keydown', this.processKey)
 
@@ -44,7 +44,7 @@ export default class GpuMachine extends PureComponent {
       })
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     cancelAnimationFrame(this.requestID)
 
     document.removeEventListener('keydown', this.processKey)
@@ -125,7 +125,7 @@ export default class GpuMachine extends PureComponent {
     this.setState({ [name]: value })
   }
 
-  render () {
+  render() {
     return (
       <>
         <Connector

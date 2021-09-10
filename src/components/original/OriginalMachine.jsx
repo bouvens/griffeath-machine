@@ -26,14 +26,14 @@ export default class OriginalMachine extends PureComponent {
     status: STATUSES.pause,
   }
 
-  componentDidMount () {
+  componentDidMount() {
     this.handleNew()
     this.handlePlay()
 
     document.addEventListener('keydown', this.processKey)
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     cancelAnimationFrame(this.requestID)
 
     document.removeEventListener('keydown', this.processKey)
@@ -89,7 +89,7 @@ export default class OriginalMachine extends PureComponent {
     this.setState({ [name]: value })
   }
 
-  render () {
+  render() {
     return (
       <>
         <Connector

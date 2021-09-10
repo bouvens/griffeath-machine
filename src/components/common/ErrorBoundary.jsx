@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function reloadPage () {
+function reloadPage() {
   window.location.reload()
 }
 
@@ -12,11 +12,11 @@ export default class ErrorBoundary extends React.Component {
 
   state = { hasError: false }
 
-  componentDidCatch () {
+  componentDidCatch() {
     this.setState({ hasError: true })
   }
 
-  render () {
+  render() {
     if (this.state.hasError) {
       return [
         <h1 key={0}>{'I\'m sorry. Something went wrong.'}</h1>,
