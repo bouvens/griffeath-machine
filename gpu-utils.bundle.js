@@ -1,9 +1,9 @@
+"use strict";
 (this["webpackChunkgriffeath_machine"] = this["webpackChunkgriffeath_machine"] || []).push([[809],{
 
 /***/ 3588:
 /***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "makeGetUpdatedField": function() { return /* binding */ makeGetUpdatedField; }
