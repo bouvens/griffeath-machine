@@ -6,7 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack serve --hot --open",
     "build": "cross-env NODE_ENV=production webpack",
-    "deploy": "npm build && gh-pages -d dist",
+    "deploy": "npm run build && gh-pages -d dist",
     "eslint": "eslint --ext .js,.jsx ./src",
     "eslint:html": "eslint --ext .js,.jsx -f html -o ./reports/eslint.checkstyle.html ./src",
     "eslint:fix": "eslint --fix --ext .js,.jsx  ./src",
