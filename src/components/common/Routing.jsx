@@ -18,7 +18,7 @@ const Routing = ({ routes }) => (
             <NavLink to={route.path} activeClassName={style.active}>{route.name}</NavLink>
           </li>
         ))}
-        ← these loads lazily
+        ← these are loaded lazily
       </ul>
       <Switch>
         {routes.map((route) => (

@@ -23,7 +23,7 @@ On every step [every cell changes](https://github.com/bouvens/griffeath-machine/
 
 ## How to run locally
 
-Run in bash:
+Run in bash
 ```bash
 git clone git@github.com:bouvens/griffeath-machine.git
 cd griffeath-machine
@@ -31,7 +31,7 @@ npm install
 npm start
 ```
 
-Also, there’s a script for a local build:
+Also, there’s the script for local build
 ```bash
 npm run build
 ```
