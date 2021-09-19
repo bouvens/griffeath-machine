@@ -35,7 +35,7 @@ export default class WebWorkerMachine extends PureComponent {
 
   componentDidMount() {
     this.workers = new Parallel(GriffeathWorker, this.updateField,
-      { handleError: this.handleError, ArrayConstructor: Uint8Array })
+      { numberOfWorkers: 4, ArrayConstructor: Uint8Array })
     this.updateFieldRandomly()
     this.handlePlay()
 
@@ -67,10 +67,6 @@ export default class WebWorkerMachine extends PureComponent {
     } else {
       this.setState({ fps: 0 })
     }
-  }
-
-  handleError = () => {
-    this.setState({ status: STATUSES.pause }, this.makeNewField)
   }
 
   getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
