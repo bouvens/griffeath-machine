@@ -49,9 +49,6 @@
     "webpack-dev-server": "^4.2.0",
     "worker-loader": "^3.0.8"
   },
-  "eslintConfig": {
-    "extends": "air"
-  },
   "browserslist": [
     "defaults"
   ],
