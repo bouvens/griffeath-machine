@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "start": "cross-env NODE_ENV=development webpack serve --hot --open",
+    "start:prod": "cross-env NODE_ENV=production webpack serve --hot --open",
     "build": "cross-env NODE_ENV=production webpack",
     "deploy": "npm run build && gh-pages -d dist",
     "lint": "eslint --ext .js,.jsx ./src",
