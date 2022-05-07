@@ -8,7 +8,6 @@
     "build": "cross-env NODE_ENV=production webpack",
     "deploy": "npm run build && gh-pages -d dist",
     "lint": "eslint --ext .js,.jsx ./src",
-    "lint:html": "eslint --ext .js,.jsx -f html -o ./reports/eslint.checkstyle.html ./src",
     "lint:fix": "eslint --fix --ext .js,.jsx  ./src",
     "test": "node src/test/benchmark.js"
   },
