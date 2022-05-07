@@ -1,0 +1,14 @@
+/**
+ * gpu.js
+ * http://gpu.rocks/
+ *
+ * GPU Accelerated JavaScript
+ *
+ * @version 2.15.2
+ * @date Mon Mar 28 2022 10:51:06 GMT-0400 (Eastern Daylight Time)
+ *
+ * @license MIT
+ * The MIT License
+ *
+ * Copyright (c) 2022 gpu.js Team
+ */

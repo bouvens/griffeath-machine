@@ -1,29 +1,29 @@
-.Routing__routes__TnWxa {
+.Routing__routes__x2ZKO {
   padding: 0;
 }
 
-.Routing__routes__TnWxa li {
+.Routing__routes__x2ZKO li {
   display: inline-block;
   margin-right: 0.7em;
 }
 
-.Routing__routes__TnWxa a {
+.Routing__routes__x2ZKO a {
   text-decoration: none;
   border-bottom: 1px dashed;
 }
 
-.Routing__routes__TnWxa a,
-.Routing__routes__TnWxa a.Routing__active__A4LyO:focus {
+.Routing__routes__x2ZKO a,
+.Routing__routes__x2ZKO a.Routing__active__krb1h:focus {
   color: #6060cc;
 }
 
-.Routing__routes__TnWxa a.Routing__active__A4LyO {
+.Routing__routes__x2ZKO a.Routing__active__krb1h {
   border-bottom: none;
   cursor: default;
   font-weight: bold;
 }
 
-.stats__stats__S2HSK {
+.stats__stats__SGQqR {
   position: fixed;
   bottom: 0;
   right: 0;
@@ -42,18 +42,18 @@ hr {
   margin: 2em auto 3em;
 }
 
-.GriffeathMachine__field__juaXM {
+.GriffeathMachine__field__E7cXr {
   display: inline-block;
   cursor: pointer;
   margin-bottom: 0.7em;
 }
 
-.GriffeathMachine__bigButton__NiL0_ {
+.GriffeathMachine__bigButton__Punqk {
   margin-right: 2em;
   padding: 0.6em 1.2em;
 }
 
-.GriffeathMachine__fps___rWH8 {
+.GriffeathMachine__fps__3PT8D {
   position: fixed;
   display: inline-block;
   right: 0;
