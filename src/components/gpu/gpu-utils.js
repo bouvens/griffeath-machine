@@ -1,4 +1,4 @@
-import GPU from 'gpu.js'
+import { GPU } from 'gpu.js'
 
 function myMod(number, limit) {
   if (number < 0) {
