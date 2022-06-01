@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import hueToRgb from 'number-to-color/map'
+import { mapColor } from 'number-to-color/map-color'
 
 export default class CanvasField extends React.PureComponent {
   canvasContext
@@ -15,7 +15,7 @@ export default class CanvasField extends React.PureComponent {
 
   drawPixel = (x, y, h) => {
     const index = (x + (y * this.props.width)) * 4
-    const { r, g, b } = hueToRgb(h)
+    const { r, g, b } = mapColor(h)
 
     this.canvasData.data[index] = r
     this.canvasData.data[index + 1] = g

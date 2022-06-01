@@ -2,13 +2,14 @@ export const IDS = {
   width: 'width',
   height: 'height',
   states: 'states',
-  status: 'status',
+  shuffle: 'shuffle',
 }
 
 export const DEFAULT = {
   [IDS.width]: 1200,
   [IDS.height]: 700,
   [IDS.states]: 16,
+  [IDS.shuffle]: false,
 }
 
 export const STATUSES = {

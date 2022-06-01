@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Connector, Input } from 'state-control'
+import { Check, Connector, Input } from 'state-control'
 import { DEFAULT, IDS, SPACE_CODE, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
 import CanvasField from '../common/CanvasField'
@@ -15,14 +15,16 @@ export default class OptimizedMachine extends PureComponent {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     states: PropTypes.number.isRequired,
+    shuffle: PropTypes.bool.isRequired,
   }
 
   static defaultProps = { ...DEFAULT }
 
   state = {
-    width: this.props.width,
-    height: this.props.height,
-    states: this.props.states,
+    [IDS.width]: this.props.width,
+    [IDS.height]: this.props.height,
+    [IDS.states]: this.props.states,
+    [IDS.shuffle]: this.props.shuffle,
     status: STATUSES.pause,
   }
 
@@ -117,6 +119,10 @@ export default class OptimizedMachine extends PureComponent {
             label="Number of states"
             defaultNum={1}
           />
+          <Check
+            id={IDS.shuffle}
+            label="Shuffle colors"
+          />
         </Connector>
         <div
           onClick={this.handlePlay}
@@ -129,6 +135,7 @@ export default class OptimizedMachine extends PureComponent {
             width={this.state.width}
             height={this.state.height}
             states={this.state.states}
+            shuffle={this.state.shuffle}
             ref={this.canvas}
           />
         </div>

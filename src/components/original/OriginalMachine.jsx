@@ -20,9 +20,9 @@ export default class OriginalMachine extends PureComponent {
   static defaultProps = { ...DEFAULT }
 
   state = {
-    width: this.props.width,
-    height: this.props.height,
-    states: this.props.states,
+    [IDS.width]: this.props.width,
+    [IDS.height]: this.props.height,
+    [IDS.states]: this.props.states,
     status: STATUSES.pause,
   }
 

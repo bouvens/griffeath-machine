@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "gpu.js": "^2.15.2",
-    "number-to-color": "^0.5.0",
+    "number-to-color": "^1.0.0",
     "parallel1d": "^1.0.1",
     "prop-types": "^15.6.0",
     "react": "^17.0.1",

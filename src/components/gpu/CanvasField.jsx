@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import getColor from 'number-to-color'
+import { numberToColor } from 'number-to-color'
 
 export default class CanvasField extends React.PureComponent {
   canvasContext
@@ -11,11 +11,12 @@ export default class CanvasField extends React.PureComponent {
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     states: PropTypes.number.isRequired,
+    shuffle: PropTypes.bool.isRequired,
   }
 
   drawPixel = (x, y, h, states) => {
     const index = x + (y * this.props.width)
-    const { r, g, b } = getColor(h, states)
+    const { r, g, b } = numberToColor(h, states, this.props.shuffle)
 
     /* eslint-disable-next-line no-bitwise */
     this.uInt32Array[index] = (255 << 24) | (b << 16) | (g << 8) | r
