@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import { DEFAULT, IDS, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
 import { getRandomField } from '../original/utils'
@@ -15,20 +14,8 @@ export default class GpuMachine extends PureComponent {
 
   fieldUpdater
 
-  static propTypes = {
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    states: PropTypes.number.isRequired,
-    shuffle: PropTypes.bool.isRequired,
-  }
-
-  static defaultProps = { ...DEFAULT }
-
   state = {
-    [IDS.width]: this.props.width,
-    [IDS.height]: this.props.height,
-    [IDS.states]: this.props.states,
-    [IDS.shuffle]: this.props.shuffle,
+    ...DEFAULT,
     status: STATUSES.pause,
   }
 
@@ -37,7 +24,7 @@ export default class GpuMachine extends PureComponent {
 
     import(/* webpackChunkName: "gpu-utils" */ './gpu-utils')
       .then((module) => {
-        const { width, height } = this.props
+        const { width, height } = this.state
 
         this.makeGetUpdatedField = module.makeGetUpdatedField
         this.fieldUpdater = this.makeGetUpdatedField(width, height)
@@ -49,7 +36,7 @@ export default class GpuMachine extends PureComponent {
     cancelAnimationFrame(this.requestID)
   }
 
-  updateFieldSize = (width = this.props.width, height = this.props.height) => {
+  updateFieldSize = (width = this.state.width, height = this.state.height) => {
     this.fieldUpdater = this.makeGetUpdatedField(width, height)
   }
 
