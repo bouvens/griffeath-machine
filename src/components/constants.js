@@ -17,6 +17,7 @@ export const STATUSES = {
   pause: 'Pause',
 }
 
+export const KEY_FOR_RESET = 'Enter'
 // NB event.preventDefault() for Space rewrites normal behavior of checkboxes
 export const KEY_FOR_PAUSE = ' '
-export const KEY_FOR_RESET = 'Enter'
+export const MODIFIER_FOR_STEP = 'Shift'

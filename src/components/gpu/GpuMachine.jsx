@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { DEFAULT, IDS, KEY_FOR_PAUSE, KEY_FOR_RESET, STATUSES } from '../constants'
+import { DEFAULT, IDS, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
 import { getRandomField } from '../original/utils'
 import CanvasField from './CanvasField'
@@ -34,7 +34,6 @@ export default class GpuMachine extends PureComponent {
 
   componentDidMount() {
     this.handleNew()
-    document.addEventListener('keydown', this.handleKeyDown)
 
     import(/* webpackChunkName: "gpu-utils" */ './gpu-utils')
       .then((module) => {
@@ -48,22 +47,6 @@ export default class GpuMachine extends PureComponent {
 
   componentWillUnmount() {
     cancelAnimationFrame(this.requestID)
-
-    document.removeEventListener('keydown', this.handleKeyDown)
-  }
-
-  handleKeyDown = (event) => {
-    switch (event.key) {
-      case KEY_FOR_PAUSE:
-        event.preventDefault()
-        this.handlePlay()
-        break
-      case KEY_FOR_RESET:
-        event.preventDefault()
-        this.handleNew()
-        break
-      default:
-    }
   }
 
   updateFieldSize = (width = this.props.width, height = this.props.height) => {
@@ -144,7 +127,6 @@ export default class GpuMachine extends PureComponent {
         />
         <div
           onClick={this.handlePlay}
-          onKeyDown={this.handleKeyDown}
           className={style.field}
           role="presentation"
           title="⏯"

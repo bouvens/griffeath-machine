@@ -1,10 +1,39 @@
-import React from 'react'
+// we can disable particular accessibility because we give global keyboard control
+/* eslint-disable jsx-a11y/interactive-supports-focus,jsx-a11y/click-events-have-key-events */
+
+import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { Check, Connector, Input } from 'state-control'
-import { IDS, STATUSES } from '../constants'
+import { IDS, KEY_FOR_PAUSE, KEY_FOR_RESET, MODIFIER_FOR_STEP, STATUSES } from '../constants'
 import style from './GriffeathMachine.css'
 
 export default function ControlBlock({ state, onChange, onReset, onPlayPause, onNextStep }) {
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      switch (event.key) {
+        case KEY_FOR_PAUSE:
+          event.preventDefault()
+          if (event.getModifierState(MODIFIER_FOR_STEP)) {
+            onNextStep()
+          } else {
+            onPlayPause()
+          }
+          break
+        case KEY_FOR_RESET:
+          event.preventDefault()
+          onReset()
+          break
+        default:
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [])
+
   return (
     <>
       <Connector
@@ -31,18 +60,26 @@ export default function ControlBlock({ state, onChange, onReset, onPlayPause, on
           label="Shuffle colors"
         />
       </Connector>
-      <p><em>Press Space or click field for play / pause</em></p>
-      <button type="button" className={style.bigButton} onClick={onReset}>
-        New
-      </button>
-      <button type="button" className={style.bigButton} onClick={onPlayPause}>
-        {state.status === STATUSES.play ? STATUSES.pause : STATUSES.play}
-      </button>
-      {state.status === STATUSES.pause && (
-        <button type="button" className={style.bigButton} onClick={onNextStep}>
-          Next step
-        </button>
-      )}
+      <p>
+        <span onClick={onReset} role="button">
+          <span className={style.key}>Enter</span>
+          <span className={style.activeDescription}>New (Reset)</span>
+        </span>
+      </p>
+      <p>
+        <span onClick={onPlayPause} role="button">
+          <span className={style.key}>Space</span>
+          <span className={style.activeDescription}>Play / Pause</span>
+        </span>
+      </p>
+      <p className={state.status !== STATUSES.pause ? style.hidden : undefined}>
+        <span onClick={onNextStep} role="button">
+          <span className={style.key}>Shift</span>
+          {' + '}
+          <span className={style.key}>Space</span>
+          <span className={style.activeDescription}>One step forward</span>
+        </span>
+      </p>
     </>
   )
 }

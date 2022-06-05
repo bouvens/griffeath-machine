@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { DEFAULT, IDS, KEY_FOR_PAUSE, KEY_FOR_RESET, STATUSES } from '../constants'
+import { DEFAULT, IDS, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
 import CanvasField from '../common/CanvasField'
 import { getRandomField, getUpdatedField } from '../common/utils'
@@ -31,30 +31,10 @@ export default class OptimizedMachine extends PureComponent {
   componentDidMount() {
     this.handleNew()
     this.nextStep()
-
-    document.addEventListener('keydown', this.handleKeyDown)
   }
 
   componentWillUnmount() {
     cancelAnimationFrame(this.requestID)
-
-    document.removeEventListener('keydown', this.handleKeyDown)
-  }
-
-  getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
-
-  handleKeyDown = (event) => {
-    switch (event.key) {
-      case KEY_FOR_PAUSE:
-        event.preventDefault()
-        this.handlePlay()
-        break
-      case KEY_FOR_RESET:
-        event.preventDefault()
-        this.handleNew()
-        break
-      default:
-    }
   }
 
   nextStep = () => {
@@ -116,7 +96,6 @@ export default class OptimizedMachine extends PureComponent {
         />
         <div
           onClick={this.handlePlay}
-          onKeyDown={this.handleKeyDown}
           className={style.field}
           role="presentation"
           title="⏯"

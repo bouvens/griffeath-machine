@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import Parallel from 'parallel1d'
 import GriffeathWorker from './machine.worker'
-import { DEFAULT, IDS, KEY_FOR_PAUSE, KEY_FOR_RESET, STATUSES } from '../constants'
+import { DEFAULT, IDS, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
 import CanvasField from '../common/CanvasField'
 import { getRandomField } from '../common/utils'
@@ -40,12 +40,9 @@ export default class WebWorkerMachine extends PureComponent {
       { numberOfWorkers: 4, ArrayConstructor: Uint8Array })
     this.updateFieldRandomly()
     this.handlePlay()
-
-    document.addEventListener('keydown', this.handleKeyDown)
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown)
     this.workers.terminate()
   }
 
@@ -68,20 +65,6 @@ export default class WebWorkerMachine extends PureComponent {
       this.handleNext()
     } else {
       this.setState({ fps: 0 })
-    }
-  }
-
-  handleKeyDown = (event) => {
-    switch (event.key) {
-      case KEY_FOR_PAUSE:
-        event.preventDefault()
-        this.handlePlay()
-        break
-      case KEY_FOR_RESET:
-        event.preventDefault()
-        this.makeNewField()
-        break
-      default:
     }
   }
 
@@ -135,7 +118,6 @@ export default class WebWorkerMachine extends PureComponent {
         />
         <div
           onClick={this.handlePlay}
-          onKeyDown={this.handleKeyDown}
           className={style.field}
           role="presentation"
           title="⏯"
