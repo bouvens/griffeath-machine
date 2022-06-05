@@ -39,18 +39,12 @@ body {
 }
 
 hr {
-  margin: 2em auto 3em;
+  margin: 2em auto;
 }
 
 .GriffeathMachine__field__E7cXr {
-  display: inline-block;
   cursor: pointer;
-  margin-bottom: 0.7em;
-}
-
-.GriffeathMachine__bigButton__Punqk {
-  margin-right: 2em;
-  padding: 0.6em 1.2em;
+  margin-top: 0.7em;
 }
 
 .GriffeathMachine__fps__3PT8D {
@@ -63,5 +57,27 @@ hr {
   padding: 5px 10px 6px;
   font-size: 12px;
   color: #fff;
+}
+
+.GriffeathMachine__key__LytvS {
+  display: inline-block;
+  border: 1px solid darkgray;
+  border-radius: 3px;
+  padding: 0.1em 0.3em;
+  background-color: lightgray;
+  font-size: 0.8em;
+  cursor: pointer;
+}
+
+.GriffeathMachine__activeDescription__u49q7 {
+  display: inline-block;
+  margin-left: 0.5em;
+  border-bottom: 1px dotted #6060cc;
+  color: #6060cc;
+  cursor: pointer;
+}
+
+.GriffeathMachine__hidden__SvdP0 {
+  visibility: hidden;
 }
 
