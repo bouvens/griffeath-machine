@@ -48,11 +48,12 @@ export default function ControlBlock({ state, onChange, onReset, onPlayPause, on
 }
 
 ControlBlock.propTypes = {
-  state: PropTypes.objectOf({
+  state: PropTypes.exact({
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     states: PropTypes.number.isRequired,
     shuffle: PropTypes.bool.isRequired,
+    status: PropTypes.string.isRequired,
   }).isRequired,
   onChange: PropTypes.func.isRequired,
   onReset: PropTypes.func.isRequired,

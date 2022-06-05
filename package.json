@@ -17,9 +17,9 @@
     "number-to-color": "^1.0.0",
     "parallel1d": "^1.0.1",
     "prop-types": "^15.6.0",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-router-dom": "^5.0.0",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0",
+    "react-router-dom": "^6.3.0",
     "state-control": "^3.0.0"
   },
   "devDependencies": {
@@ -37,7 +37,7 @@
     "eslint-config-air": "^0.7.2",
     "eslint-import-resolver-webpack": "^0.13.0",
     "eslint-plugin-react": "^7.4.0",
-    "gh-pages": "^3.1.0",
+    "gh-pages": "^4.0.0",
     "html-webpack-plugin": "^5.1.0",
     "mini-css-extract-plugin": "^2.2.2",
     "postcss-modules": "^4.0.0",

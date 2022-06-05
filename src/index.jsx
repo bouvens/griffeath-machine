@@ -1,10 +1,11 @@
 import React from 'react'
-import { render } from 'react-dom'
+import { createRoot } from 'react-dom/client'
 import App from './components/App'
 import Stats from './lib/stats'
 import './index.css'
 
-render(<App />, document.querySelector('#app'))
+const root = createRoot(document.querySelector('#app'))
+root.render(<App />)
 
 const stats = new Stats()
 document.body.appendChild(stats.dom)
