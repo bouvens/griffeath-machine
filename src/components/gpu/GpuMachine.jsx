@@ -37,7 +37,12 @@ export default class GpuMachine extends PureComponent {
   }
 
   updateFieldSize = ({ width = this.state.width, height = this.state.height }) => {
+    const { status } = this.state
     this.fieldUpdater = this.makeGetUpdatedField(width, height)
+    this.setState({ status: STATUSES.pause }, () => {
+      this.handleNew()
+      this.setState({ status })
+    })
   }
 
   updateField = () => {
