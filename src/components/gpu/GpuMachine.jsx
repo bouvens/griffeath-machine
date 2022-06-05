@@ -36,7 +36,7 @@ export default class GpuMachine extends PureComponent {
     cancelAnimationFrame(this.requestID)
   }
 
-  updateFieldSize = (width = this.state.width, height = this.state.height) => {
+  updateFieldSize = ({ width = this.state.width, height = this.state.height }) => {
     this.fieldUpdater = this.makeGetUpdatedField(width, height)
   }
 
@@ -87,10 +87,10 @@ export default class GpuMachine extends PureComponent {
 
     switch (name) {
       case IDS.width:
-        this.updateFieldSize(value)
+        this.updateFieldSize({ width: value })
         break
       case IDS.height:
-        this.updateFieldSize(undefined, value)
+        this.updateFieldSize({ height: value })
         break
       case IDS.states:
         if (value > 255) {
