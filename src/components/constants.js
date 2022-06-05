@@ -17,7 +17,5 @@ export const STATUSES = {
   pause: 'Pause',
 }
 
-export const SPACE_CODE = 32
-
 export const KEY_FOR_PAUSE = ' '
-export const KEY_FOR_RESET = 'Delete'
+export const KEY_FOR_RESET = 'Enter'
