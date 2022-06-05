@@ -16,7 +16,7 @@ export default class GpuMachine extends PureComponent {
 
   state = {
     ...DEFAULT,
-    status: STATUSES.pause,
+    status: STATUSES.play,
   }
 
   componentDidMount() {
@@ -28,7 +28,7 @@ export default class GpuMachine extends PureComponent {
 
         this.makeGetUpdatedField = module.makeGetUpdatedField
         this.fieldUpdater = this.makeGetUpdatedField(width, height)
-        this.handlePlay()
+        this.nextStep()
       })
   }
 

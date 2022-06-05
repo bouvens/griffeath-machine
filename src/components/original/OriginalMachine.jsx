@@ -25,12 +25,12 @@ export default class OriginalMachine extends PureComponent {
     [IDS.height]: this.props.height,
     [IDS.states]: this.props.states,
     [IDS.shuffle]: this.props.shuffle,
-    status: STATUSES.pause,
+    status: STATUSES.play,
   }
 
   componentDidMount() {
     this.handleNew()
-    this.handlePlay()
+    this.nextStep()
   }
 
   componentWillUnmount() {

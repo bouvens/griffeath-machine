@@ -31,7 +31,7 @@ export default class WebWorkerMachine extends PureComponent {
     [IDS.height]: this.props.height,
     [IDS.states]: this.props.states,
     [IDS.shuffle]: this.props.shuffle,
-    status: STATUSES.pause,
+    status: STATUSES.play,
     fps: 0,
   }
 
@@ -39,7 +39,7 @@ export default class WebWorkerMachine extends PureComponent {
     this.workers = new Parallel(GriffeathWorker, this.updateField,
       { numberOfWorkers: 4, ArrayConstructor: Uint8Array })
     this.updateFieldRandomly()
-    this.handlePlay()
+    this.handleNext()
   }
 
   componentWillUnmount() {
