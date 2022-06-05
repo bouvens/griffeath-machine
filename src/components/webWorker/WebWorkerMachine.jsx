@@ -81,7 +81,7 @@ export default class WebWorkerMachine extends PureComponent {
         break
       case KEY_FOR_RESET:
         event.preventDefault()
-        this.handleNew()
+        this.makeNewField()
         break
       default:
     }
