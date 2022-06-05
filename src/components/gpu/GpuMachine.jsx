@@ -1,10 +1,10 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
-import { Check, Connector, Input } from 'state-control'
 import { DEFAULT, IDS, KEY_FOR_PAUSE, KEY_FOR_RESET, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
 import { getRandomField } from '../original/utils'
 import CanvasField from './CanvasField'
+import ControlBlock from '../common/ControlBlock'
 
 export default class GpuMachine extends PureComponent {
   field = null
@@ -51,8 +51,6 @@ export default class GpuMachine extends PureComponent {
 
     document.removeEventListener('keydown', this.handleKeyDown)
   }
-
-  getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
 
   handleKeyDown = (event) => {
     switch (event.key) {
@@ -137,36 +135,19 @@ export default class GpuMachine extends PureComponent {
   render() {
     return (
       <>
-        <Connector
+        <ControlBlock
           state={this.state}
           onChange={this.changeHandler}
-        >
-          <Input
-            id={IDS.width}
-            label="Field width"
-            defaultNum={1}
-          />
-          <Input
-            id={IDS.height}
-            label="Field height"
-            defaultNum={1}
-          />
-          <Input
-            id={IDS.states}
-            label="Number of states"
-            defaultNum={1}
-          />
-          <Check
-            id={IDS.shuffle}
-            label="Shuffle colors"
-          />
-        </Connector>
+          onReset={this.handleNew}
+          onPlayPause={this.handlePlay}
+          onNextStep={this.handleNext}
+        />
         <div
           onClick={this.handlePlay}
           onKeyDown={this.handleKeyDown}
           className={style.field}
           role="presentation"
-          title={this.getActionName()}
+          title="⏯"
         >
           <CanvasField
             width={this.state.width}
@@ -176,18 +157,6 @@ export default class GpuMachine extends PureComponent {
             ref={this.canvas}
           />
         </div>
-        <p><em>Press Space or click field for play / pause</em></p>
-        <button type="button" className={style.bigButton} onClick={this.handleNew}>
-          New
-        </button>
-        <button type="button" className={style.bigButton} onClick={this.handlePlay}>
-          {this.getActionName()}
-        </button>
-        {this.state.status === STATUSES.pause && (
-          <button type="button" className={style.bigButton} onClick={this.handleNext}>
-            Next step
-          </button>
-        )}
       </>
     )
   }
