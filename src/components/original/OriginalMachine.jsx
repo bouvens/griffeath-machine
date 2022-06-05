@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import PropTypes from 'prop-types'
 import { Connector, Input } from 'state-control'
-import { DEFAULT, IDS, SPACE_CODE, STATUSES } from '../constants'
+import { DEFAULT, IDS, KEY_FOR_PAUSE, KEY_FOR_RESET, STATUSES } from '../constants'
 import style from '../common/GriffeathMachine.css'
 import { getRandomField, getUpdatedField } from './utils'
 import CanvasField from './CanvasField'
@@ -30,21 +30,28 @@ export default class OriginalMachine extends PureComponent {
     this.handleNew()
     this.handlePlay()
 
-    document.addEventListener('keydown', this.processKey)
+    document.addEventListener('keydown', this.handleKeyDown)
   }
 
   componentWillUnmount() {
     cancelAnimationFrame(this.requestID)
 
-    document.removeEventListener('keydown', this.processKey)
+    document.removeEventListener('keydown', this.handleKeyDown)
   }
 
   getActionName = () => (this.state.status === STATUSES.play ? STATUSES.pause : STATUSES.play)
 
-  processKey = (e) => {
-    if (e.keyCode === SPACE_CODE) {
-      e.preventDefault()
-      this.handlePlay()
+  handleKeyDown = (event) => {
+    switch (event.key) {
+      case KEY_FOR_PAUSE:
+        event.preventDefault()
+        this.handlePlay()
+        break
+      case KEY_FOR_RESET:
+        event.preventDefault()
+        this.handleNew()
+        break
+      default:
     }
   }
 
@@ -114,7 +121,7 @@ export default class OriginalMachine extends PureComponent {
         </Connector>
         <div
           onClick={this.handlePlay}
-          onKeyDown={this.processKey}
+          onKeyDown={this.handleKeyDown}
           className={style.field}
           role="presentation"
           title={this.getActionName()}
