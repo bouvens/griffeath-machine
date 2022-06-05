@@ -100,6 +100,7 @@ export default class WebWorkerMachine extends PureComponent {
   }
 
   render() {
+    const { fps, ...state } = this.state
     return (
       <>
         {this.workers
@@ -110,7 +111,7 @@ export default class WebWorkerMachine extends PureComponent {
           </p>
         )}
         <ControlBlock
-          state={this.state}
+          state={state}
           onChange={this.changeHandler}
           onReset={this.makeNewField}
           onPlayPause={this.handlePlay}
