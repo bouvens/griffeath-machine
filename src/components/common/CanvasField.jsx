@@ -8,14 +8,17 @@ export default class CanvasField extends React.PureComponent {
   colorsOfField
 
   static propTypes = {
+    // We can't check the field type properly with acceptable speed
+    // eslint-disable-next-line react/forbid-prop-types
+    field: PropTypes.object.isRequired,
     width: PropTypes.number.isRequired,
     height: PropTypes.number.isRequired,
     states: PropTypes.number.isRequired,
     shuffle: PropTypes.bool.isRequired,
   }
 
-  paint = (field) => {
-    const { width, height, states, shuffle } = this.props
+  paint = () => {
+    const { field, width, height, states, shuffle } = this.props
     const size = width * height
 
     this.colorsOfField = new Uint32Array(size)
@@ -37,6 +40,10 @@ export default class CanvasField extends React.PureComponent {
   }
 
   render() {
+    if (this.canvasContext) {
+      this.paint()
+    }
+
     return (
       <canvas
         ref={this.refCanvas}

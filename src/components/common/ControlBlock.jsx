@@ -1,13 +1,22 @@
 // we can disable particular accessibility because we give global keyboard control
 /* eslint-disable jsx-a11y/interactive-supports-focus,jsx-a11y/click-events-have-key-events */
 
-import React, { useEffect } from 'react'
+import React, { useEffect, memo } from 'react'
 import PropTypes from 'prop-types'
 import { Check, Connector, Input } from 'state-control'
 import { IDS, KEY_FOR_PAUSE, KEY_FOR_RESET, MODIFIER_FOR_STEP, STATUSES } from '../constants'
 import style from './GriffeathMachine.css'
 
-export default function ControlBlock({ state, onChange, onReset, onPlayPause, onNextStep }) {
+let previousOnChange = null
+
+function ControlBlock({ state, status, onChange, onReset, onPlayPause, onNextStep }) {
+  // if (previousOnChange === state) {
+  //   console.log('rerender CB with no change of state'.toUpperCase())
+  // } else {
+  //   console.log('update state'.toUpperCase())
+  //   previousOnChange = state
+  // }
+
   useEffect(() => {
     const handleKeyDown = (event) => {
       switch (event.key) {
@@ -72,7 +81,7 @@ export default function ControlBlock({ state, onChange, onReset, onPlayPause, on
           <span className={style.activeDescription}>Play / Pause</span>
         </span>
       </p>
-      <p className={state.status !== STATUSES.pause ? style.hidden : undefined}>
+      <p className={status !== STATUSES.pause ? style.hidden : undefined}>
         <span onClick={onNextStep} role="button">
           <span className={style.key}>Shift</span>
           {' + '}
@@ -90,10 +99,12 @@ ControlBlock.propTypes = {
     height: PropTypes.number.isRequired,
     states: PropTypes.number.isRequired,
     shuffle: PropTypes.bool.isRequired,
-    status: PropTypes.string.isRequired,
   }).isRequired,
+  status: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onReset: PropTypes.func.isRequired,
   onPlayPause: PropTypes.func.isRequired,
   onNextStep: PropTypes.func.isRequired,
 }
+
+export default memo(ControlBlock)

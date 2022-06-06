@@ -1,101 +1,104 @@
-import React, { PureComponent } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { DEFAULT, IDS, STATUSES } from '../constants'
 import { getRandomField, getUpdatedField } from '../common/utils'
 import CanvasField from '../common/CanvasField'
 import ControlBlock from '../common/ControlBlock'
 import style from '../common/GriffeathMachine.css'
 
-export default class OptimizedMachine extends PureComponent {
-  field = null
+export default function OptimizedMachine() {
+  const [configuration, setConfiguration] = useState(DEFAULT)
+  const [status, setStatus] = useState(STATUSES.pause)
 
-  canvas = React.createRef()
+  const [field, setField] = useState(getRandomField({
+    width: configuration.width,
+    height: configuration.height,
+    states: configuration.states,
+  }))
 
-  state = {
-    ...DEFAULT,
-    status: STATUSES.play,
-  }
+  const [requestID, setRequestID] = useState()
 
-  componentDidMount() {
-    this.handleNew()
-    this.nextStep()
-  }
-
-  componentWillUnmount() {
-    cancelAnimationFrame(this.requestID)
-  }
-
-  nextStep = () => {
-    try {
-      this.field = getUpdatedField({ ...this.state, field: this.field })
-
-      if (this.state.status === STATUSES.play) {
-        this.requestID = requestAnimationFrame(this.nextStep)
+  useEffect(() => {
+    const nextStep = () => {
+      cancelAnimationFrame(requestID) // Do we need it? No! Do we want it? Yeah!
+      try {
+        console.log('update field'.toUpperCase(), status)
+        setField(getUpdatedField({ ...configuration, field }))
+        if (status === STATUSES.play) {
+          console.log('plan new'.toUpperCase())
+          setRequestID(requestAnimationFrame(nextStep))
+        }
+      } catch (e) {
+        console.log('error field'.toUpperCase(), e)
+        setField(getRandomField(configuration))
+        setStatus(STATUSES.pause)
       }
-    } catch (e) {
-      cancelAnimationFrame(this.requestID)
-      this.field = getRandomField(this.state)
-      this.setState({ status: STATUSES.pause })
     }
-    this.canvas.current.paint(this.field)
-  }
 
-  handleNew = () => {
-    this.field = getRandomField(this.state)
-    this.canvas.current.paint(this.field)
-  }
+    console.log('effect status'.toUpperCase(), status)
+    if (status === STATUSES.play) {
+      nextStep()
+    }
+    return () => {
+      cancelAnimationFrame(requestID)
+    }
+  }, [status, configuration, field, requestID])
 
-  handleNext = () => {
-    this.field = getUpdatedField({ ...this.state, field: this.field })
-    this.canvas.current.paint(this.field)
-  }
+  const handleNew = useCallback(() => {
+    setField(getRandomField(configuration))
+  }, [configuration])
 
-  handlePlay = () => {
-    switch (this.state.status) {
+  const handleNext = useCallback(() => {
+    setField(getUpdatedField({ ...configuration, field }))
+  }, [configuration, field])
+
+  const handlePlay = () => {
+    switch (status) {
       case STATUSES.play:
-        this.setState({ status: STATUSES.pause })
+        setStatus(STATUSES.pause)
         break
       case STATUSES.pause:
-        this.setState({ status: STATUSES.play }, this.nextStep)
+        setStatus(STATUSES.play)
+        // Does it work or we should uncomment useEffect?
+        // nextStep()
         break
       default:
     }
   }
 
-  changeHandler = (name, initialValue) => {
-    let value = initialValue
+  const changeHandler = (name, newValue) => {
+    let value = newValue
 
     if (name === IDS.states && value > 255) {
       value = 255
     }
 
-    this.setState({ [name]: value })
+    setConfiguration({ ...configuration, [name]: value })
   }
 
-  render() {
-    return (
-      <>
-        <ControlBlock
-          state={this.state}
-          onChange={this.changeHandler}
-          onReset={this.handleNew}
-          onPlayPause={this.handlePlay}
-          onNextStep={this.handleNext}
+  return (
+    <>
+      <ControlBlock
+        state={configuration}
+        status={status}
+        onChange={changeHandler}
+        onReset={handleNew}
+        onPlayPause={handlePlay}
+        onNextStep={handleNext}
+      />
+      <div
+        onClick={handlePlay}
+        className={style.field}
+        role="presentation"
+        title="⏯"
+      >
+        <CanvasField
+          field={field}
+          width={configuration.width}
+          height={configuration.height}
+          states={configuration.states}
+          shuffle={configuration.shuffle}
         />
-        <div
-          onClick={this.handlePlay}
-          className={style.field}
-          role="presentation"
-          title="⏯"
-        >
-          <CanvasField
-            width={this.state.width}
-            height={this.state.height}
-            states={this.state.states}
-            shuffle={this.state.shuffle}
-            ref={this.canvas}
-          />
-        </div>
-      </>
-    )
-  }
+      </div>
+    </>
+  )
 }
