@@ -40,7 +40,7 @@ const Routing = ({ routes }) => (
 )
 
 Routing.propTypes = {
-  routes: PropTypes.arrayOf(PropTypes.shape({
+  routes: PropTypes.arrayOf(PropTypes.exact({
     name: PropTypes.string,
     path: PropTypes.string,
     component: PropTypes.oneOfType([PropTypes.func, PropTypes.object]),

@@ -1,30 +1,17 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import { DEFAULT, IDS, STATUSES } from '../constants'
-import style from '../common/GriffeathMachine.css'
-import CanvasField from '../common/CanvasField'
 import { getRandomField, getUpdatedField } from '../common/utils'
+import CanvasField from '../common/CanvasField'
 import ControlBlock from '../common/ControlBlock'
+import style from '../common/GriffeathMachine.css'
 
 export default class OptimizedMachine extends PureComponent {
   field = null
 
   canvas = React.createRef()
 
-  static propTypes = {
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    states: PropTypes.number.isRequired,
-    shuffle: PropTypes.bool.isRequired,
-  }
-
-  static defaultProps = { ...DEFAULT }
-
   state = {
-    [IDS.width]: this.props.width,
-    [IDS.height]: this.props.height,
-    [IDS.states]: this.props.states,
-    [IDS.shuffle]: this.props.shuffle,
+    ...DEFAULT,
     status: STATUSES.play,
   }
 

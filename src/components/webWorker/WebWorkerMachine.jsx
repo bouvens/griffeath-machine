@@ -1,12 +1,11 @@
 import React, { PureComponent } from 'react'
-import PropTypes from 'prop-types'
 import Parallel from 'parallel1d'
-import GriffeathWorker from './machine.worker'
-import { DEFAULT, IDS, STATUSES } from '../constants'
-import style from '../common/GriffeathMachine.css'
-import CanvasField from '../common/CanvasField'
+import { DEFAULT, STATUSES } from '../constants'
 import { getRandomField } from '../common/utils'
+import CanvasField from '../common/CanvasField'
 import ControlBlock from '../common/ControlBlock'
+import style from '../common/GriffeathMachine.css'
+import GriffeathWorker from './machine.worker'
 
 export default class WebWorkerMachine extends PureComponent {
   field = null
@@ -17,20 +16,8 @@ export default class WebWorkerMachine extends PureComponent {
 
   workers
 
-  static propTypes = {
-    width: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    states: PropTypes.number.isRequired,
-    shuffle: PropTypes.bool.isRequired,
-  }
-
-  static defaultProps = { ...DEFAULT }
-
   state = {
-    [IDS.width]: this.props.width,
-    [IDS.height]: this.props.height,
-    [IDS.states]: this.props.states,
-    [IDS.shuffle]: this.props.shuffle,
+    ...DEFAULT,
     status: STATUSES.play,
     fps: 0,
   }
@@ -52,8 +39,7 @@ export default class WebWorkerMachine extends PureComponent {
       this.frameTimes.shift()
     }
     this.frameTimes.push(now)
-    // callback should be faster with React 16 and Fiber
-    this.setState(() => ({ fps: this.frameTimes.length }))
+    this.setState({ fps: this.frameTimes.length })
   }
 
   updateField = (data) => {
@@ -101,6 +87,7 @@ export default class WebWorkerMachine extends PureComponent {
 
   render() {
     const { fps, ...state } = this.state
+
     return (
       <>
         {this.workers
@@ -132,7 +119,7 @@ export default class WebWorkerMachine extends PureComponent {
           />
         </div>
         <div className={style.fps}>
-          {this.state.fps}
+          {fps}
           {' FPS'}
           <br />
           in the canvas

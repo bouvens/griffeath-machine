@@ -1,9 +1,9 @@
 import React, { PureComponent } from 'react'
 import { DEFAULT, IDS, STATUSES } from '../constants'
-import style from '../common/GriffeathMachine.css'
 import { getRandomField } from '../original/utils'
-import CanvasField from './CanvasField'
 import ControlBlock from '../common/ControlBlock'
+import style from '../common/GriffeathMachine.css'
+import CanvasField from './CanvasField'
 
 export default class GpuMachine extends PureComponent {
   field = null
