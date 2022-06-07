@@ -57,12 +57,12 @@ export default class GpuMachine extends PureComponent {
       if (this.state.status === STATUSES.play) {
         this.requestID = requestAnimationFrame(this.nextStep)
       }
+      this.canvas.current.paint(this.field)
     } catch (e) {
       cancelAnimationFrame(this.requestID)
       this.field = getRandomField(this.state)
       this.setState({ status: STATUSES.pause })
     }
-    this.canvas.current.paint(this.field)
   }
 
   handleNew = () => {
