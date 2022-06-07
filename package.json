@@ -15,12 +15,12 @@
   "dependencies": {
     "gpu.js": "^2.15.2",
     "number-to-color": "^1.0.0",
-    "parallel1d": "^1.0.1",
+    "parallel1d": "^2.0.0",
     "prop-types": "^15.6.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-router-dom": "^6.3.0",
-    "state-control": "^3.0.0"
+    "state-control": "^3.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.4.5",
