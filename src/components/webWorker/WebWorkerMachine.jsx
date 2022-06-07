@@ -26,7 +26,6 @@ export default class WebWorkerMachine extends PureComponent {
     this.workers = new Parallel(GriffeathWorker, this.updateField,
       { numberOfWorkers: 4, ArrayConstructor: Uint8Array })
     this.updateFieldRandomly()
-    this.handleNext()
   }
 
   componentWillUnmount() {
@@ -91,12 +90,12 @@ export default class WebWorkerMachine extends PureComponent {
     return (
       <>
         {this.workers
-        && (
-          <p>
-            {this.workers.threads}
-            {' workers started'}
-          </p>
-        )}
+          && (
+            <p>
+              {this.workers.threads}
+              {' workers started'}
+            </p>
+          )}
         <ControlBlock
           state={state}
           onChange={this.changeHandler}
