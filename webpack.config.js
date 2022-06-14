@@ -14,6 +14,7 @@ module.exports = {
     publicPath: '',
     filename: '[name].bundle.js',
     globalObject: 'this',
+    assetModuleFilename: 'images/[name].[ext]',
   },
   module: {
     rules: [
@@ -44,6 +45,14 @@ module.exports = {
             },
           },
         ],
+      },
+      {
+        test: /\.(html)$/,
+        loader: 'html-loader',
+      },
+      {
+        test: /\.(png|gif|svg|jpe?g)$/,
+        type: 'asset/resource',
       },
     ],
   },

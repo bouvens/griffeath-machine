@@ -7,3 +7,7 @@ body {
 hr {
   margin: 2em auto;
 }
+
+small img {
+  vertical-align: middle;
+}
