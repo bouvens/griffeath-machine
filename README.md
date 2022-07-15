@@ -2,7 +2,7 @@
 
 ### [Demo](https://bouvens.github.io/griffeath-machine/)
 
-[![Example of step](https://bouvens.github.io/images/griffeath-machine.png)](https://bouvens.github.io/griffeath-machine/)
+[![Example of a frame](https://github.com/bouvens/griffeath-machine/raw/master/img/griffeath-machine.png)](https://bouvens.github.io/griffeath-machine/)
 
 This experiment is made with [state-control ![npm][npm-badge]][npm]
 
