@@ -23,7 +23,7 @@
     "state-control": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.4.5",
+    "@babel/core": "^7.24.0",
     "@babel/eslint-parser": "^7.12.17",
     "@babel/plugin-proposal-class-properties": "^7.4.4",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
@@ -44,7 +44,7 @@
     "postcss-modules": "^4.0.0",
     "style-loader": "^3.2.1",
     "terser-webpack-plugin": "^5.1.1",
-    "webpack": "^5.23.0",
+    "webpack": "^5.90.3",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^4.2.0",
     "worker-loader": "^3.0.8"
@@ -53,8 +53,8 @@
     "defaults"
   ],
   "engines": {
-    "node": "14.21.3",
-    "npm": "6.14.18v"
+    "node": ">=20.11.1",
+    "npm": ">=10.2.4"
   },
   "author": "Alexander Demin <bouvens@gmail.com> (https://bouvens.github.io/)",
   "homepage": "https://bouvens.github.io/griffeath-machine",
